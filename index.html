@@ -680,7 +680,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 <script>
 /* ══ CONFIG ══ */
 const CONFIG = {
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzzSZrzw5SEYpnA7qgoD34joB1vgDjPeF7MWSX4mdZT2YGraTtzhqawzUJ2jrZcn_qZug/exec',
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxRh9rlNdV5GwIIJppIllCWIm_aDNmZeNUHToRpU_YO0cDmzjymJBqKZyR8tRN5oYWk0A/exec',
 };
 
 const ALOJ_INFO = {
@@ -700,13 +700,7 @@ function loadSession() {
 function saveSession(data) { session = data; sessionStorage.setItem('boda_s', JSON.stringify(data)); }
 function clearSession() { session = null; sessionStorage.removeItem('boda_s'); }
 
-/* ══ CONFIRMACIÓN PERSISTENTE (por usuario) ══ */
-function hasConfirmed(usuario) {
-  return localStorage.getItem('rsvp_' + usuario) === '1';
-}
-function markConfirmed(usuario) {
-  localStorage.setItem('rsvp_' + usuario, '1');
-}
+/* ══ CONFIRMACIÓN: se lee y escribe en Google Sheets vía session ══ */
 
 /* ══ LOGIN ══ */
 function openLogin(e) { if (e) e.preventDefault(); document.getElementById('login-modal').classList.add('open'); setTimeout(() => document.getElementById('loginUser').focus(), 100); }
@@ -762,10 +756,13 @@ function enterPrivateZone(data) {
   // Alojamiento
   renderAlojamiento(data);
 
-  // Confirmación persistente
-  if (hasConfirmed(data.nombre)) {
+  // Confirmación: viene del Google Sheet (columna G)
+  if (data.confirmado == 1) {
     document.getElementById('rsvpForm').style.display = 'none';
     document.getElementById('msg-success').style.display = 'block';
+  } else {
+    document.getElementById('rsvpForm').style.display = 'flex';
+    document.getElementById('msg-success').style.display = 'none';
   }
 
   // Ir a tab inicio
@@ -948,11 +945,11 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   fetch(CONFIG.appsScriptUrl, {
     method: 'POST', mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({ nombre, apellidos, email, telefono, asistencia, acompanantes: acomp, alojamiento: session?.alojamiento || '', alergias, hijos, mensaje, usuario: session?.nombre || '' }),
+    body: JSON.stringify({ nombre, apellidos, email, telefono, asistencia, acompanantes: acomp, alojamiento: session?.alojamiento || '', alergias, hijos, mensaje, usuario: session?.usuario || '' }),
   }).catch(err => console.warn(err));
 
-  // Marcar como confirmado de forma persistente
-  if (session?.nombre) markConfirmed(session.nombre);
+  // Actualizar sesión local como confirmado
+  if (session) { session.confirmado = 1; saveSession(session); }
 
   document.getElementById('rsvpForm').style.display = 'none';
   document.getElementById('msg-success').style.display = 'block';
