@@ -357,7 +357,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   <a href="#programa">Programa</a>
   <a href="#faq">FAQ</a>
   <span class="nav-sep">·</span>
-  <a href="#" class="nav-login-btn" id="navLoginBtn" onclick="openLogin(event)">Mi zona →</a>
+  <a href="#" class="nav-login-btn" id="navLoginBtn" onclick="miZonaClick(event)">Mi zona →</a>
 </nav>
 
 <!-- ══ NAV PRIVADA ══ -->
@@ -703,6 +703,14 @@ function clearSession() { session = null; sessionStorage.removeItem('boda_s'); }
 /* ══ CONFIRMACIÓN: se lee y escribe en Google Sheets vía session ══ */
 
 /* ══ LOGIN ══ */
+function miZonaClick(e) {
+  e.preventDefault();
+  if (session?.ok) {
+    enterPrivateZone(session);
+  } else {
+    openLogin();
+  }
+}
 function openLogin(e) { if (e) e.preventDefault(); document.getElementById('login-modal').classList.add('open'); setTimeout(() => document.getElementById('loginUser').focus(), 100); }
 function closeLogin() { document.getElementById('login-modal').classList.remove('open'); }
 document.getElementById('login-modal').addEventListener('click', function(e) { if (e.target === this) closeLogin(); });
