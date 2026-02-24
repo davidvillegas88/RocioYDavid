@@ -43,7 +43,7 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 }
 .nav-login-btn:hover { background: var(--terra) !important; }
 
-/* ══ NAV PRIVADA (tabs) ══ */
+/* ══ NAV PRIVADA ══ */
 #nav-private {
   display: none;
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -107,6 +107,8 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .login-fg label { font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.55; }
 .login-fg input { background: white; border: 1px solid rgba(184,149,106,0.25); padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--deep); outline: none; transition: border-color 0.3s; appearance: none; border-radius: 0; width: 100%; }
 .login-fg input:focus { border-color: var(--rose); }
+.login-remember { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; opacity: 0.65; cursor: pointer; }
+.login-remember input[type="checkbox"] { accent-color: var(--rose); width: 14px; height: 14px; cursor: pointer; }
 .login-btn { width: 100%; padding: 0.95rem; background: var(--rose); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.3rem; }
 .login-btn:hover { background: var(--terra); }
 .login-btn:disabled { background: var(--sand); cursor: not-allowed; }
@@ -226,20 +228,14 @@ section { padding: 6rem 2rem; }
 
 /* ══ GATE ══ */
 #gate { background: var(--ivory); padding: 5rem 2rem; text-align: center; border-top: 1px solid rgba(184,149,106,0.15); }
-.gate-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5; }
-.gate-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.6rem; }
-.gate-title em { font-style: italic; color: var(--rose); }
-.gate-sub { font-size: 0.88rem; opacity: 0.6; line-height: 1.7; max-width: 400px; margin: 0 auto 2rem; }
-.gate-btn { display: inline-block; padding: 0.95rem 2.5rem; background: var(--rose); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
-.gate-btn:hover { background: var(--terra); }
 
-/* ══ ZONA PRIVADA (pantalla completa sobre lo público) ══ */
+/* ══ ZONA PRIVADA ══ */
 #private-screen {
   display: none;
   position: fixed; inset: 0; z-index: 150;
   background: var(--cream);
   overflow-y: auto;
-  padding-top: 95px; /* altura de nav privada */
+  padding-top: 95px;
 }
 #private-screen.visible { display: block; }
 
@@ -278,16 +274,6 @@ section { padding: 6rem 2rem; }
 .aloj-asignado p { font-size: 0.86rem; line-height: 1.8; opacity: 0.68; max-width: 420px; margin: 0 auto 1.5rem; }
 .aloj-map-btn { display: inline-block; padding: 0.75rem 1.8rem; background: var(--deep); color: var(--cream); text-decoration: none; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.3s; }
 .aloj-map-btn:hover { background: var(--rose); }
-.aloj-opciones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
-.aloj-opcion-card { background: white; border: 2px solid rgba(184,149,106,0.18); padding: 1.8rem 1.5rem; cursor: pointer; transition: all 0.3s; text-align: center; position: relative; }
-.aloj-opcion-card:hover { border-color: var(--rose); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
-.aloj-opcion-card.selected { border-color: var(--rose); background: rgba(196,128,106,0.04); }
-.aloj-opcion-card.selected::after { content: '✓'; position: absolute; top: 0.7rem; right: 0.7rem; width: 20px; height: 20px; background: var(--rose); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; line-height: 20px; text-align: center; }
-.aloj-opcion-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
-.aloj-opcion-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
-.aloj-opcion-card p { font-size: 0.8rem; line-height: 1.65; opacity: 0.6; }
-.aloj-opcion-link { display: inline-block; margin-top: 0.8rem; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
-.aloj-opcion-link:hover { border-color: var(--rose); }
 .aloj-nota { text-align: center; font-size: 0.82rem; opacity: 0.5; margin-top: 1.5rem; font-style: italic; }
 
 /* ══ CONFIRMACIÓN TAB ══ */
@@ -307,6 +293,8 @@ section { padding: 6rem 2rem; }
 .submit-btn:disabled { background: var(--sand); cursor: not-allowed; }
 .field-error { font-size: 0.72rem; color: #e05c4a; margin-top: 0.2rem; display: none; }
 .field-error.show { display: block; }
+/* Honeypot: totalmente invisible para humanos, los bots lo rellenan */
+.hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .form-msg { text-align: center; padding: 3rem 1.5rem; }
 .form-msg .msg-icon { font-size: 3rem; margin-bottom: 1rem; }
 .form-msg h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; margin-bottom: 0.8rem; color: var(--dark-sage); }
@@ -339,7 +327,6 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   .tl::before { left: 68px; }
   .tl-dot { left: 62px; }
   .cd-dot { display: none; }
-  .aloj-opciones-grid { grid-template-columns: 1fr; }
   #private-screen { padding-top: 85px; }
 }
 
@@ -393,6 +380,9 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <label>Contraseña</label>
         <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="current-password">
       </div>
+      <label class="login-remember">
+        <input type="checkbox" id="loginRemember"> Recordarme en este dispositivo
+      </label>
       <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
       <button type="submit" class="login-btn" id="loginBtn">Entrar</button>
     </form>
@@ -401,7 +391,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
 <!-- ════════════════════════════════════════════
      ZONA PÚBLICA
-     ════════════════════════════════════════════ -->
+════════════════════════════════════════════ -->
 <div id="public-content">
 
   <!-- HERO -->
@@ -478,7 +468,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <h2 class="sec-title">Nuestra <em>Galería</em></h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
-      <div class="carousel-wrap reveal">
+      <div class="carousel-wrap reveal" id="carouselWrap">
         <div class="carousel-track" id="carouselTrack">
           <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">📸</span><span>fotos/foto1.jpg</span></div></div>
           <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌿</span><span>fotos/foto2.jpg</span></div></div>
@@ -547,7 +537,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <div class="faq-wrap">
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cómo reservo mi alojamiento?</span><span class="faq-ico">+</span></button><div class="faq-ans">Accede a tu zona privada con el usuario y contraseña que te hemos enviado. Verás tu alojamiento asignado o las opciones disponibles.</div></div>
+        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cómo reservo mi alojamiento?</span><span class="faq-ico">+</span></button><div class="faq-ans">Accede a tu zona privada con el usuario y contraseña que te hemos enviado. Encontrarás tu alojamiento asignado.</div></div>
         <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Puedo llevar a mis hijos?</span><span class="faq-ico">+</span></button><div class="faq-ans">¡Cuéntanos! Escríbenos en el mensaje del formulario de confirmación y lo hablamos.</div></div>
         <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Hay opciones para vegetarianos o alergias?</span><span class="faq-ico">+</span></button><div class="faq-ans">Sí. Indícalo en el campo de alergias del formulario de confirmación en tu zona privada.</div></div>
         <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cuál es el dress code?</span><span class="faq-ico">+</span></button><div class="faq-ans">¡Como tú quieras! La boda es al aire libre en diciembre, elegancia con capas. Lleva abrigo para la noche 😄</div></div>
@@ -562,7 +552,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     <div style="font-size:2.5rem;margin-bottom:1rem;opacity:0.5">🔐</div>
     <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:0.6rem">Tu <em style="font-style:italic;color:var(--rose)">zona privada</em></div>
     <p style="font-size:0.88rem;opacity:0.6;line-height:1.7;max-width:400px;margin:0 auto 2rem">Accede con tu usuario y contraseña para ver tu alojamiento, confirmar asistencia y los datos del regalo.</p>
-    <button class="gate-btn" onclick="openLogin()">Acceder a mi zona →</button>
+    <button class="gate-btn" style="display:inline-block;padding:0.95rem 2.5rem;background:var(--rose);color:white;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onclick="openLogin()">Acceder a mi zona →</button>
   </div>
 
   <footer>
@@ -574,8 +564,8 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 </div><!-- /public-content -->
 
 <!-- ════════════════════════════════════════════
-     ZONA PRIVADA (pantalla superpuesta con tabs)
-     ════════════════════════════════════════════ -->
+     ZONA PRIVADA
+════════════════════════════════════════════ -->
 <div id="private-screen">
 
   <!-- TAB: BIENVENIDA -->
@@ -609,8 +599,12 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <h2 class="sec-title">Confirmar <em>Asistencia</em></h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
-      <!-- Formulario -->
       <form class="form-stack" id="rsvpForm" novalidate>
+        <!-- Honeypot: invisible para humanos, los bots lo rellenan -->
+        <div class="hp-field" aria-hidden="true">
+          <label>No rellenes esto</label>
+          <input type="text" id="hp-name" name="hp_name" tabindex="-1" autocomplete="off">
+        </div>
         <div class="form-row">
           <div class="fg"><label>Nombre *</label><input type="text" id="nombre" placeholder="Tu nombre"><span class="field-error" id="err-nombre">Introduce tu nombre.</span></div>
           <div class="fg"><label>Apellidos *</label><input type="text" id="apellidos" placeholder="Tus apellidos"><span class="field-error" id="err-apellidos">Introduce tus apellidos.</span></div>
@@ -639,7 +633,6 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <div class="fg"><label>Mensaje para los novios 💌</label><textarea id="mensaje" placeholder="Cuéntanos lo que quieras..."></textarea></div>
         <button type="submit" class="submit-btn" id="submitBtn">Confirmar asistencia</button>
       </form>
-      <!-- Mensaje confirmación persistente -->
       <div class="form-msg" id="msg-success" style="display:none">
         <div class="msg-icon">🌿</div>
         <h3>¡Asistencia confirmada!</h3>
@@ -678,78 +671,124 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 </div><!-- /private-screen -->
 
 <script>
-/* ══ CONFIG ══ */
+/* ══════════════════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════════════════ */
 const CONFIG = {
   appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxRh9rlNdV5GwIIJppIllCWIm_aDNmZeNUHToRpU_YO0cDmzjymJBqKZyR8tRN5oYWk0A/exec',
 };
 
 const ALOJ_INFO = {
-  'Hotel Los Escullos': { icon: '🏨', desc: 'Hotel principal de la boda, a pie de playa y a metros del Castillo de San Felipe.', map: 'https://maps.google.com/?q=36.8038795,-2.0633462' },
-  'El Chamán':          { icon: '🌿', desc: 'Alojamiento rural en pleno Parque Natural Cabo de Gata. Ambiente tranquilo rodeado de naturaleza.', map: 'https://maps.google.com/?q=36.8024663,-2.0631902' },
-  'Cortijo El Aire':    { icon: '🌾', desc: 'Cortijo andaluz con encanto. Vistas al mar y montaña. A 10 minutos en coche.', map: 'https://maps.google.com/?q=36.805827,-2.0770532' },
-  'Casa Emilio':        { icon: '🍽️', desc: 'Hostal con restaurante propio muy bien valorado. A 200m del hotel principal.', map: 'https://maps.google.com/?q=36.8036064,-2.0632437' },
-  'Camping Los Escullos':{ icon: '⛺', desc: 'Bungalows y parcelas en el Parque Natural. Piscina y restaurante.', map: 'https://maps.google.com/?q=36.803305,-2.078733' },
+  'Hotel Los Escullos':   { icon: '🏨', desc: 'Hotel principal de la boda, a pie de playa y a metros del Castillo de San Felipe.', map: 'https://maps.google.com/?q=36.8038795,-2.0633462' },
+  'El Chamán':            { icon: '🌿', desc: 'Alojamiento rural en pleno Parque Natural Cabo de Gata. Ambiente tranquilo rodeado de naturaleza.', map: 'https://maps.google.com/?q=36.8024663,-2.0631902' },
+  'Cortijo El Aire':      { icon: '🌾', desc: 'Cortijo andaluz con encanto. Vistas al mar y montaña. A 10 minutos en coche.', map: 'https://maps.google.com/?q=36.805827,-2.0770532' },
+  'Casa Emilio':          { icon: '🍽️', desc: 'Hostal con restaurante propio muy bien valorado. A 200m del hotel principal.', map: 'https://maps.google.com/?q=36.8036064,-2.0632437' },
+  'Camping Los Escullos': { icon: '⛺', desc: 'Bungalows y parcelas en el Parque Natural. Piscina y restaurante.', map: 'https://maps.google.com/?q=36.803305,-2.078733' },
 };
 
-/* ══ SESIÓN ══ */
+/* ══════════════════════════════════════════════════════
+   SESIÓN — sessionStorage (pestaña) + localStorage (recordar)
+══════════════════════════════════════════════════════ */
 let session = null;
 
 function loadSession() {
-  try { const s = sessionStorage.getItem('boda_s'); if (s) session = JSON.parse(s); } catch(e) {}
+  try {
+    // sessionStorage tiene prioridad (pestaña activa); si no, localStorage (recordarme)
+    const raw = sessionStorage.getItem('boda_s') || localStorage.getItem('boda_s');
+    if (raw) session = JSON.parse(raw);
+  } catch(e) { session = null; }
 }
-function saveSession(data) { session = data; sessionStorage.setItem('boda_s', JSON.stringify(data)); }
-function clearSession() { session = null; sessionStorage.removeItem('boda_s'); }
 
-/* ══ CONFIRMACIÓN: se lee y escribe en Google Sheets vía session ══ */
+function saveSession(data, remember) {
+  session = data;
+  try {
+    const json = JSON.stringify(data);
+    sessionStorage.setItem('boda_s', json);
+    if (remember) {
+      localStorage.setItem('boda_s', json);
+    } else {
+      localStorage.removeItem('boda_s');
+    }
+  } catch(e) {}
+}
 
-/* ══ LOGIN ══ */
+function clearSession() {
+  session = null;
+  try {
+    sessionStorage.removeItem('boda_s');
+    localStorage.removeItem('boda_s');
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════════════════════
+   LOGIN — vía POST (las credenciales NO van en la URL)
+══════════════════════════════════════════════════════ */
 function miZonaClick(e) {
   e.preventDefault();
-  if (session?.ok) {
-    enterPrivateZone(session);
-  } else {
-    openLogin();
-  }
+  session?.ok ? enterPrivateZone(session) : openLogin();
 }
-function openLogin(e) { if (e) e.preventDefault(); document.getElementById('login-modal').classList.add('open'); setTimeout(() => document.getElementById('loginUser').focus(), 100); }
-function closeLogin() { document.getElementById('login-modal').classList.remove('open'); }
-document.getElementById('login-modal').addEventListener('click', function(e) { if (e.target === this) closeLogin(); });
+
+function openLogin(e) {
+  if (e) e.preventDefault();
+  document.getElementById('login-modal').classList.add('open');
+  setTimeout(() => document.getElementById('loginUser').focus(), 100);
+}
+
+function closeLogin() {
+  document.getElementById('login-modal').classList.remove('open');
+}
+
+document.getElementById('login-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeLogin();
+});
 
 async function doLogin(e) {
   e.preventDefault();
-  const usuario = document.getElementById('loginUser').value.trim();
+  const usuario  = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value.trim();
-  const btn = document.getElementById('loginBtn');
-  const errEl = document.getElementById('loginError');
+  const remember = document.getElementById('loginRemember').checked;
+  const btn      = document.getElementById('loginBtn');
+  const errEl    = document.getElementById('loginError');
+
   if (!usuario || !password) return;
-  btn.disabled = true; btn.textContent = 'Comprobando...';
+
+  btn.disabled = true;
+  btn.textContent = 'Comprobando...';
   errEl.classList.remove('show');
+
   try {
-    const url = `${CONFIG.appsScriptUrl}?action=login&u=${encodeURIComponent(usuario)}&p=${encodeURIComponent(password)}`;
-    const resp = await fetch(url);
+    // ★ POST: credenciales van en el body JSON, no en la URL
+    const resp = await fetch(CONFIG.appsScriptUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'login', u: usuario, p: password }),
+    });
     const data = await resp.json();
+
     if (data.ok) {
-      saveSession(data);
+      saveSession(data, remember);
       closeLogin();
       enterPrivateZone(data);
     } else {
+      errEl.textContent = 'Usuario o contraseña incorrectos.';
       errEl.classList.add('show');
     }
   } catch(err) {
     errEl.textContent = 'Error de conexión. Inténtalo de nuevo.';
     errEl.classList.add('show');
   }
-  btn.disabled = false; btn.textContent = 'Entrar';
+
+  btn.disabled = false;
+  btn.textContent = 'Entrar';
 }
 
-/* ══ ENTRAR EN ZONA PRIVADA ══ */
+/* ══════════════════════════════════════════════════════
+   ZONA PRIVADA
+══════════════════════════════════════════════════════ */
 function enterPrivateZone(data) {
-  // Cambiar nav
   document.getElementById('nav-public').style.display = 'none';
   document.getElementById('nav-private').classList.add('visible');
   document.getElementById('privNavName').textContent = data.nombre;
-
-  // Mostrar pantalla privada, ocultar pública
   document.getElementById('private-screen').classList.add('visible');
   document.getElementById('public-content').style.display = 'none';
 
@@ -761,10 +800,8 @@ function enterPrivateZone(data) {
     el.classList.add('visible');
   }
 
-  // Alojamiento
   renderAlojamiento(data);
 
-  // Confirmación: viene del Google Sheet (columna G)
   if (data.confirmado == 1) {
     document.getElementById('rsvpForm').style.display = 'none';
     document.getElementById('msg-success').style.display = 'block';
@@ -773,12 +810,10 @@ function enterPrivateZone(data) {
     document.getElementById('msg-success').style.display = 'none';
   }
 
-  // Ir a tab inicio
   switchTab('tab-bienvenida');
   window.scrollTo(0, 0);
 }
 
-/* ══ VOLVER A ZONA PÚBLICA ══ */
 function goPublic() {
   document.getElementById('private-screen').classList.remove('visible');
   document.getElementById('public-content').style.display = 'block';
@@ -787,14 +822,14 @@ function goPublic() {
   window.scrollTo(0, 0);
 }
 
-/* ══ LOGOUT ══ */
 function logout() {
   clearSession();
   goPublic();
-  document.getElementById('navLoginBtn').style.display = '';
 }
 
-/* ══ TABS ══ */
+/* ══════════════════════════════════════════════════════
+   TABS
+══════════════════════════════════════════════════════ */
 function switchTab(tabId) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.priv-tab').forEach(t => t.classList.remove('active'));
@@ -807,13 +842,14 @@ document.querySelectorAll('.priv-tab').forEach(tab => {
   tab.addEventListener('click', () => switchTab(tab.dataset.tab));
 });
 
-/* ══ ALOJAMIENTO ══ */
+/* ══════════════════════════════════════════════════════
+   ALOJAMIENTO — siempre asignado por los novios, sin selección
+══════════════════════════════════════════════════════ */
 function renderAlojamiento(data) {
   const container = document.getElementById('alojamientoContent');
-  const tipo = (data.tipo || '').toLowerCase();
-  const alojStr = data.alojamiento || '';
+  const alojStr   = (data.alojamiento || '').trim();
 
-  if (tipo === 'asignado' && alojStr) {
+  if (alojStr) {
     const info = ALOJ_INFO[alojStr] || { icon: '🏨', desc: '', map: '#' };
     container.innerHTML = `
       <div class="aloj-asignado">
@@ -821,94 +857,123 @@ function renderAlojamiento(data) {
         <div style="font-size:2.5rem;margin-bottom:0.8rem">${info.icon}</div>
         <h3>${alojStr}</h3>
         <p>${info.desc}</p>
-        <a href="${info.map}" target="_blank" class="aloj-map-btn">Ver en Google Maps →</a>
-      </div>`;
-  } else if (alojStr) {
-    const opciones = alojStr.split(',').map(s => s.trim()).filter(Boolean);
-    const cards = opciones.map(nombre => {
-      const info = ALOJ_INFO[nombre] || { icon: '🏨', desc: '', map: '#' };
-      return `<div class="aloj-opcion-card" onclick="selectAloj(this)">
-        <span class="aloj-opcion-icon">${info.icon}</span>
-        <h3>${nombre}</h3>
-        <p>${info.desc}</p>
-        <a href="${info.map}" target="_blank" class="aloj-opcion-link" onclick="event.stopPropagation()">Ver en mapa →</a>
-      </div>`;
-    }).join('');
-    container.innerHTML = `
-      <p style="text-align:center;font-size:0.88rem;opacity:0.6;margin-bottom:2rem">Selecciona el alojamiento que más te guste. ¡Reserva cuanto antes!</p>
-      <div class="aloj-opciones-grid">${cards}</div>
-      <p class="aloj-nota">Si necesitas ayuda, escríbenos en el formulario de confirmación.</p>`;
+        <a href="${info.map}" target="_blank" rel="noopener noreferrer" class="aloj-map-btn">Ver en Google Maps →</a>
+      </div>
+      <p class="aloj-nota">¿Tienes alguna duda sobre tu alojamiento? Escríbenos en el formulario de confirmación.</p>`;
   } else {
-    container.innerHTML = `<p style="text-align:center;opacity:0.5;font-size:0.9rem">Tu alojamiento se confirmará próximamente. Escríbenos si tienes dudas.</p>`;
+    container.innerHTML = `
+      <p style="text-align:center;opacity:0.5;font-size:0.9rem;padding:3rem 0">
+        Tu alojamiento se confirmará próximamente. Si tienes dudas, escríbenos en el formulario de confirmación.
+      </p>`;
   }
 }
 
-function selectAloj(card) {
-  document.querySelectorAll('.aloj-opcion-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-}
-
-/* ══ COUNTDOWN ══ */
+/* ══════════════════════════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════════════════════════ */
 const weddingDate = new Date('2026-12-06T12:00:00');
 function tick() {
   const diff = weddingDate - new Date();
   if (diff <= 0) return;
-  document.getElementById('cd-d').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
-  document.getElementById('cd-h').textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
-  document.getElementById('cd-m').textContent = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-  document.getElementById('cd-s').textContent = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+  document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+  document.getElementById('cd-h').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
+  document.getElementById('cd-m').textContent = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
+  document.getElementById('cd-s').textContent = String(Math.floor(diff % 60000 / 1000)).padStart(2, '0');
 }
-tick(); setInterval(tick, 1000);
+tick();
+setInterval(tick, 1000);
 
-/* ══ FAQ ══ */
+/* ══════════════════════════════════════════════════════
+   FAQ
+══════════════════════════════════════════════════════ */
 document.querySelectorAll('.faq-q-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = btn.closest('.faq-item');
+    const item    = btn.closest('.faq-item');
     const wasOpen = item.classList.contains('open');
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
   });
 });
 
-/* ══ CARRUSEL ══ */
+/* ══════════════════════════════════════════════════════
+   CARRUSEL — autoplay solo cuando está en viewport
+══════════════════════════════════════════════════════ */
 (function() {
-  const track = document.getElementById('carouselTrack');
-  const slides = track ? track.querySelectorAll('.carousel-slide') : [];
-  const dotsEl = document.getElementById('carouselDots');
+  const wrap    = document.getElementById('carouselWrap');
+  const track   = document.getElementById('carouselTrack');
+  const slides  = track ? track.querySelectorAll('.carousel-slide') : [];
+  const dotsEl  = document.getElementById('carouselDots');
   const btnPrev = document.getElementById('carouselPrev');
   const btnNext = document.getElementById('carouselNext');
   if (!track || !slides.length) return;
-  let current = 0, autoTimer;
+
+  let current = 0;
+  let autoTimer = null;
+
+  // Crear dots
   slides.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    d.addEventListener('click', () => goTo(i));
+    d.setAttribute('aria-label', `Foto ${i + 1}`);
+    d.addEventListener('click', () => { goTo(i); stopAuto(); startAuto(); });
     dotsEl.appendChild(d);
   });
+
   function goTo(n) {
     current = (n + slides.length) % slides.length;
     track.style.transform = `translateX(-${current * 100}%)`;
     dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-    resetAuto();
   }
-  function resetAuto() { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 4500); }
-  btnPrev.addEventListener('click', () => goTo(current - 1));
-  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  function startAuto() {
+    if (autoTimer) return;
+    autoTimer = setInterval(() => goTo(current + 1), 4500);
+  }
+
+  function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+
+  btnPrev.addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
+  btnNext.addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
+
+  // Touch swipe
   let touchX = 0;
   track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => { const diff = touchX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1)); });
-  track.addEventListener('click', () => { const img = slides[current].querySelector('img'); if (img) { document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('on'); } });
-  resetAuto();
-})();
-document.getElementById('lb').addEventListener('click', () => document.getElementById('lb').classList.remove('on'));
+  track.addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) { goTo(current + (diff > 0 ? 1 : -1)); stopAuto(); startAuto(); }
+  });
 
-/* ══ SCROLL REVEAL (zona pública) ══ */
+  // Lightbox
+  track.addEventListener('click', () => {
+    const img = slides[current].querySelector('img');
+    if (img) { document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('on'); }
+  });
+
+  // ★ Arranca el autoplay SOLO cuando el carrusel entra en el viewport
+  //   y lo para cuando sale — ahorra CPU y batería en móvil
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => entry.isIntersecting ? startAuto() : stopAuto());
+  }, { threshold: 0.3 }).observe(wrap);
+})();
+
+document.getElementById('lb').addEventListener('click', () => {
+  document.getElementById('lb').classList.remove('on');
+});
+
+/* ══════════════════════════════════════════════════════
+   SCROLL REVEAL (zona pública)
+══════════════════════════════════════════════════════ */
 const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-/* ══ COPIAR IBAN ══ */
+/* ══════════════════════════════════════════════════════
+   COPIAR IBAN
+══════════════════════════════════════════════════════ */
 function copyIBAN() {
   const iban = document.getElementById('ibanVal').textContent.replace(/\s/g, '');
   navigator.clipboard.writeText(iban).then(() => {
@@ -919,16 +984,22 @@ function copyIBAN() {
   });
 }
 
-/* ══ RSVP ══ */
-const VALID_DOMAINS = ['gmail.com','hotmail.com','hotmail.es','outlook.com','outlook.es','yahoo.com','yahoo.es','icloud.com','me.com','live.com','live.es','msn.com','protonmail.com','tutanota.com','gmx.com'];
+/* ══════════════════════════════════════════════════════
+   VALIDACIÓN EMAIL — solo formato, sin whitelist de dominios
+══════════════════════════════════════════════════════ */
 function isValidEmail(e) {
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return false;
-  const d = e.split('@')[1]?.toLowerCase();
-  return VALID_DOMAINS.some(v => d === v || d?.endsWith('.' + v));
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
 }
 
+/* ══════════════════════════════════════════════════════
+   RSVP
+══════════════════════════════════════════════════════ */
 document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
   e.preventDefault();
+
+  // ★ Honeypot: si el campo oculto tiene valor, es un bot → ignorar silenciosamente
+  if (document.getElementById('hp-name').value.trim() !== '') return;
+
   const nombre     = document.getElementById('nombre').value.trim();
   const apellidos  = document.getElementById('apellidos').value.trim();
   const email      = document.getElementById('email').value.trim().toLowerCase();
@@ -940,30 +1011,44 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
   const mensaje    = document.getElementById('mensaje').value.trim();
 
   let valid = true;
-  const setErr = (id, show) => { document.getElementById('err-'+id)?.classList.toggle('show', show); document.getElementById(id)?.classList.toggle('err', show); };
-  if (!nombre)            { setErr('nombre', true);    valid=false; } else setErr('nombre', false);
-  if (!apellidos)         { setErr('apellidos', true); valid=false; } else setErr('apellidos', false);
-  if (!isValidEmail(email)){ setErr('email', true);   valid=false; } else setErr('email', false);
-  if (!asistencia)        { setErr('asistencia', true);valid=false; } else setErr('asistencia', false);
+  const setErr = (id, show) => document.getElementById('err-' + id)?.classList.toggle('show', show);
+
+  if (!nombre)              { setErr('nombre', true);    valid = false; } else setErr('nombre', false);
+  if (!apellidos)           { setErr('apellidos', true); valid = false; } else setErr('apellidos', false);
+  if (!isValidEmail(email)) { setErr('email', true);     valid = false; } else setErr('email', false);
+  if (!asistencia)          { setErr('asistencia', true);valid = false; } else setErr('asistencia', false);
   if (!valid) return;
 
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Enviando...';
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
 
   fetch(CONFIG.appsScriptUrl, {
     method: 'POST', mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({ nombre, apellidos, email, telefono, asistencia, acompanantes: acomp, alojamiento: session?.alojamiento || '', alergias, hijos, mensaje, usuario: session?.usuario || '' }),
+    body: JSON.stringify({
+      action: 'rsvp',
+      nombre, apellidos, email, telefono, asistencia,
+      acompanantes: acomp,
+      alojamiento: session?.alojamiento || '',
+      alergias, hijos, mensaje,
+      usuario: session?.usuario || '',
+    }),
   }).catch(err => console.warn(err));
 
-  // Actualizar sesión local como confirmado
-  if (session) { session.confirmado = 1; saveSession(session); }
+  // Marcar como confirmado en sesión local
+  if (session) {
+    session.confirmado = 1;
+    saveSession(session, !!localStorage.getItem('boda_s'));
+  }
 
   document.getElementById('rsvpForm').style.display = 'none';
   document.getElementById('msg-success').style.display = 'block';
 });
 
-/* ══ RESTAURAR SESIÓN ══ */
+/* ══════════════════════════════════════════════════════
+   RESTAURAR SESIÓN AL CARGAR
+══════════════════════════════════════════════════════ */
 loadSession();
 if (session?.ok) enterPrivateZone(session);
 </script>
