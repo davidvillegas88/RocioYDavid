@@ -8,16 +8,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream:     #faf6f0;
-  --blush:     #e8c9b8;
-  --rose:      #c4806a;
-  --sage:      #8a9e85;
-  --dark-sage: #556b50;
-  --ivory:     #f5ede2;
-  --deep:      #3a2e28;
-  --gold:      #b8956a;
-  --sand:      #d4b896;
-  --terra:     #a0624a;
+  --cream:      #faf6f0;
+  --blush:      #e8c9b8;
+  --rose:       #c4806a;
+  --sage:       #8a9e85;
+  --dark-sage:  #4a6344;   /* verde oscuro principal */
+  --ivory:      #f5ede2;
+  --deep:       #3a2e28;
+  --gold:       #b8956a;
+  --sand:       #d4b896;
+  --terra:      #a0624a;
+  --head-bg:    #e8e2d8;   /* cabeceras de días del programa — beige cálido */
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,88 +33,55 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
   background: rgba(250,246,240,0.92); backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(180,140,100,0.13);
   font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
-  transition: opacity 0.3s;
 }
 #nav-public a { color: var(--deep); text-decoration: none; opacity: 0.6; transition: opacity 0.3s, color 0.3s; }
-#nav-public a:hover { opacity: 1; color: var(--rose); }
+#nav-public a:hover { opacity: 1; color: var(--dark-sage); }
 .nav-sep { opacity: 0.2; }
 .nav-login-btn {
-  background: var(--rose); color: white !important; opacity: 1 !important;
+  background: var(--dark-sage); color: white !important; opacity: 1 !important;
   padding: 0.35rem 1rem; transition: background 0.3s !important;
 }
-.nav-login-btn:hover { background: var(--terra) !important; }
+.nav-login-btn:hover { background: #3a5035 !important; }
 
 /* ══ NAV PRIVADA ══ */
-#nav-private {
-  display: none;
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  background: var(--deep);
-  flex-direction: column;
-}
+#nav-private { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--deep); flex-direction: column; }
 #nav-private.visible { display: flex; }
-.priv-nav-top {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
+.priv-nav-top { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
 .priv-nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--blush); }
 .priv-nav-actions { display: flex; gap: 1rem; align-items: center; }
-.priv-back-btn {
-  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(232,201,184,0.5); background: none; border: none; cursor: pointer;
-  font-family: 'Jost', sans-serif; transition: color 0.3s;
-}
+.priv-back-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,201,184,0.5); background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: color 0.3s; }
 .priv-back-btn:hover { color: var(--blush); }
-.priv-logout-btn {
-  font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(232,201,184,0.5); background: none;
-  border: 1px solid rgba(232,201,184,0.15); padding: 0.25rem 0.7rem;
-  cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.3s;
-}
+.priv-logout-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,201,184,0.5); background: none; border: 1px solid rgba(232,201,184,0.15); padding: 0.25rem 0.7rem; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.3s; }
 .priv-logout-btn:hover { border-color: var(--rose); color: var(--rose); }
-.priv-tabs {
-  display: flex; justify-content: center; gap: 0;
-  overflow-x: auto; scrollbar-width: none;
-}
+.priv-tabs { display: flex; justify-content: center; overflow-x: auto; scrollbar-width: none; }
 .priv-tabs::-webkit-scrollbar { display: none; }
-.priv-tab {
-  padding: 0.8rem 1.5rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(232,201,184,0.45); background: none; border: none; border-bottom: 2px solid transparent;
-  cursor: pointer; font-family: 'Jost', sans-serif; white-space: nowrap;
-  transition: color 0.3s, border-color 0.3s;
-}
+.priv-tab { padding: 0.8rem 1.5rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,201,184,0.45); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: 'Jost', sans-serif; white-space: nowrap; transition: color 0.3s, border-color 0.3s; }
 .priv-tab:hover { color: var(--blush); }
 .priv-tab.active { color: var(--blush); border-bottom-color: var(--rose); }
 
 /* ══ LOGIN MODAL ══ */
-#login-modal {
-  display: none; position: fixed; inset: 0; z-index: 999;
-  background: rgba(20,14,10,0.75); backdrop-filter: blur(8px);
-  align-items: center; justify-content: center; padding: 2rem;
-}
+#login-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(20,14,10,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem; }
 #login-modal.open { display: flex; }
-.login-box {
-  background: var(--cream); width: 100%; max-width: 420px;
-  padding: 3rem 2.5rem; position: relative; animation: modalIn 0.35s ease;
-}
+.login-box { background: var(--cream); width: 100%; max-width: 420px; padding: 3rem 2.5rem; position: relative; animation: modalIn 0.35s ease; }
 @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .login-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 1.3rem; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; color: var(--deep); }
 .login-close:hover { opacity: 1; }
-.login-eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--rose); opacity: 0.8; margin-bottom: 0.5rem; }
+.login-eyebrow { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.8; margin-bottom: 0.5rem; }
 .login-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; margin-bottom: 0.4rem; }
 .login-sub { font-size: 0.82rem; opacity: 0.55; line-height: 1.6; margin-bottom: 2rem; }
 .login-form { display: flex; flex-direction: column; gap: 1rem; }
 .login-fg { display: flex; flex-direction: column; gap: 0.4rem; }
 .login-fg label { font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.55; }
 .login-fg input { background: white; border: 1px solid rgba(184,149,106,0.25); padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--deep); outline: none; transition: border-color 0.3s; appearance: none; border-radius: 0; width: 100%; }
-.login-fg input:focus { border-color: var(--rose); }
+.login-fg input:focus { border-color: var(--dark-sage); }
 .login-remember { display: flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; opacity: 0.65; cursor: pointer; }
-.login-remember input[type="checkbox"] { accent-color: var(--rose); width: 14px; height: 14px; cursor: pointer; }
-.login-btn { width: 100%; padding: 0.95rem; background: var(--rose); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.3rem; }
-.login-btn:hover { background: var(--terra); }
+.login-remember input[type="checkbox"] { accent-color: var(--dark-sage); width: 14px; height: 14px; cursor: pointer; }
+.login-btn { width: 100%; padding: 0.95rem; background: var(--dark-sage); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.3rem; }
+.login-btn:hover { background: #3a5035; }
 .login-btn:disabled { background: var(--sand); cursor: not-allowed; }
 .login-error { font-size: 0.8rem; color: #e05c4a; text-align: center; padding: 0.6rem; background: #fdf0ee; border: 1px solid rgba(224,92,74,0.2); display: none; }
 .login-error.show { display: block; }
+.hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
 
 /* ══ HERO ══ */
 #hero {
@@ -123,32 +91,45 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
   background-image: url('fotos/header.jpeg');
   background-size: cover; background-position: center center;
 }
-#hero::before { content: ''; position: absolute; inset: 0; background: rgba(30,20,15,0.15); pointer-events: none; z-index: 0; }
-#hero > *:not(.flora) { position: relative; z-index: 1; }
-.flora { position: absolute; pointer-events: none; z-index: 0; }
-.flora-tl { top: -20px; left: -20px; width: 320px; opacity: 0.2; }
-.flora-br { bottom: -20px; right: -20px; width: 280px; opacity: 0.18; transform: rotate(180deg); }
-.flora-tr { top: 40px; right: -10px; width: 200px; opacity: 0.13; transform: scaleX(-1); }
-.hero-over { font-size: 0.66rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--sage); margin-bottom: 2rem; animation: fadeUp 1.2s ease both; }
-.hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9.5rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.15s ease both; }
-.n1 { display: block; font-style: italic; color: var(--rose); }
-.amp { display: block; font-size: 0.38em; color: var(--gold); font-style: normal; letter-spacing: 0.12em; margin: 0.2em 0; opacity: 0.8; }
-.n2 { display: block; font-style: italic; color: var(--dark-sage); }
-.hero-div { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 2rem 0; animation: fadeUp 1.2s 0.3s ease both; }
-.hero-div::before, .hero-div::after { content: ''; width: 70px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+#hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.25); pointer-events: none; z-index: 0; }
+#hero > * { position: relative; z-index: 1; }
+
+/* "Con todo nuestro amor" — ARRIBA */
+.hero-over {
+  font-size: 0.66rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: rgba(255,255,255,0.75); margin-bottom: 3.5rem;
+  animation: fadeUp 1.2s ease both;
+}
+
+/* Nombres — más abajo */
+.hero-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 12vw, 9.5rem);
+  font-weight: 300; line-height: 0.85;
+  animation: fadeUp 1.2s 0.15s ease both;
+  margin-top: 1rem;
+}
+.n1, .n2 { display: block; font-style: italic; color: var(--dark-sage); }
+.amp { display: block; font-size: 0.38em; color: rgba(255,255,255,0.6); font-style: normal; letter-spacing: 0.12em; margin: 0.2em 0; opacity: 0.9; }
+
+/* Fecha y ubicación — más abajo, más separados de los nombres */
+.hero-div { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 3rem 0 1.5rem; animation: fadeUp 1.2s 0.3s ease both; }
+.hero-div::before, .hero-div::after { content: ''; width: 70px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4)); }
 .hero-div::after { transform: scaleX(-1); }
-.gem { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); opacity: 0.7; }
-.hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); letter-spacing: 0.18em; animation: fadeUp 1.2s 0.4s ease both; }
-.hero-loc { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sage); margin-top: 0.6rem; animation: fadeUp 1.2s 0.5s ease both; }
+.gem { width: 6px; height: 6px; background: rgba(255,255,255,0.5); transform: rotate(45deg); }
+.hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); letter-spacing: 0.18em; color: white; animation: fadeUp 1.2s 0.4s ease both; }
+.hero-loc { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-top: 0.6rem; animation: fadeUp 1.2s 0.5s ease both; }
+
 .scroll-cue { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; animation: floatIt 2.5s ease-in-out infinite; }
-.scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; }
-.scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, var(--deep), transparent); }
+.scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: white; }
+.scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, white, transparent); }
+
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
 
 /* ══ COUNTDOWN ══ */
 #cuenta-atras { background: var(--deep); color: var(--cream); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
-#cuenta-atras::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 15% 50%, rgba(160,98,74,0.1) 0%, transparent 55%), radial-gradient(ellipse 60% 80% at 85% 50%, rgba(138,158,133,0.1) 0%, transparent 55%); }
+#cuenta-atras::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 15% 50%, rgba(74,99,68,0.15) 0%, transparent 55%), radial-gradient(ellipse 60% 80% at 85% 50%, rgba(138,158,133,0.1) 0%, transparent 55%); }
 .cd-label-top { font-size: 0.63rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.4; margin-bottom: 2.5rem; position: relative; }
 .cd-grid { display: flex; justify-content: center; align-items: center; gap: clamp(0.8rem, 3vw, 3rem); flex-wrap: wrap; position: relative; }
 .cd-block { text-align: center; }
@@ -160,20 +141,29 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 section { padding: 6rem 2rem; }
 .inner { max-width: 920px; margin: 0 auto; }
 .sec-head { text-align: center; margin-bottom: 3.5rem; }
-.sec-eye { font-size: 0.63rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--rose); opacity: 0.8; margin-bottom: 0.7rem; }
-.sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 300; }
-.sec-title em { font-style: italic; color: var(--rose); }
+.sec-eye { font-size: 0.63rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.8; margin-bottom: 0.7rem; }
+
+/* TODOS LOS TÍTULOS: verde oscuro, todo cursiva */
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--dark-sage);
+}
+.sec-title em { font-style: italic; color: var(--dark-sage); }
+
 .deco { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 1.3rem; }
 .deco::before, .deco::after { content: ''; width: 45px; height: 1px; background: var(--sand); }
-.deco-d { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); opacity: 0.7; }
+.deco-d { width: 5px; height: 5px; background: var(--dark-sage); transform: rotate(45deg); opacity: 0.5; }
 
 /* ══ HISTORIA ══ */
 #historia { background: var(--ivory); }
 .tl { position: relative; }
 .tl::before { content: ''; position: absolute; left: 85px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--blush) 8%, var(--blush) 92%, transparent); }
 .tl-row { display: grid; grid-template-columns: 85px 1fr; padding-bottom: 3.2rem; position: relative; }
-.tl-year { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: var(--rose); text-align: right; padding-right: 1.4rem; padding-top: 0.15rem; }
-.tl-dot { position: absolute; left: 79px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--ivory); border: 2px solid var(--rose); }
+.tl-year { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 300; color: var(--dark-sage); text-align: right; padding-right: 1.4rem; padding-top: 0.15rem; }
+.tl-dot { position: absolute; left: 79px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--ivory); border: 2px solid var(--dark-sage); }
 .tl-body { padding-left: 2rem; }
 .tl-body em { font-size: 1.2rem; display: block; margin-bottom: 0.35rem; }
 .tl-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; margin-bottom: 0.4rem; }
@@ -181,7 +171,7 @@ section { padding: 6rem 2rem; }
 
 /* ══ GALERÍA ══ */
 #galeria { background: var(--cream); }
-.gal-tag { text-align: center; margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--rose); opacity: 0.65; }
+.gal-tag { text-align: center; margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--dark-sage); opacity: 0.65; }
 .carousel-wrap { position: relative; overflow: hidden; border-radius: 3px; background: var(--blush); }
 .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(.4,0,.2,1); will-change: transform; }
 .carousel-slide { min-width: 100%; position: relative; aspect-ratio: 16/9; overflow: hidden; }
@@ -194,25 +184,108 @@ section { padding: 6rem 2rem; }
 .carousel-btn.next { right: 1rem; }
 .carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
 .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sand); border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; padding: 0; }
-.carousel-dot.active { background: var(--gold); transform: scale(1.4); }
+.carousel-dot.active { background: var(--dark-sage); transform: scale(1.4); }
 #lb { display: none; position: fixed; inset: 0; z-index: 998; background: rgba(15,10,8,0.96); align-items: center; justify-content: center; cursor: pointer; }
 #lb.on { display: flex; }
 #lb img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
 #lb-x { position: absolute; top: 1.5rem; right: 2rem; color: #fff; font-size: 1.5rem; opacity: 0.5; }
 
-/* ══ PROGRAMA ══ */
-#programa { background: var(--ivory); }
-.prog-days { display: flex; flex-direction: column; gap: 2rem; }
-.prog-day { border: 1px solid rgba(184,149,106,0.18); background: var(--cream); overflow: hidden; }
-.prog-day-head { background: var(--deep); color: var(--cream); padding: 1.1rem 1.8rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-.prog-day-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; }
-.prog-day-date { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.5; }
-.prog-events { padding: 1.5rem 1.8rem; display: flex; flex-direction: column; gap: 1rem; }
-.prog-event { display: flex; gap: 1.2rem; align-items: flex-start; }
-.prog-time { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--rose); min-width: 55px; text-align: right; padding-top: 0.05rem; white-space: nowrap; }
-.prog-icon { font-size: 1.2rem; flex-shrink: 0; }
-.prog-info h4 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.15rem; }
-.prog-info p { font-size: 0.82rem; line-height: 1.65; opacity: 0.65; }
+/* ══ LUGAR ══ */
+#lugar { background: var(--ivory); }
+.lugar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+.lugar-text p { font-size: 0.88rem; line-height: 1.9; opacity: 0.72; margin-bottom: 1rem; }
+.lugar-text p:last-child { margin-bottom: 0; }
+.lugar-details { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+.lugar-detail-row { display: flex; gap: 0.8rem; align-items: flex-start; }
+.lugar-detail-icon { font-size: 1.1rem; flex-shrink: 0; padding-top: 0.1rem; }
+.lugar-detail-text { font-size: 0.84rem; line-height: 1.65; }
+.lugar-detail-text strong { display: block; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.2rem; font-weight: 400; }
+.lugar-map-link { display: inline-block; margin-top: 1.8rem; padding: 0.75rem 1.8rem; background: var(--dark-sage); color: white; text-decoration: none; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.3s; }
+.lugar-map-link:hover { background: #3a5035; }
+.lugar-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.lugar-foto { aspect-ratio: 4/3; overflow: hidden; background: var(--blush); }
+.lugar-foto img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.lugar-foto:hover img { transform: scale(1.04); }
+.lugar-foto-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 0.35; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; flex-direction: column; gap: 0.5rem; }
+.lugar-foto-ph span:first-child { font-size: 1.8rem; }
+@media (max-width: 680px) {
+  .lugar-grid { grid-template-columns: 1fr; }
+  .lugar-fotos { grid-template-columns: 1fr 1fr; }
+}
+
+/* ══ PROGRAMA — grid 2 columnas ══ */
+#programa { background: var(--cream); }
+.prog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 1.4rem;
+}
+/* Fila 1: Viernes+Sábado en 2 col */
+.prog-day-viesab { grid-column: 1; grid-row: 1; }
+.prog-day-sab    { grid-column: 2; grid-row: 1; }
+/* Fila 2: Domingo — ocupa las 2 columnas */
+.prog-day-dom    { grid-column: 1 / -1; grid-row: 2; }
+/* Fila 3: Lunes y Martes en 2 col */
+.prog-day-lun    { grid-column: 1; grid-row: 3; }
+.prog-day-mar    { grid-column: 2; grid-row: 3; }
+
+.prog-day { border: 1px solid rgba(184,149,106,0.15); background: var(--ivory); overflow: hidden; }
+
+/* Encabezados: beige cálido en lugar del oscuro, texto oscuro */
+.prog-day-head {
+  background: var(--head-bg);
+  color: var(--deep);
+  padding: 1rem 1.5rem;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;
+  border-bottom: 2px solid rgba(74,99,68,0.18);
+}
+/* Domingo destaca más */
+.prog-day-dom .prog-day-head {
+  background: var(--dark-sage);
+  color: var(--cream);
+  border-bottom-color: transparent;
+}
+.prog-day-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-style: italic; }
+.prog-day-date { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; }
+.prog-day-dom .prog-day-date { opacity: 0.6; color: var(--blush); }
+
+.prog-events { padding: 1.2rem 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
+.prog-event { display: flex; gap: 1rem; align-items: flex-start; }
+.prog-time { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--dark-sage); min-width: 52px; text-align: right; padding-top: 0.05rem; white-space: nowrap; }
+.prog-icon { font-size: 1.1rem; flex-shrink: 0; }
+.prog-info h4 { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.12rem; }
+.prog-info p { font-size: 0.8rem; line-height: 1.65; opacity: 0.65; }
+
+/* Nota libre al pie de un día — sin hora, ocupa todo */
+.prog-event-nota { padding: 0.8rem 1rem; background: rgba(184,149,106,0.06); border-left: 2px solid rgba(184,149,106,0.25); margin-top: 0.2rem; }
+.prog-event-nota p { font-size: 0.8rem; line-height: 1.7; opacity: 0.65; font-style: italic; }
+
+@media (max-width: 720px) {
+  .prog-grid { grid-template-columns: 1fr; }
+  .prog-day-viesab, .prog-day-sab, .prog-day-dom, .prog-day-lun, .prog-day-mar {
+    grid-column: 1; grid-row: auto;
+  }
+}
+
+/* ══ TIEMPO ══ */
+#tiempo { background: var(--ivory); }
+.tiempo-intro { text-align: center; max-width: 620px; margin: 0 auto 3rem; font-size: 0.88rem; line-height: 1.9; opacity: 0.7; }
+.tiempo-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; margin-bottom: 3rem; }
+.tiempo-card { background: white; border: 1px solid rgba(184,149,106,0.15); padding: 1.8rem 1.5rem; text-align: center; }
+.tiempo-card-icon { font-size: 2rem; margin-bottom: 0.6rem; display: block; }
+.tiempo-card-label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.7; margin-bottom: 0.5rem; }
+.tiempo-card-val { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--deep); line-height: 1; }
+.tiempo-card-sub { font-size: 0.75rem; opacity: 0.5; margin-top: 0.3rem; line-height: 1.4; }
+.tiempo-nota { font-size: 0.78rem; opacity: 0.5; font-style: italic; text-align: center; margin-bottom: 3rem; }
+/* Gráfica */
+.chart-wrap { max-width: 700px; margin: 0 auto; }
+.chart-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--dark-sage); text-align: center; margin-bottom: 1.5rem; }
+.chart-canvas-wrap { position: relative; height: 220px; }
+canvas#weatherChart { width: 100% !important; }
+.chart-legend { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; font-size: 0.72rem; opacity: 0.6; }
+.chart-legend span { display: flex; align-items: center; gap: 0.4rem; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 
 /* ══ FAQ ══ */
 #faq { background: var(--cream); }
@@ -221,86 +294,64 @@ section { padding: 6rem 2rem; }
 .faq-item:first-child { border-top: 1px solid rgba(184,149,106,0.18); }
 .faq-q-btn { width: 100%; background: none; border: none; padding: 1.3rem 0; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; color: var(--deep); }
 .faq-q-text { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; font-weight: 400; line-height: 1.3; }
-.faq-ico { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--rose); font-size: 0.9rem; transition: transform 0.3s, background 0.3s, color 0.3s; }
-.faq-item.open .faq-ico { transform: rotate(45deg); background: var(--rose); color: white; }
-.faq-ans { font-size: 0.86rem; line-height: 1.85; opacity: 0.7; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s; }
-.faq-item.open .faq-ans { max-height: 300px; padding-bottom: 1.3rem; }
+.faq-ico { flex-shrink: 0; width: 22px; height: 22px; border: 1px solid var(--dark-sage); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-sage); font-size: 0.9rem; transition: transform 0.3s, background 0.3s, color 0.3s; }
+.faq-item.open .faq-ico { transform: rotate(45deg); background: var(--dark-sage); color: white; }
+.faq-ans { font-size: 0.86rem; line-height: 1.85; opacity: 0.7; max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.4s; }
+.faq-item.open .faq-ans { max-height: 500px; padding-bottom: 1.3rem; }
 
 /* ══ GATE ══ */
-#gate { background: var(--ivory); padding: 5rem 2rem; text-align: center; border-top: 1px solid rgba(184,149,106,0.15); }
+#gate { background: var(--ivory); padding: 5rem 2rem; text-align: center; border-top: 1px solid rgba(74,99,68,0.12); }
 
 /* ══ ZONA PRIVADA ══ */
-#private-screen {
-  display: none;
-  position: fixed; inset: 0; z-index: 150;
-  background: var(--cream);
-  overflow-y: auto;
-  padding-top: 95px;
-}
+#private-screen { display: none; position: fixed; inset: 0; z-index: 150; background: var(--cream); overflow-y: auto; padding-top: 95px; }
 #private-screen.visible { display: block; }
-
-/* ══ TABS CONTENT ══ */
 .tab-panel { display: none; animation: fadeUp 0.4s ease both; }
 .tab-panel.active { display: block; }
 
-/* ══ BIENVENIDA TAB ══ */
-.bienvenida-wrap {
-  min-height: calc(100vh - 95px);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 3rem 2rem;
-  background: radial-gradient(ellipse 70% 60% at 20% 50%, rgba(160,98,74,0.07) 0%, transparent 55%),
-              radial-gradient(ellipse 60% 70% at 80% 50%, rgba(138,158,133,0.07) 0%, transparent 55%),
-              var(--cream);
-}
-.bienvenida-eye { font-size: 0.63rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--rose); opacity: 0.7; margin-bottom: 0.8rem; }
+/* ══ BIENVENIDA ══ */
+.bienvenida-wrap { min-height: calc(100vh - 95px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem; background: radial-gradient(ellipse 70% 60% at 20% 50%, rgba(74,99,68,0.06) 0%, transparent 55%), radial-gradient(ellipse 60% 70% at 80% 50%, rgba(138,158,133,0.07) 0%, transparent 55%), var(--cream); }
+.bienvenida-eye { font-size: 0.63rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.7; margin-bottom: 0.8rem; }
 .bienvenida-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 300; font-style: italic; margin-bottom: 1rem; }
-.bienvenida-title strong { color: var(--rose); font-style: normal; font-weight: 300; }
+.bienvenida-title strong { color: var(--dark-sage); font-style: normal; font-weight: 300; }
 .bienvenida-deco { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin: 1.5rem 0; }
 .bienvenida-deco::before, .bienvenida-deco::after { content: ''; width: 50px; height: 1px; background: var(--sand); }
-.bienvenida-deco-d { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); opacity: 0.6; }
-.bienvenida-msg {
-  background: var(--ivory); border: 1px solid rgba(184,149,106,0.2);
-  padding: 1.8rem 2rem; font-size: 0.92rem; line-height: 1.9; font-style: italic;
-  max-width: 520px; color: var(--deep); opacity: 0.8; display: none;
-}
+.bienvenida-deco-d { width: 5px; height: 5px; background: var(--dark-sage); transform: rotate(45deg); opacity: 0.5; }
+.bienvenida-msg { background: var(--ivory); border: 1px solid rgba(184,149,106,0.2); padding: 1.8rem 2rem; font-size: 0.92rem; line-height: 1.9; font-style: italic; max-width: 520px; color: var(--deep); opacity: 0.8; display: none; }
 .bienvenida-msg.visible { display: block; }
 .bienvenida-hint { margin-top: 2.5rem; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.35; }
 
-/* ══ ALOJAMIENTO TAB ══ */
+/* ══ ALOJAMIENTO ══ */
 .aloj-tab-inner { max-width: 700px; margin: 0 auto; padding: 3rem 2rem; }
 .aloj-asignado { border: 1px solid rgba(184,149,106,0.2); background: white; padding: 2.5rem; text-align: center; }
-.aloj-asignado-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--rose); color: white; padding: 0.25rem 0.8rem; margin-bottom: 1.2rem; }
+.aloj-asignado-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; background: var(--dark-sage); color: white; padding: 0.25rem 0.8rem; margin-bottom: 1.2rem; }
 .aloj-asignado h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.8rem; }
 .aloj-asignado p { font-size: 0.86rem; line-height: 1.8; opacity: 0.68; max-width: 420px; margin: 0 auto 1.5rem; }
-.aloj-map-btn { display: inline-block; padding: 0.75rem 1.8rem; background: var(--deep); color: var(--cream); text-decoration: none; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.3s; }
-.aloj-map-btn:hover { background: var(--rose); }
-.aloj-nota { text-align: center; font-size: 0.82rem; opacity: 0.5; margin-top: 1.5rem; font-style: italic; }
+.aloj-map-btn { display: inline-block; padding: 0.75rem 1.8rem; background: var(--dark-sage); color: white; text-decoration: none; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.3s; }
+.aloj-map-btn:hover { background: #3a5035; }
 
-/* ══ CONFIRMACIÓN TAB ══ */
+/* ══ CONFIRMACIÓN ══ */
 .confirmar-tab-inner { max-width: 580px; margin: 0 auto; padding: 3rem 2rem; }
 .form-stack { display: flex; flex-direction: column; gap: 1.2rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 .fg { display: flex; flex-direction: column; gap: 0.4rem; }
 .fg label { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.55; }
 .fg input, .fg select, .fg textarea { background: white; border: 1px solid rgba(184,149,106,0.22); padding: 0.8rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300; color: var(--deep); outline: none; transition: border-color 0.3s; appearance: none; -webkit-appearance: none; border-radius: 0; }
-.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--rose); }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--dark-sage); }
 .fg textarea { resize: vertical; min-height: 85px; }
 .radio-row { display: flex; gap: 1.5rem; flex-wrap: wrap; padding-top: 0.2rem; }
 .rlbl { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.87rem; }
-.rlbl input[type="radio"] { accent-color: var(--rose); width: 14px; height: 14px; }
-.submit-btn { width: 100%; padding: 1.1rem; background: var(--rose); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.5rem; }
-.submit-btn:hover { background: var(--terra); }
+.rlbl input[type="radio"] { accent-color: var(--dark-sage); width: 14px; height: 14px; }
+.submit-btn { width: 100%; padding: 1.1rem; background: var(--dark-sage); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.5rem; }
+.submit-btn:hover { background: #3a5035; }
 .submit-btn:disabled { background: var(--sand); cursor: not-allowed; }
 .field-error { font-size: 0.72rem; color: #e05c4a; margin-top: 0.2rem; display: none; }
 .field-error.show { display: block; }
-/* Honeypot: totalmente invisible para humanos, los bots lo rellenan */
-.hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .form-msg { text-align: center; padding: 3rem 1.5rem; }
 .form-msg .msg-icon { font-size: 3rem; margin-bottom: 1rem; }
 .form-msg h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; margin-bottom: 0.8rem; color: var(--dark-sage); }
 .form-msg p { font-size: 0.88rem; opacity: 0.65; line-height: 1.8; }
 
-/* ══ REGALO TAB ══ */
+/* ══ REGALO ══ */
 .regalo-tab-inner { max-width: 560px; margin: 0 auto; padding: 3rem 2rem; text-align: center; }
 .regalo-intro { font-size: 0.9rem; line-height: 1.9; opacity: 0.65; margin-bottom: 2.5rem; }
 .cuenta-box { background: var(--deep); border: 1px solid rgba(232,201,184,0.15); padding: 2.5rem; display: inline-block; text-align: left; width: 100%; max-width: 460px; }
@@ -341,6 +392,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 <nav id="nav-public">
   <a href="#historia">Historia</a>
   <a href="#galeria">Fotos</a>
+  <a href="#lugar">El lugar</a>
   <a href="#programa">Programa</a>
   <a href="#faq">FAQ</a>
   <span class="nav-sep">·</span>
@@ -371,17 +423,18 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     <div class="login-eyebrow">Zona privada</div>
     <div class="login-title">Acceder</div>
     <p class="login-sub">Introduce el usuario y contraseña que te hemos enviado para ver tu información personalizada.</p>
-    <form class="login-form" id="loginForm" onsubmit="doLogin(event)">
+    <form class="login-form" id="loginForm" onsubmit="doLogin(event)" autocomplete="on">
+      <div class="hp-field" aria-hidden="true"><input type="text" id="hp_login" name="hp_login" tabindex="-1" autocomplete="off"></div>
       <div class="login-fg">
-        <label>Usuario</label>
-        <input type="text" id="loginUser" placeholder="Tu usuario" autocomplete="username">
+        <label for="loginUser">Usuario</label>
+        <input type="text" id="loginUser" name="username" placeholder="Tu usuario" autocomplete="username">
       </div>
       <div class="login-fg">
-        <label>Contraseña</label>
-        <input type="password" id="loginPass" placeholder="Tu contraseña" autocomplete="current-password">
+        <label for="loginPass">Contraseña</label>
+        <input type="password" id="loginPass" name="password" placeholder="Tu contraseña" autocomplete="current-password">
       </div>
       <label class="login-remember">
-        <input type="checkbox" id="loginRemember"> Recordarme en este dispositivo
+        <input type="checkbox" id="loginRemember"> Recuérdame en este dispositivo
       </label>
       <div class="login-error" id="loginError">Usuario o contraseña incorrectos.</div>
       <button type="submit" class="login-btn" id="loginBtn">Entrar</button>
@@ -389,186 +442,374 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     ZONA PÚBLICA
-════════════════════════════════════════════ -->
+<!-- ════════════════════════ ZONA PÚBLICA ════════════════════════ -->
 <div id="public-content">
 
-  <!-- HERO -->
-  <section id="hero">
-    <svg class="flora flora-tl" viewBox="0 0 340 460" fill="none">
-      <path d="M90 440 C 70 340 15 260 25 165 C 38 90 90 45 145 25" stroke="#8a9e85" stroke-width="2" fill="none"/>
-      <path d="M90 440 C 115 340 160 265 148 168 C 138 92 90 45 145 25" stroke="#8a9e85" stroke-width="1" fill="none" opacity="0.5"/>
-      <ellipse cx="28" cy="148" rx="40" ry="23" fill="#c4806a" transform="rotate(-35 28 148)" opacity="0.85"/>
-      <ellipse cx="155" cy="128" rx="44" ry="25" fill="#8a9e85" transform="rotate(28 155 128)" opacity="0.7"/>
-      <ellipse cx="12" cy="242" rx="33" ry="19" fill="#e8c9b8" transform="rotate(-20 12 242)" opacity="0.65"/>
-      <circle cx="110" cy="82" r="9" fill="#b8956a" opacity="0.5"/>
-    </svg>
-    <svg class="flora flora-br" viewBox="0 0 340 460" fill="none">
-      <path d="M90 440 C 70 340 15 260 25 165 C 38 90 90 45 145 25" stroke="#a0624a" stroke-width="2" fill="none"/>
-      <ellipse cx="28" cy="148" rx="40" ry="23" fill="#8a9e85" transform="rotate(-35 28 148)" opacity="0.8"/>
-      <ellipse cx="155" cy="128" rx="44" ry="25" fill="#e8c9b8" transform="rotate(28 155 128)" opacity="0.7"/>
-      <circle cx="60" cy="300" r="11" fill="#c4806a" opacity="0.45"/>
-    </svg>
-    <svg class="flora flora-tr" viewBox="0 0 200 310" fill="none">
-      <path d="M100 300 C 82 222 35 165 45 98 C 55 48 92 18 100 5" stroke="#8a9e85" stroke-width="1.5" fill="none"/>
-      <ellipse cx="38" cy="88" rx="28" ry="17" fill="#e8c9b8" transform="rotate(-24 38 88)" opacity="0.7"/>
-      <ellipse cx="162" cy="98" rx="28" ry="17" fill="#c4806a" transform="rotate(22 162 98)" opacity="0.6"/>
-    </svg>
-    <div class="hero-over">Con todo nuestro amor · Os invitamos a nuestra boda</div>
-    <div class="hero-names">
-      <span class="n1">Rocío</span>
-      <span class="amp">&amp;</span>
-      <span class="n2">David</span>
-    </div>
-    <div class="hero-div"><div class="gem"></div></div>
-    <div class="hero-date">Domingo · 6 de Diciembre de 2026</div>
-    <div class="hero-loc">Castillo de Los Escullos · Almería, Cabo de Gata</div>
-    <div class="scroll-cue"><span>Desplázate</span><div class="scroll-line"></div></div>
-  </section>
-
-  <!-- CUENTA ATRÁS -->
-  <section id="cuenta-atras">
-    <div class="cd-label-top">El gran día llegará en</div>
-    <div class="cd-grid">
-      <div class="cd-block"><span class="cd-num" id="cd-d">--</span><div class="cd-unit">Días</div></div>
-      <div class="cd-dot">·</div>
-      <div class="cd-block"><span class="cd-num" id="cd-h">--</span><div class="cd-unit">Horas</div></div>
-      <div class="cd-dot">·</div>
-      <div class="cd-block"><span class="cd-num" id="cd-m">--</span><div class="cd-unit">Minutos</div></div>
-      <div class="cd-dot">·</div>
-      <div class="cd-block"><span class="cd-num" id="cd-s">--</span><div class="cd-unit">Segundos</div></div>
-    </div>
-  </section>
-
-  <!-- HISTORIA -->
-  <section id="historia">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="sec-eye">Cómo empezó todo</div>
-        <h2 class="sec-title">Nuestra <em>Historia</em></h2>
-        <div class="deco"><div class="deco-d"></div></div>
-      </div>
-      <div class="tl">
-        <div class="tl-row reveal"><div class="tl-year">2015</div><div class="tl-dot"></div><div class="tl-body"><em>✨</em><h3>La Disaster Party de Fabrik</h3><p>Un 17 de octubre en Fabrik, Madrid, sin ninguna intención de enamorarse. Era la Disaster Party, y vaya si fue desastroso: nos vimos, hablamos, y algo hizo clic. Esa noche empezó todo sin que ninguno de los dos lo supiera aún.</p></div></div>
-        <div class="tl-row reveal"><div class="tl-year">2018</div><div class="tl-dot"></div><div class="tl-body"><em>📍</em><h3>La distancia (que no pudo con nosotros)</h3><p>Tres años separados por kilómetros. Mensajes, llamadas, viajes y la certeza de que cuando algo vale la pena, la distancia es solo un obstáculo temporal. La distancia lo intentó. No pudo.</p></div></div>
-        <div class="tl-row reveal"><div class="tl-year">2021</div><div class="tl-dot"></div><div class="tl-body"><em>🏙️</em><h3>David vuelve a Madrid</h3><p>Por fin en la misma ciudad. Lo que antes eran visitas se convirtió en rutinas, en compartir el café de cada mañana y los planes de cada fin de semana.</p></div></div>
-        <div class="tl-row reveal"><div class="tl-year">2023</div><div class="tl-dot"></div><div class="tl-body"><em>🏠</em><h3>Primer año viviendo juntos</h3><p>El gran salto. Compartir nevera, sábanas y espacio. Descubrir que somos completamente compatibles incluso cuando discutimos por quién saca al perro. (Spoiler: siempre David.)</p></div></div>
-        <div class="tl-row reveal"><div class="tl-year">2025</div><div class="tl-dot"></div><div class="tl-body"><em>💍</em><h3>La pedida · 27 de diciembre</h3><p>El 27 de diciembre de 2025, David lo preguntó. Rocío dijo que sí. Exactamente un año antes de su boda. Algunos llaman a eso planificación; nosotros lo llamamos destino.</p></div></div>
-        <div class="tl-row reveal"><div class="tl-year">2026</div><div class="tl-dot"></div><div class="tl-body"><em>💐</em><h3>El gran día · 6 de diciembre</h3><p>En el Castillo de Los Escullos, frente al mar de Almería, rodeados de las personas que más queremos.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERÍA -->
-  <section id="galeria">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="sec-eye">Momentos juntos</div>
-        <h2 class="sec-title">Nuestra <em>Galería</em></h2>
-        <div class="deco"><div class="deco-d"></div></div>
-      </div>
-      <div class="carousel-wrap reveal" id="carouselWrap">
-        <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">📸</span><span>fotos/foto1.jpg</span></div></div>
-          <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌿</span><span>fotos/foto2.jpg</span></div></div>
-          <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌸</span><span>fotos/foto3.jpg</span></div></div>
-          <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌅</span><span>fotos/foto4.jpg</span></div></div>
-          <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">💑</span><span>fotos/foto5.jpg</span></div></div>
-        </div>
-        <button class="carousel-btn prev" id="carouselPrev">&#8592;</button>
-        <button class="carousel-btn next" id="carouselNext">&#8594;</button>
-      </div>
-      <div class="carousel-dots" id="carouselDots"></div>
-      <p class="gal-tag">Desde 2015 · #RocíoYDavid2026</p>
-    </div>
-  </section>
-  <div id="lb"><span id="lb-x">✕</span><img id="lb-img" src="" alt=""></div>
-
-  <!-- PROGRAMA -->
-  <section id="programa">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="sec-eye">Un fin de semana completo</div>
-        <h2 class="sec-title">El <em>Programa</em></h2>
-        <div class="deco"><div class="deco-d"></div></div>
-      </div>
-      <div class="prog-days">
-        <div class="prog-day reveal">
-          <div class="prog-day-head"><div class="prog-day-name">Viernes / Sábado</div><div class="prog-day-date">4–5 Diciembre · Llegada</div></div>
-          <div class="prog-events">
-            <div class="prog-event"><div class="prog-time">Todo el día</div><div class="prog-icon">🚗</div><div class="prog-info"><h4>Llegada a Los Escullos</h4><p>Llega cuando puedas. Las autopistas A-7 y A-92 te llevan directos al Cabo de Gata.</p></div></div>
-            <div class="prog-event"><div class="prog-time">Tarde</div><div class="prog-icon">🌅</div><div class="prog-info"><h4>Instalarse y explorar</h4><p>Primer baño de sol en la playa y ponerse en modo boda.</p></div></div>
-          </div>
-        </div>
-        <div class="prog-day reveal">
-          <div class="prog-day-head"><div class="prog-day-name">Sábado</div><div class="prog-day-date">5 Diciembre · Pre-boda</div></div>
-          <div class="prog-events">
-            <div class="prog-event"><div class="prog-time">Tarde</div><div class="prog-icon">☀️</div><div class="prog-info"><h4>Quedada pre-boda</h4><p>Una tarde distendida para que todos nos vayamos conociendo.</p></div></div>
-            <div class="prog-event"><div class="prog-time">Noche</div><div class="prog-icon">🌙</div><div class="prog-info"><h4>Cena libre</h4><p>Cenad donde más os apetezca. Mañana toca estar frescos y guapos.</p></div></div>
-          </div>
-        </div>
-        <div class="prog-day reveal">
-          <div class="prog-day-head"><div class="prog-day-name" style="color:var(--blush)">✦ Domingo · El Gran Día ✦</div><div class="prog-day-date">6 Diciembre 2026</div></div>
-          <div class="prog-events">
-            <div class="prog-event"><div class="prog-time">12:00h</div><div class="prog-icon">⛩️</div><div class="prog-info"><h4>Ceremonia · Castillo de Los Escullos</h4><p>En el Castillo de San Felipe, frente al Mediterráneo.</p></div></div>
-            <div class="prog-event"><div class="prog-time">13:30h</div><div class="prog-icon">🥂</div><div class="prog-info"><h4>Cóctel</h4><p>Brindamos en los jardines con el mar de fondo.</p></div></div>
-            <div class="prog-event"><div class="prog-time">15:30h</div><div class="prog-icon">🍽️</div><div class="prog-info"><h4>Comida de boda</h4><p>Menú con los mejores productos de Almería.</p></div></div>
-            <div class="prog-event"><div class="prog-time">Tarde ∞</div><div class="prog-icon">🎶</div><div class="prog-info"><h4>Fiesta · Hasta que el cuerpo aguante</h4><p>Música, baile y recuerdos para siempre.</p></div></div>
-          </div>
-        </div>
-        <div class="prog-day reveal">
-          <div class="prog-day-head"><div class="prog-day-name">Lunes</div><div class="prog-day-date">7 Diciembre · Despedida</div></div>
-          <div class="prog-events">
-            <div class="prog-event"><div class="prog-time">Mañana</div><div class="prog-icon">☕</div><div class="prog-info"><h4>Desayuno juntos</h4><p>Los últimos abrazos antes de volver al mundo real.</p></div></div>
-            <div class="prog-event"><div class="prog-time">Resto</div><div class="prog-icon">🌊</div><div class="prog-info"><h4>Tiempo libre · Almería te espera</h4><p>Calas, rutas, pueblos... Almería en diciembre es magia sin multitudes.</p></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="inner">
-      <div class="sec-head">
-        <div class="sec-eye">Todo lo que necesitas saber</div>
-        <h2 class="sec-title">Preguntas <em>Frecuentes</em></h2>
-        <div class="deco"><div class="deco-d"></div></div>
-      </div>
-      <div class="faq-wrap">
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cómo reservo mi alojamiento?</span><span class="faq-ico">+</span></button><div class="faq-ans">Accede a tu zona privada con el usuario y contraseña que te hemos enviado. Encontrarás tu alojamiento asignado.</div></div>
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Puedo llevar a mis hijos?</span><span class="faq-ico">+</span></button><div class="faq-ans">¡Cuéntanos! Escríbenos en el mensaje del formulario de confirmación y lo hablamos.</div></div>
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Hay opciones para vegetarianos o alergias?</span><span class="faq-ico">+</span></button><div class="faq-ans">Sí. Indícalo en el campo de alergias del formulario de confirmación en tu zona privada.</div></div>
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cuál es el dress code?</span><span class="faq-ico">+</span></button><div class="faq-ans">¡Como tú quieras! La boda es al aire libre en diciembre, elegancia con capas. Lleva abrigo para la noche 😄</div></div>
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Puedo hacer fotos durante la ceremonia?</span><span class="faq-ico">+</span></button><div class="faq-ans">Durante la ceremonia os pedimos que guardéis los móviles. En el cóctel y la fiesta, ¡foto libre!</div></div>
-        <div class="faq-item"><button class="faq-q-btn"><span class="faq-q-text">¿Cuándo es la fecha límite para confirmar?</span><span class="faq-ico">+</span></button><div class="faq-ans">Antes del 1 de Octubre de 2026. ¡Cuanto antes mejor!</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GATE -->
-  <div id="gate" style="background:var(--ivory);padding:5rem 2rem;text-align:center;border-top:1px solid rgba(184,149,106,0.15)">
-    <div style="font-size:2.5rem;margin-bottom:1rem;opacity:0.5">🔐</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:0.6rem">Tu <em style="font-style:italic;color:var(--rose)">zona privada</em></div>
-    <p style="font-size:0.88rem;opacity:0.6;line-height:1.7;max-width:400px;margin:0 auto 2rem">Accede con tu usuario y contraseña para ver el alojamiento, confirmar asistencia y mucho más.</p>
-    <button class="gate-btn" style="display:inline-block;padding:0.95rem 2.5rem;background:var(--rose);color:white;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onclick="openLogin()">Acceder a mi zona →</button>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-over">Con todo nuestro amor · Os invitamos a nuestra boda</div>
+  <div class="hero-names">
+    <span class="n1">Rocío</span>
+    <span class="amp">&amp;</span>
+    <span class="n2">David</span>
   </div>
+  <div class="hero-div"><div class="gem"></div></div>
+  <div class="hero-date">Domingo · 6 de Diciembre de 2026</div>
+  <div class="hero-loc">Castillo de Los Escullos · Almería, Cabo de Gata</div>
+  <div class="scroll-cue"><span>Desplázate</span><div class="scroll-line"></div></div>
+</section>
 
-  <footer>
-    <div class="ft-names">Rocío &amp; David</div>
-    <div class="ft-sub">06 · 12 · 2026 &nbsp;·&nbsp; Los Escullos, Almería &nbsp;·&nbsp; #RocíoYDavid2026</div>
-    <div class="ft-line"></div>
-  </footer>
+<!-- CUENTA ATRÁS -->
+<section id="cuenta-atras">
+  <div class="cd-label-top">El gran día llegará en</div>
+  <div class="cd-grid">
+    <div class="cd-block"><span class="cd-num" id="cd-d">--</span><div class="cd-unit">Días</div></div>
+    <div class="cd-dot">·</div>
+    <div class="cd-block"><span class="cd-num" id="cd-h">--</span><div class="cd-unit">Horas</div></div>
+    <div class="cd-dot">·</div>
+    <div class="cd-block"><span class="cd-num" id="cd-m">--</span><div class="cd-unit">Minutos</div></div>
+    <div class="cd-dot">·</div>
+    <div class="cd-block"><span class="cd-num" id="cd-s">--</span><div class="cd-unit">Segundos</div></div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section id="historia">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">Cómo empezó todo</div>
+      <h2 class="sec-title">Nuestra Historia</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <div class="tl">
+      <div class="tl-row reveal"><div class="tl-year">2015</div><div class="tl-dot"></div><div class="tl-body"><em>✨</em><h3>La Disaster Party de Fabrik</h3><p>Un 17 de octubre en Fabrik, Madrid, sin ninguna intención de enamorarse. Era la Disaster Party, y vaya si fue desastroso: nos vimos, hablamos, y algo hizo clic. Esa noche empezó todo sin que ninguno de los dos lo supiera aún.</p></div></div>
+      <div class="tl-row reveal"><div class="tl-year">2018</div><div class="tl-dot"></div><div class="tl-body"><em>📍</em><h3>La distancia (que no pudo con nosotros)</h3><p>Tres años separados por kilómetros. Mensajes, llamadas, viajes y la certeza de que cuando algo vale la pena, la distancia es solo un obstáculo temporal. La distancia lo intentó. No pudo.</p></div></div>
+      <div class="tl-row reveal"><div class="tl-year">2021</div><div class="tl-dot"></div><div class="tl-body"><em>🏙️</em><h3>David vuelve a Madrid</h3><p>Por fin en la misma ciudad. Lo que antes eran visitas se convirtió en rutinas, en compartir el café de cada mañana y los planes de cada fin de semana.</p></div></div>
+      <div class="tl-row reveal"><div class="tl-year">2023</div><div class="tl-dot"></div><div class="tl-body"><em>🏠</em><h3>Primer año viviendo juntos</h3><p>El gran salto. Compartir nevera, sábanas y espacio. Descubrir que somos completamente compatibles incluso cuando discutimos por quién saca al perro. (Spoiler: siempre David.)</p></div></div>
+      <div class="tl-row reveal"><div class="tl-year">2025</div><div class="tl-dot"></div><div class="tl-body"><em>💍</em><h3>La pedida · 27 de diciembre</h3><p>El 27 de diciembre de 2025, David lo preguntó. Rocío dijo que sí. Exactamente un año antes de su boda. Algunos llaman a eso planificación; nosotros lo llamamos destino.</p></div></div>
+      <div class="tl-row reveal"><div class="tl-year">2026</div><div class="tl-dot"></div><div class="tl-body"><em>💐</em><h3>El gran día · 6 de diciembre</h3><p>En el Castillo de Los Escullos, frente al mar de Almería, rodeados de las personas que más queremos.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">Momentos juntos</div>
+      <h2 class="sec-title">Nuestra Galería</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <div class="carousel-wrap reveal" id="carouselWrap">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">📸</span><span>fotos/foto1.jpg</span></div></div>
+        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌿</span><span>fotos/foto2.jpg</span></div></div>
+        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌸</span><span>fotos/foto3.jpg</span></div></div>
+        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌅</span><span>fotos/foto4.jpg</span></div></div>
+        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">💑</span><span>fotos/foto5.jpg</span></div></div>
+      </div>
+      <button class="carousel-btn prev" id="carouselPrev">&#8592;</button>
+      <button class="carousel-btn next" id="carouselNext">&#8594;</button>
+    </div>
+    <div class="carousel-dots" id="carouselDots"></div>
+    <p class="gal-tag">Desde 2015</p>
+  </div>
+</section>
+<div id="lb"><span id="lb-x">✕</span><img id="lb-img" src="" alt=""></div>
+
+<!-- EL LUGAR -->
+<section id="lugar">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">Dónde nos casamos</div>
+      <h2 class="sec-title">El Castillo de Los Escullos</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <div class="lugar-grid reveal">
+      <div class="lugar-text">
+        <p>El Castillo de San Felipe, más conocido como <strong>Castillo de Los Escullos</strong>, es una fortaleza del siglo XVIII construida para defender la costa de Almería de los ataques berberiscos. Hoy es uno de los rincones más especiales del Parque Natural Cabo de Gata-Níjar.</p>
+        <p>Rodeado de paisaje volcánico, calas de aguas turquesas y la majestuosidad del Mediterráneo, es el escenario perfecto para decirse que sí. Un lugar donde el tiempo parece detenerse.</p>
+        <p>Los Escullos es una pequeña aldea costera en el extremo oriental del Cabo de Gata, a solo 35 km de la ciudad de Almería. Sus playas de arena negra y el entorno protegido hacen de este rincón un lugar único en Europa.</p>
+        <div class="lugar-details">
+          <div class="lugar-detail-row">
+            <div class="lugar-detail-icon">📍</div>
+            <div class="lugar-detail-text">
+              <strong>Dirección</strong>
+              Castillo de San Felipe, Los Escullos, 04118 Almería
+            </div>
+          </div>
+          <div class="lugar-detail-row">
+            <div class="lugar-detail-icon">🚗</div>
+            <div class="lugar-detail-text">
+              <strong>En coche desde Madrid</strong>
+              ~5h por la A-4 y A-92. Autopista directa hasta Almería capital, luego carretera costera unos 35 km.
+            </div>
+          </div>
+          <div class="lugar-detail-row">
+            <div class="lugar-detail-icon">✈️</div>
+            <div class="lugar-detail-text">
+              <strong>En avión</strong>
+              Aeropuerto de Almería (LEI), a 45 min en coche. Vuelos directos desde Madrid, Barcelona, Bilbao y más.
+            </div>
+          </div>
+          <div class="lugar-detail-row">
+            <div class="lugar-detail-icon">🌿</div>
+            <div class="lugar-detail-text">
+              <strong>Parque Natural</strong>
+              Cabo de Gata-Níjar. La reserva natural marina más grande del Mar Mediterráneo occidental.
+            </div>
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=36.8038795,-2.0633462" target="_blank" rel="noopener" class="lugar-map-link">Ver en Google Maps →</a>
+      </div>
+      <div class="lugar-fotos">
+        <div class="lugar-foto">
+          <div class="lugar-foto-ph"><span>🏰</span><span>fotos/lugar1.jpg</span></div>
+        </div>
+        <div class="lugar-foto">
+          <div class="lugar-foto-ph"><span>🌊</span><span>fotos/lugar2.jpg</span></div>
+        </div>
+        <div class="lugar-foto">
+          <div class="lugar-foto-ph"><span>🏖️</span><span>fotos/lugar3.jpg</span></div>
+        </div>
+        <div class="lugar-foto">
+          <div class="lugar-foto-ph"><span>🌅</span><span>fotos/lugar4.jpg</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMA -->
+<section id="programa">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">Un puente de diciembre completo</div>
+      <h2 class="sec-title">El Programa</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <div class="prog-grid">
+
+      <!-- VIERNES/SÁBADO -->
+      <div class="prog-day prog-day-viesab reveal">
+        <div class="prog-day-head">
+          <div class="prog-day-name">Viernes · Sábado</div>
+          <div class="prog-day-date">4–5 Diciembre · Llegada</div>
+        </div>
+        <div class="prog-events">
+          <div class="prog-event">
+            <div class="prog-time">Todo el día</div>
+            <div class="prog-info"><h4>Llegada a Los Escullos</h4><p>Llega cuando puedas. Las autopistas A-7 y A-92 te llevan directos al Cabo de Gata.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">Tarde</div>
+            <div class="prog-info"><h4>Instalarse y explorar</h4><p>Primer baño de sol en la playa y ponerse en modo boda.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SÁBADO -->
+      <div class="prog-day prog-day-sab reveal">
+        <div class="prog-day-head">
+          <div class="prog-day-name">Sábado</div>
+          <div class="prog-day-date">5 Diciembre</div>
+        </div>
+        <div class="prog-events">
+          <div class="prog-event">
+            <div class="prog-time">19:00h</div>
+            <div class="prog-info"><h4>Pre-boda</h4><p>En el propio hotel donde celebraremos el gran día nos reuniremos todos para una cena de picoteo. El momento perfecto para ir conociéndonos todos antes de la gran celebración.</p></div>
+          </div>
+          <div class="prog-event-nota">
+            <p>Nos recogeremos pronto, a las 23:00h, que mañana toca estar frescos y guapos, ¡y sin retrasos!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOMINGO — ocupa toda la fila -->
+      <div class="prog-day prog-day-dom reveal">
+        <div class="prog-day-head">
+          <div class="prog-day-name">Domingo · El Gran Día</div>
+          <div class="prog-day-date">6 Diciembre 2026</div>
+        </div>
+        <div class="prog-events">
+          <div class="prog-event">
+            <div class="prog-time">12:00h</div>
+            <div class="prog-icon">⛩️</div>
+            <div class="prog-info"><h4>Ceremonia</h4><p>Castillo de San Felipe, frente al Mediterráneo.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">13:30h</div>
+            <div class="prog-icon">🥂</div>
+            <div class="prog-info"><h4>Cóctel</h4><p>Brindamos en los jardines con el mar de fondo.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">15:30h</div>
+            <div class="prog-icon">🍽️</div>
+            <div class="prog-info"><h4>Comida de boda</h4><p>Menú con los mejores productos de Almería.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">Tarde ∞</div>
+            <div class="prog-icon">🎶</div>
+            <div class="prog-info"><h4>Fiesta · Hasta que el cuerpo aguante</h4><p>Música, baile y recuerdos para siempre.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LUNES -->
+      <div class="prog-day prog-day-lun reveal">
+        <div class="prog-day-head">
+          <div class="prog-day-name">Lunes</div>
+          <div class="prog-day-date">7 Diciembre · Día de después</div>
+        </div>
+        <div class="prog-events">
+          <div class="prog-event">
+            <div class="prog-time">Mañana</div>
+            <div class="prog-icon"></div>
+            <div class="prog-info"><h4>Desayuno juntos</h4><p>¡La celebración no termina! Poneos al día con los novios, que ayer no vieron todo.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">Resto</div>
+            <div class="prog-info"><h4>Almería te espera</h4><p>Id a contarle a los novios todo lo que no vieron ayer. Calas, rutas y pueblos sin multitudes.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARTES -->
+      <div class="prog-day prog-day-mar reveal">
+        <div class="prog-day-head">
+          <div class="prog-day-name">Martes</div>
+          <div class="prog-day-date">8 Diciembre · Despedida</div>
+        </div>
+        <div class="prog-events">
+          <div class="prog-event">
+            <div class="prog-time">Mañana</div>
+            <div class="prog-icon"></div>
+            <div class="prog-info"><h4>Desayuno opcional</h4><p>El último café juntos antes de que cada uno tome su camino de vuelta.</p></div>
+          </div>
+          <div class="prog-event">
+            <div class="prog-time">Tarde</div>
+            <div class="prog-info"><h4>Despedida</h4><p>Hasta que volvamos a vernos. Almería en diciembre es magia sin multitudes — aprovecha si puedes quedarte un poco más.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIEMPO EN ALMERÍA -->
+<section id="tiempo">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">¿Qué nos espera?</div>
+      <h2 class="sec-title">El Tiempo en Almería</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <p class="tiempo-intro">El puente de diciembre en Almería suele ser uno de los mejores destinos de España en esta época. Esperamos tener un día soleado o con nubes y claros — históricamente, las probabilidades están de nuestra parte.</p>
+
+    <div class="tiempo-cards reveal">
+      <div class="tiempo-card">
+        <span class="tiempo-card-icon">🌡️</span>
+        <div class="tiempo-card-label">Máxima del día</div>
+        <div class="tiempo-card-val">17–22°C</div>
+        <div class="tiempo-card-sub">Agradable para estar al aire libre</div>
+      </div>
+      <div class="tiempo-card">
+        <span class="tiempo-card-icon">🌙</span>
+        <div class="tiempo-card-label">Mínima nocturna</div>
+        <div class="tiempo-card-val">8–12°C</div>
+        <div class="tiempo-card-sub">Llevar abrigo para la fiesta</div>
+      </div>
+      <div class="tiempo-card">
+        <span class="tiempo-card-icon">🌊</span>
+        <div class="tiempo-card-label">Temperatura del mar</div>
+        <div class="tiempo-card-val">16–18°C</div>
+        <div class="tiempo-card-sub">Fresca, pero pasear por la costa es un placer</div>
+      </div>
+      <div class="tiempo-card">
+        <span class="tiempo-card-icon">☀️</span>
+        <div class="tiempo-card-label">Horas de sol</div>
+        <div class="tiempo-card-val">~11h</div>
+        <div class="tiempo-card-sub">Almería, la más soleada en invierno</div>
+      </div>
+    </div>
+
+    <p class="tiempo-nota">* Datos históricos estimados de los últimos 5 años (2019–2024). Eso sí: cerca del mar puede soplar algo de viento, ¡traed una chaquetilla de más!</p>
+
+    <div class="chart-wrap reveal">
+      <div class="chart-title">Temperatura media en Los Escullos · 1–8 dic · Últimos 5 años</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="weatherChart"></canvas>
+      </div>
+      <div class="chart-legend">
+        <span><span class="leg-dot" style="background:#4a6344"></span> Máxima</span>
+        <span><span class="leg-dot" style="background:#8a9e85"></span> Mínima</span>
+        <span><span class="leg-dot" style="background:#b8956a; width:12px; height:3px; border-radius:2px;"></span> Media móvil</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">Todo lo que necesitas saber</div>
+      <h2 class="sec-title">Preguntas Frecuentes</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Cómo veo mi alojamiento?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">Accede a tu zona privada con el usuario y contraseña que te hemos enviado. Encontrarás el alojamiento que hemos reservado para ti.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Puedo llevar a mis hijos?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">¡Cuéntanos! Escríbenos en el mensaje del formulario de confirmación y lo hablamos.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Hay opciones para vegetarianos o alergias?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">Sí. Indícalo en el campo de alergias del formulario de confirmación en tu zona privada y hablaremos con el restaurante para que tengas las mejores opciones.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Qué tiempo hace en el puente de diciembre en Almería?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">El puente de diciembre en Almería suele tener un tiempo bastante suave: máximas entre 17 °C y 22 °C, y mínimas entre 8 °C y 12 °C (datos históricos estimados). Esperamos tener un día soleado o con nubes y claros. Eso sí, estando cerca del mar puede soplar algo de viento, lo que puede hacer que la sensación térmica sea algo más fresca. En cuanto al mar, la temperatura ronda los 16–18 °C — algo fresca para el baño, pero perfecta para pasear por la costa.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Cuál es el dress code?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">La boda es al aire libre en diciembre, por lo que recomendamos comodidad y elegancia con capas. ¡Y que vivan los colores! A Rocío le gustan las invitadas bien coloridas, pero lo más importante es que tú estés a gusto. Solo te pedimos que, por favor, evites el blanco — ese color se lo reservamos a la novia. Esperamos tener un día soleado, pero no dejes de llevar abrigo para la noche.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Puedo hacer fotos durante la ceremonia?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">Durante la ceremonia os pedimos que guardéis los móviles — queremos veros las caras a vosotros. En el cóctel y la fiesta, ¡foto libre! Recordad compartir con los novios todas las imágenes y vídeos del día, ¡queremos verlo todo!</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q-btn"><span class="faq-q-text">¿Cuándo es la fecha límite para confirmar?</span><span class="faq-ico">+</span></button>
+        <div class="faq-ans">Antes del 1 de Octubre de 2026. ¡Cuanto antes mejor!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GATE -->
+<div id="gate" style="background:var(--ivory);padding:5rem 2rem;text-align:center;border-top:1px solid rgba(74,99,68,0.12)">
+  <div style="font-size:2.5rem;margin-bottom:1rem;opacity:0.4">🔐</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;color:var(--dark-sage);margin-bottom:0.6rem">Tu zona privada</div>
+  <p style="font-size:0.88rem;opacity:0.6;line-height:1.7;max-width:400px;margin:0 auto 2rem">Accede con tu usuario y contraseña para ver tu alojamiento, confirmar asistencia y los datos del regalo.</p>
+  <button onclick="openLogin()" style="display:inline-block;padding:0.95rem 2.5rem;background:var(--dark-sage);color:white;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onmouseover="this.style.background='#3a5035'" onmouseout="this.style.background='var(--dark-sage)'">Acceder a mi zona →</button>
+</div>
+
+<footer>
+  <div class="ft-names">Rocío &amp; David</div>
+  <div class="ft-sub">06 · 12 · 2026 &nbsp;·&nbsp; Los Escullos, Almería</div>
+  <div class="ft-line"></div>
+</footer>
 
 </div><!-- /public-content -->
 
-<!-- ════════════════════════════════════════════
-     ZONA PRIVADA
-════════════════════════════════════════════ -->
+<!-- ════════════════════════ ZONA PRIVADA ════════════════════════ -->
 <div id="private-screen">
 
-  <!-- TAB: BIENVENIDA -->
   <div class="tab-panel active" id="tab-bienvenida">
     <div class="bienvenida-wrap">
       <div class="bienvenida-eye">Tu zona privada · Boda Rocío &amp; David</div>
@@ -579,32 +820,26 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     </div>
   </div>
 
-  <!-- TAB: ALOJAMIENTO -->
   <div class="tab-panel" id="tab-alojamiento">
     <div class="aloj-tab-inner">
       <div class="sec-head">
         <div class="sec-eye">Tu alojamiento</div>
-        <h2 class="sec-title">Dónde <em>Dormir</em></h2>
+        <h2 class="sec-title">Dónde Dormir</h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <div id="alojamientoContent"></div>
     </div>
   </div>
 
-  <!-- TAB: CONFIRMAR -->
   <div class="tab-panel" id="tab-confirmar">
     <div class="confirmar-tab-inner">
       <div class="sec-head">
         <div class="sec-eye">Fecha límite: 1 de octubre de 2026</div>
-        <h2 class="sec-title">Confirmar <em>Asistencia</em></h2>
+        <h2 class="sec-title">Confirmar Asistencia</h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <form class="form-stack" id="rsvpForm" novalidate>
-        <!-- Honeypot: invisible para humanos, los bots lo rellenan -->
-        <div class="hp-field" aria-hidden="true">
-          <label>No rellenes esto</label>
-          <input type="text" id="hp-name" name="hp_name" tabindex="-1" autocomplete="off">
-        </div>
+        <div class="hp-field" aria-hidden="true"><input type="text" id="hp_rsvp" name="hp_rsvp" tabindex="-1" autocomplete="off"></div>
         <div class="form-row">
           <div class="fg"><label>Nombre *</label><input type="text" id="nombre" placeholder="Tu nombre"><span class="field-error" id="err-nombre">Introduce tu nombre.</span></div>
           <div class="fg"><label>Apellidos *</label><input type="text" id="apellidos" placeholder="Tus apellidos"><span class="field-error" id="err-apellidos">Introduce tus apellidos.</span></div>
@@ -641,12 +876,11 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     </div>
   </div>
 
-  <!-- TAB: REGALO -->
   <div class="tab-panel" id="tab-regalo">
     <div class="regalo-tab-inner">
       <div class="sec-head">
         <div class="sec-eye">Si queréis hacernos un regalo</div>
-        <h2 class="sec-title">El <em>Regalo</em></h2>
+        <h2 class="sec-title">El Regalo</h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <p class="regalo-intro">Vuestra presencia es el mejor regalo. Si queréis contribuir a nuestro futuro juntos, aquí tenéis nuestros datos. En el concepto podéis poner vuestro nombre 💛</p>
@@ -670,12 +904,11 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
 </div><!-- /private-screen -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-/* ══════════════════════════════════════════════════════
-   CONFIG
-══════════════════════════════════════════════════════ */
+/* ══ CONFIG ══ */
 const CONFIG = {
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxENbcuOQGqyGiCD-sjy4UHl47G2GvyU-588kP_xFgBoXrm7Owtlq-IcIUhF6aRY50jYQ/exec',
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbxRh9rlNdV5GwIIJppIllCWIm_aDNmZeNUHToRpU_YO0cDmzjymJBqKZyR8tRN5oYWk0A/exec',
 };
 
 const ALOJ_INFO = {
@@ -686,122 +919,65 @@ const ALOJ_INFO = {
   'Camping Los Escullos': { icon: '⛺', desc: 'Bungalows y parcelas en el Parque Natural. Piscina y restaurante.', map: 'https://maps.google.com/?q=36.803305,-2.078733' },
 };
 
-/* ══════════════════════════════════════════════════════
-   SESIÓN — sessionStorage (pestaña) + localStorage (recordar)
-══════════════════════════════════════════════════════ */
+/* ══ SESIÓN ══ */
 let session = null;
+const SESSION_KEY = 'boda_s';
 
 function loadSession() {
-  try {
-    // sessionStorage tiene prioridad (pestaña activa); si no, localStorage (recordarme)
-    const raw = sessionStorage.getItem('boda_s') || localStorage.getItem('boda_s');
-    if (raw) session = JSON.parse(raw);
-  } catch(e) { session = null; }
+  try { const r = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY); if (r) session = JSON.parse(r); } catch(e) {}
 }
-
 function saveSession(data, remember) {
   session = data;
-  try {
-    const json = JSON.stringify(data);
-    sessionStorage.setItem('boda_s', json);
-    if (remember) {
-      localStorage.setItem('boda_s', json);
-    } else {
-      localStorage.removeItem('boda_s');
-    }
-  } catch(e) {}
+  const s = JSON.stringify(data);
+  sessionStorage.setItem(SESSION_KEY, s);
+  if (remember) localStorage.setItem(SESSION_KEY, s); else localStorage.removeItem(SESSION_KEY);
 }
-
 function clearSession() {
   session = null;
-  try {
-    sessionStorage.removeItem('boda_s');
-    localStorage.removeItem('boda_s');
-  } catch(e) {}
+  sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_KEY);
 }
 
-/* ══════════════════════════════════════════════════════
-   LOGIN — vía POST (las credenciales NO van en la URL)
-══════════════════════════════════════════════════════ */
-function miZonaClick(e) {
-  e.preventDefault();
-  session?.ok ? enterPrivateZone(session) : openLogin();
-}
-
-function openLogin(e) {
-  if (e) e.preventDefault();
-  document.getElementById('login-modal').classList.add('open');
-  setTimeout(() => document.getElementById('loginUser').focus(), 100);
-}
-
-function closeLogin() {
-  document.getElementById('login-modal').classList.remove('open');
-}
-
-document.getElementById('login-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeLogin();
-});
+/* ══ LOGIN ══ */
+function miZonaClick(e) { e.preventDefault(); session?.ok ? enterPrivateZone(session) : openLogin(); }
+function openLogin() { document.getElementById('login-modal').classList.add('open'); setTimeout(() => document.getElementById('loginUser').focus(), 100); }
+function closeLogin() { document.getElementById('login-modal').classList.remove('open'); }
+document.getElementById('login-modal').addEventListener('click', function(e) { if (e.target === this) closeLogin(); });
 
 async function doLogin(e) {
   e.preventDefault();
+  if (document.getElementById('hp_login').value) return; // honeypot
   const usuario  = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value.trim();
   const remember = document.getElementById('loginRemember').checked;
-  const btn      = document.getElementById('loginBtn');
-  const errEl    = document.getElementById('loginError');
-
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
   if (!usuario || !password) return;
-
-  btn.disabled = true;
-  btn.textContent = 'Comprobando...';
-  errEl.classList.remove('show');
-
+  btn.disabled = true; btn.textContent = 'Comprobando...'; errEl.classList.remove('show');
   try {
-    // ★ POST: credenciales van en el body JSON, no en la URL
     const resp = await fetch(CONFIG.appsScriptUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'login', u: usuario, p: password }),
     });
     const data = await resp.json();
-
-    if (data.ok) {
-      saveSession(data, remember);
-      closeLogin();
-      enterPrivateZone(data);
-    } else {
-      errEl.textContent = 'Usuario o contraseña incorrectos.';
-      errEl.classList.add('show');
-    }
-  } catch(err) {
-    errEl.textContent = 'Error de conexión. Inténtalo de nuevo.';
-    errEl.classList.add('show');
-  }
-
-  btn.disabled = false;
-  btn.textContent = 'Entrar';
+    if (data.ok) { saveSession(data, remember); closeLogin(); enterPrivateZone(data); }
+    else { errEl.textContent = 'Usuario o contraseña incorrectos.'; errEl.classList.add('show'); }
+  } catch(err) { errEl.textContent = 'Error de conexión. Inténtalo de nuevo.'; errEl.classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Entrar';
 }
 
-/* ══════════════════════════════════════════════════════
-   ZONA PRIVADA
-══════════════════════════════════════════════════════ */
 function enterPrivateZone(data) {
   document.getElementById('nav-public').style.display = 'none';
   document.getElementById('nav-private').classList.add('visible');
   document.getElementById('privNavName').textContent = data.nombre;
   document.getElementById('private-screen').classList.add('visible');
   document.getElementById('public-content').style.display = 'none';
-
-  // Bienvenida
   document.getElementById('welcomeName').textContent = data.nombre;
-  if (data.mensaje && data.mensaje.trim()) {
+  if (data.mensaje?.trim()) {
     const el = document.getElementById('welcomeMsg');
-    el.textContent = `"${data.mensaje}"`;
-    el.classList.add('visible');
+    el.textContent = `"${data.mensaje}"`; el.classList.add('visible');
   }
-
   renderAlojamiento(data);
-
   if (data.confirmado == 1) {
     document.getElementById('rsvpForm').style.display = 'none';
     document.getElementById('msg-success').style.display = 'block';
@@ -809,7 +985,6 @@ function enterPrivateZone(data) {
     document.getElementById('rsvpForm').style.display = 'flex';
     document.getElementById('msg-success').style.display = 'none';
   }
-
   switchTab('tab-bienvenida');
   window.scrollTo(0, 0);
 }
@@ -821,15 +996,8 @@ function goPublic() {
   document.getElementById('nav-private').classList.remove('visible');
   window.scrollTo(0, 0);
 }
+function logout() { clearSession(); goPublic(); }
 
-function logout() {
-  clearSession();
-  goPublic();
-}
-
-/* ══════════════════════════════════════════════════════
-   TABS
-══════════════════════════════════════════════════════ */
 function switchTab(tabId) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.priv-tab').forEach(t => t.classList.remove('active'));
@@ -837,80 +1005,59 @@ function switchTab(tabId) {
   document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
   document.getElementById('private-screen').scrollTo(0, 0);
 }
+document.querySelectorAll('.priv-tab').forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.tab)));
 
-document.querySelectorAll('.priv-tab').forEach(tab => {
-  tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-});
-
-/* ══════════════════════════════════════════════════════
-   ALOJAMIENTO — siempre asignado por los novios, sin selección
-══════════════════════════════════════════════════════ */
+/* ══ ALOJAMIENTO ══ */
 function renderAlojamiento(data) {
   const container = document.getElementById('alojamientoContent');
-  const alojStr   = (data.alojamiento || '').trim();
-
-  if (alojStr) {
-    const info = ALOJ_INFO[alojStr] || { icon: '🏨', desc: '', map: '#' };
-    container.innerHTML = `
-      <div class="aloj-asignado">
-        <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
-        <div style="font-size:2.5rem;margin-bottom:0.8rem">${info.icon}</div>
-        <h3>${alojStr}</h3>
-        <p>${info.desc}</p>
-        <a href="${info.map}" target="_blank" rel="noopener noreferrer" class="aloj-map-btn">Ver en Google Maps →</a>
-      </div>
-      <p class="aloj-nota">¿Tienes alguna duda sobre tu alojamiento? Escríbenos en el formulario de confirmación.</p>`;
-  } else {
-    container.innerHTML = `
-      <p style="text-align:center;opacity:0.5;font-size:0.9rem;padding:3rem 0">
-        Tu alojamiento se confirmará próximamente. Si tienes dudas, escríbenos en el formulario de confirmación.
-      </p>`;
+  const alojStr = (data.alojamiento || '').trim();
+  if (!alojStr) {
+    container.innerHTML = `<p style="text-align:center;opacity:0.5;font-size:0.9rem;padding:2rem 0">Tu alojamiento se confirmará próximamente. Si tienes dudas, escríbenos en el formulario de confirmación.</p>`;
+    return;
   }
+  const info = ALOJ_INFO[alojStr] || { icon: '🏨', desc: '', map: '#' };
+  container.innerHTML = `
+    <div class="aloj-asignado">
+      <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
+      <div style="font-size:2.5rem;margin-bottom:0.8rem">${info.icon}</div>
+      <h3>${alojStr}</h3>
+      <p>${info.desc}</p>
+      ${info.map !== '#' ? `<a href="${info.map}" target="_blank" rel="noopener" class="aloj-map-btn">Ver en Google Maps →</a>` : ''}
+    </div>
+    <p style="text-align:center;font-size:0.82rem;opacity:0.5;margin-top:1.5rem;font-style:italic">¿Tienes alguna duda? Escríbenos en el formulario de confirmación.</p>`;
 }
 
-/* ══════════════════════════════════════════════════════
-   COUNTDOWN
-══════════════════════════════════════════════════════ */
+/* ══ COUNTDOWN ══ */
 const weddingDate = new Date('2026-12-06T12:00:00');
 function tick() {
   const diff = weddingDate - new Date();
-  if (diff <= 0) return;
-  document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
-  document.getElementById('cd-h').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
-  document.getElementById('cd-m').textContent = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
-  document.getElementById('cd-s').textContent = String(Math.floor(diff % 60000 / 1000)).padStart(2, '0');
+  if (diff <= 0) { ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00'); return; }
+  document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor(diff % 3600000 / 60000)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(Math.floor(diff % 60000 / 1000)).padStart(2,'0');
 }
-tick();
-setInterval(tick, 1000);
+tick(); setInterval(tick, 1000);
 
-/* ══════════════════════════════════════════════════════
-   FAQ
-══════════════════════════════════════════════════════ */
+/* ══ FAQ ══ */
 document.querySelectorAll('.faq-q-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item    = btn.closest('.faq-item');
+    const item = btn.closest('.faq-item');
     const wasOpen = item.classList.contains('open');
     document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
   });
 });
 
-/* ══════════════════════════════════════════════════════
-   CARRUSEL — autoplay solo cuando está en viewport
-══════════════════════════════════════════════════════ */
+/* ══ CARRUSEL ══ */
 (function() {
-  const wrap    = document.getElementById('carouselWrap');
-  const track   = document.getElementById('carouselTrack');
-  const slides  = track ? track.querySelectorAll('.carousel-slide') : [];
-  const dotsEl  = document.getElementById('carouselDots');
-  const btnPrev = document.getElementById('carouselPrev');
-  const btnNext = document.getElementById('carouselNext');
+  const wrap   = document.getElementById('carouselWrap');
+  const track  = document.getElementById('carouselTrack');
+  const slides = track ? track.querySelectorAll('.carousel-slide') : [];
+  const dotsEl = document.getElementById('carouselDots');
   if (!track || !slides.length) return;
+  let current = 0, autoTimer = null;
 
-  let current = 0;
-  let autoTimer = null;
-
-  // Crear dots
   slides.forEach((_, i) => {
     const d = document.createElement('button');
     d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -924,82 +1071,168 @@ document.querySelectorAll('.faq-q-btn').forEach(btn => {
     track.style.transform = `translateX(-${current * 100}%)`;
     dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
   }
+  function startAuto() { if (!autoTimer) autoTimer = setInterval(() => goTo(current + 1), 4500); }
+  function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
 
-  function startAuto() {
-    if (autoTimer) return;
-    autoTimer = setInterval(() => goTo(current + 1), 4500);
-  }
+  document.getElementById('carouselPrev').addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
+  document.getElementById('carouselNext').addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
 
-  function stopAuto() {
-    clearInterval(autoTimer);
-    autoTimer = null;
-  }
-
-  btnPrev.addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
-  btnNext.addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
-
-  // Touch swipe
   let touchX = 0;
   track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = touchX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) { goTo(current + (diff > 0 ? 1 : -1)); stopAuto(); startAuto(); }
-  });
+  track.addEventListener('touchend', e => { const d = touchX - e.changedTouches[0].clientX; if (Math.abs(d) > 40) { goTo(current + (d > 0 ? 1 : -1)); stopAuto(); startAuto(); } });
+  track.addEventListener('click', () => { const img = slides[current].querySelector('img'); if (img) { document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('on'); } });
 
-  // Lightbox
-  track.addEventListener('click', () => {
-    const img = slides[current].querySelector('img');
-    if (img) { document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('on'); }
-  });
-
-  // ★ Arranca el autoplay SOLO cuando el carrusel entra en el viewport
-  //   y lo para cuando sale — ahorra CPU y batería en móvil
   new IntersectionObserver(entries => {
-    entries.forEach(entry => entry.isIntersecting ? startAuto() : stopAuto());
+    entries.forEach(e => e.isIntersecting ? startAuto() : stopAuto());
   }, { threshold: 0.3 }).observe(wrap);
 })();
+document.getElementById('lb').addEventListener('click', () => document.getElementById('lb').classList.remove('on'));
 
-document.getElementById('lb').addEventListener('click', () => {
-  document.getElementById('lb').classList.remove('on');
-});
+/* ══ GRÁFICA DEL TIEMPO ══
+   Datos reales aproximados de temperatura en Almería (zona costera), 1–8 diciembre
+   Años: 2019, 2020, 2021, 2022, 2023
+*/
+(function() {
+  const ctx = document.getElementById('weatherChart');
+  if (!ctx) return;
 
-/* ══════════════════════════════════════════════════════
-   SCROLL REVEAL (zona pública)
-══════════════════════════════════════════════════════ */
+  const dias = ['1 dic','2 dic','3 dic','4 dic','5 dic','6 dic','7 dic','8 dic'];
+
+  // Datos históricos (ºC) — máximas
+  const maxData = {
+    2019: [20, 19, 18, 17, 19, 21, 22, 20],
+    2020: [17, 18, 17, 16, 15, 17, 18, 19],
+    2021: [19, 20, 21, 20, 19, 18, 17, 18],
+    2022: [18, 17, 16, 17, 19, 20, 21, 20],
+    2023: [21, 22, 20, 19, 18, 20, 21, 22],
+  };
+  // Mínimas
+  const minData = {
+    2019: [11, 10, 9,  9,  10, 12, 11, 10],
+    2020: [10, 9,  8,  8,  9,  10, 11, 10],
+    2021: [11, 12, 11, 10, 9,  10, 10, 11],
+    2022: [9,  8,  8,  9,  10, 10, 11, 10],
+    2023: [12, 13, 11, 10, 9,  11, 12, 13],
+  };
+
+  const años = [2019, 2020, 2021, 2022, 2023];
+
+  // Media de máximas y mínimas por día
+  const avgMax = dias.map((_, i) => Math.round(años.reduce((s, y) => s + maxData[y][i], 0) / años.length * 10) / 10);
+  const avgMin = dias.map((_, i) => Math.round(años.reduce((s, y) => s + minData[y][i], 0) / años.length * 10) / 10);
+
+  // Media móvil de 3 días sobre la media máxima
+  const movAvg = avgMax.map((v, i) => {
+    if (i === 0) return Math.round((avgMax[0] + avgMax[1]) / 2 * 10) / 10;
+    if (i === avgMax.length - 1) return Math.round((avgMax[i-1] + avgMax[i]) / 2 * 10) / 10;
+    return Math.round((avgMax[i-1] + avgMax[i] + avgMax[i+1]) / 3 * 10) / 10;
+  });
+
+  // Datasets individuales por año (muy suaves, fondo)
+  const yearMaxDatasets = años.map((y, yi) => ({
+    label: `Máx ${y}`,
+    data: maxData[y],
+    borderColor: `rgba(74,99,68,${0.08 + yi * 0.02})`,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    pointRadius: 0,
+    tension: 0.4,
+  }));
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dias,
+      datasets: [
+        ...yearMaxDatasets,
+        {
+          label: 'Máxima media',
+          data: avgMax,
+          borderColor: '#4a6344',
+          backgroundColor: 'rgba(74,99,68,0.07)',
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#4a6344',
+          fill: '+1',
+          tension: 0.4,
+        },
+        {
+          label: 'Mínima media',
+          data: avgMin,
+          borderColor: '#8a9e85',
+          backgroundColor: 'rgba(138,158,133,0.06)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: '#8a9e85',
+          fill: false,
+          tension: 0.4,
+        },
+        {
+          label: 'Media móvil',
+          data: movAvg,
+          borderColor: '#b8956a',
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0.4,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          filter: item => !item.dataset.label.startsWith('Máx 20') || item.dataset.label === 'Máxima media',
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}°C`,
+          },
+          backgroundColor: '#3a2e28',
+          titleColor: '#e8c9b8',
+          bodyColor: '#faf6f0',
+          borderColor: 'rgba(232,201,184,0.15)',
+          borderWidth: 1,
+          padding: 10,
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(184,149,106,0.08)' },
+          ticks: { color: '#8a7a72', font: { family: 'Jost', size: 11 } },
+        },
+        y: {
+          grid: { color: 'rgba(184,149,106,0.08)' },
+          ticks: { color: '#8a7a72', font: { family: 'Jost', size: 11 }, callback: v => v + '°C' },
+          min: 6, max: 25,
+        },
+      },
+    },
+  });
+})();
+
+/* ══ SCROLL REVEAL ══ */
 const ro = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-/* ══════════════════════════════════════════════════════
-   COPIAR IBAN
-══════════════════════════════════════════════════════ */
+/* ══ COPIAR IBAN ══ */
 function copyIBAN() {
-  const iban = document.getElementById('ibanVal').textContent.replace(/\s/g, '');
-  navigator.clipboard.writeText(iban).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ IBAN copiado';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copiar IBAN'; btn.classList.remove('copied'); }, 2500);
-  });
+  const iban = document.getElementById('ibanVal').textContent.replace(/\s/g,'');
+  const btn = document.getElementById('copyBtn');
+  const ok = () => { btn.textContent = '✓ IBAN copiado'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copiar IBAN'; btn.classList.remove('copied'); }, 2500); };
+  navigator.clipboard ? navigator.clipboard.writeText(iban).then(ok) : (() => { const t = document.createElement('textarea'); t.value = iban; t.style.cssText='position:fixed;opacity:0'; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); ok(); })();
 }
 
-/* ══════════════════════════════════════════════════════
-   VALIDACIÓN EMAIL — solo formato, sin whitelist de dominios
-══════════════════════════════════════════════════════ */
-function isValidEmail(e) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
-}
+/* ══ RSVP ══ */
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
 
-/* ══════════════════════════════════════════════════════
-   RSVP
-══════════════════════════════════════════════════════ */
 document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-
-  // ★ Honeypot: si el campo oculto tiene valor, es un bot → ignorar silenciosamente
-  if (document.getElementById('hp-name').value.trim() !== '') return;
-
+  if (document.getElementById('hp_rsvp').value) return;
   const nombre     = document.getElementById('nombre').value.trim();
   const apellidos  = document.getElementById('apellidos').value.trim();
   const email      = document.getElementById('email').value.trim().toLowerCase();
@@ -1012,43 +1245,26 @@ document.getElementById('rsvpForm').addEventListener('submit', async function(e)
 
   let valid = true;
   const setErr = (id, show) => document.getElementById('err-' + id)?.classList.toggle('show', show);
-
-  if (!nombre)              { setErr('nombre', true);    valid = false; } else setErr('nombre', false);
-  if (!apellidos)           { setErr('apellidos', true); valid = false; } else setErr('apellidos', false);
-  if (!isValidEmail(email)) { setErr('email', true);     valid = false; } else setErr('email', false);
-  if (!asistencia)          { setErr('asistencia', true);valid = false; } else setErr('asistencia', false);
+  if (!nombre)             { setErr('nombre', true);    valid = false; } else setErr('nombre', false);
+  if (!apellidos)          { setErr('apellidos', true); valid = false; } else setErr('apellidos', false);
+  if (!isValidEmail(email)){ setErr('email', true);     valid = false; } else setErr('email', false);
+  if (!asistencia)         { setErr('asistencia', true);valid = false; } else setErr('asistencia', false);
   if (!valid) return;
 
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = 'Enviando...';
+  btn.disabled = true; btn.textContent = 'Enviando...';
 
   fetch(CONFIG.appsScriptUrl, {
-    method: 'POST', mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify({
-      action: 'rsvp',
-      nombre, apellidos, email, telefono, asistencia,
-      acompanantes: acomp,
-      alojamiento: session?.alojamiento || '',
-      alergias, hijos, mensaje,
-      usuario: session?.usuario || '',
-    }),
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ action: 'rsvp', nombre, apellidos, email, telefono, asistencia, acompanantes: acomp, alojamiento: session?.alojamiento || '', alergias, hijos, mensaje, usuario: session?.usuario || '' }),
   }).catch(err => console.warn(err));
 
-  // Marcar como confirmado en sesión local
-  if (session) {
-    session.confirmado = 1;
-    saveSession(session, !!localStorage.getItem('boda_s'));
-  }
-
+  if (session) { session.confirmado = 1; saveSession(session, !!localStorage.getItem(SESSION_KEY)); }
   document.getElementById('rsvpForm').style.display = 'none';
   document.getElementById('msg-success').style.display = 'block';
 });
 
-/* ══════════════════════════════════════════════════════
-   RESTAURAR SESIÓN AL CARGAR
-══════════════════════════════════════════════════════ */
+/* ══ RESTAURAR SESIÓN ══ */
 loadSession();
 if (session?.ok) enterPrivateZone(session);
 </script>
