@@ -99,9 +99,9 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
 @media (max-width: 600px) {
-  #hero .hero-over { white-space: normal; text-align: right; max-width: 180px; font-size: 0.56rem; }
-  #hero .hero-center { top: 22%; }
-  #hero .hero-names { top: 40%; }
+  #hero .hero-over { text-align: right; max-width: 180px; font-size: 0.52rem; top: 5rem; right: 6rem; }
+  #hero .hero-center { top: 50%; }
+  #hero .hero-names { top: 70%; font-size: clamp(3rem, 14vw, 5rem); }
 }
 
 /* ══ COUNTDOWN ══ */
