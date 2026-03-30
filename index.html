@@ -85,24 +85,65 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
 
 /* ══ HERO ══ */
-#hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; background-image: url('fotos/header.jpeg'); background-size: cover; background-position: center center; }
-#hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.25); pointer-events: none; z-index: 0; }
+#hero {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-image: url('fotos/header.jpeg');
+  background-size: cover;
+  background-position: center center;
+}
+#hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.18); pointer-events: none; z-index: 0; }
 #hero > * { position: relative; z-index: 1; }
-.hero-over { font-size: 0.66rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 3.5rem; animation: fadeUp 1.2s ease both; }
-.hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9.5rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.15s ease both; margin-top: 1rem; }
+.hero-over {
+  position: absolute;
+  top: 5.5rem; right: 2.5rem;
+  text-align: right;
+  font-size: 0.66rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(18,14,11,0.72);
+  max-width: 360px; line-height: 1.8;
+  animation: fadeUp 1.2s ease both;
+}
+.hero-center {
+  position: absolute;
+  top: 42%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  animation: fadeUp 1.2s 0.2s ease both;
+}
+.hero-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  letter-spacing: 0.2em;
+  color: rgba(18,14,11,0.78);
+  margin-bottom: 0.4rem;
+}
+.hero-loc {
+  font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(18,14,11,0.65);
+}
+.hero-names {
+  position: absolute;
+  top: 58%; left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 12vw, 9.5rem);
+  font-weight: 300; line-height: 0.85;
+  animation: fadeUp 1.2s 0.35s ease both;
+}
 .n1, .n2 { display: block; font-style: italic; color: var(--dark-sage); }
-.amp { display: block; font-size: 0.38em; color: rgba(255,255,255,0.6); font-style: normal; letter-spacing: 0.12em; margin: 0.2em 0; opacity: 0.9; }
-.hero-div { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 3rem 0 1.5rem; animation: fadeUp 1.2s 0.3s ease both; }
-.hero-div::before, .hero-div::after { content: ''; width: 70px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4)); }
-.hero-div::after { transform: scaleX(-1); }
-.gem { width: 6px; height: 6px; background: rgba(255,255,255,0.5); transform: rotate(45deg); }
-.hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); letter-spacing: 0.18em; color: white; animation: fadeUp 1.2s 0.4s ease both; }
-.hero-loc { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-top: 0.6rem; animation: fadeUp 1.2s 0.5s ease both; }
+.amp { display: block; font-size: 0.38em; color: rgba(18,14,11,0.55); font-style: normal; letter-spacing: 0.12em; margin: 0.2em 0; }
 .scroll-cue { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; animation: floatIt 2.5s ease-in-out infinite; }
-.scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: white; }
-.scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, white, transparent); }
+.scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(18,14,11,0.8); }
+.scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, rgba(18,14,11,0.6), transparent); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
+@media (max-width: 600px) {
+  .hero-over { top: 4.5rem; right: 1.2rem; font-size: 0.58rem; max-width: 220px; }
+  .hero-center { top: 36%; }
+  .hero-names { top: 52%; }
+}
 
 /* ══ COUNTDOWN ══ */
 #cuenta-atras { background: var(--deep); color: var(--cream); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
@@ -454,14 +495,15 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
 <section id="hero">
   <div class="hero-over">Con todo nuestro amor · Os invitamos a nuestra boda</div>
+  <div class="hero-center">
+    <div class="hero-date">Domingo · 6 de Diciembre de 2026</div>
+    <div class="hero-loc">Los Escullos · Almería, Cabo de Gata</div>
+  </div>
   <div class="hero-names">
     <span class="n1">Rocío</span>
     <span class="amp">&amp;</span>
     <span class="n2">David</span>
   </div>
-  <div class="hero-div"><div class="gem"></div></div>
-  <div class="hero-date">Domingo · 6 de Diciembre de 2026</div>
-  <div class="hero-loc">Los Escullos · Almería, Cabo de Gata</div>
   <div class="scroll-cue"><span>Desplázate</span><div class="scroll-line"></div></div>
 </section>
 
@@ -571,7 +613,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     </div>
     <div class="prog-grid">
       <div class="prog-day prog-day-viesab reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Viernes · Sábado</div><div class="prog-day-date">4–5 Diciembre · Llegada</div></div>
+        <div class="prog-day-head"><div class="prog-day-name">Viernes o Sábado</div><div class="prog-day-date">4–5 Diciembre · Llegada</div></div>
         <div class="prog-events">
           <div class="prog-event"><div class="prog-time">Todo el día</div><div class="prog-info"><h4>Llegada a Los Escullos</h4><p>Llega cuando puedas. Las autopistas A-7 y A-92 te llevan directos al Cabo de Gata.</p></div></div>
           <div class="prog-event"><div class="prog-time">Tarde</div><div class="prog-info"><h4>Instalarse y explorar la zona</h4><p>Ir juntándonos todos.</p></div></div>
