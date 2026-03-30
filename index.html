@@ -88,15 +88,14 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 #hero { min-height: 100vh; width: 100%; position: relative; overflow: hidden; background-image: url('fotos/header.jpeg'); background-size: cover; background-position: center center; }
 #hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.18); pointer-events: none; z-index: 0; }
 
-#hero .hero-over { position: absolute; z-index: 1; top: 7.5rem; right: 3rem; text-align: right; max-width: 500px; font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.72); animation: fadeUp 1.2s ease both; }
-#hero .hero-center { position: absolute; z-index: 1; top: 42%; left: 0; width: 100%; text-align: center; transform: translateY(-50%); animation: fadeUp 1.2s 0.2s ease both; }
+#hero .hero-over { position: absolute; z-index: 1; top: 7.5rem; right: 3rem; text-align: right; max-width: 500px; font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.72); animation: fadeUp 1.2s ease both; }
+#hero .hero-center { position: absolute; z-index: 1; top: 40%; left: 0; width: 100%; text-align: center; transform: translateY(-50%); animation: fadeUp 1.2s 0.2s ease both; }
 #hero .hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.2vw, 1.35rem); letter-spacing: 0.2em; color: rgba(18,14,11,0.78); margin-bottom: 0.4rem; }
 #hero .hero-loc { font-size: 0.68rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.65); }
 
-#hero .hero-names { position: absolute; z-index: 1; top: 55%; left: 0; width: 100%; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9.5rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.35s ease both; }
+#hero .hero-names { position: absolute; z-index: 1; top: 50%; left: 0; width: 100%; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 12vw, 9.5rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.35s ease both; }
 #hero .n1 { display: block; font-style: italic; color: var(--dark-sage); }
-/*#hero .amp { display: block; font-size: 0.38em; color: rgba(18,14,11,0.55); font-style: normal; letter-spacing: 0.12em; margin: 0.2em 0; }
-*/
+
 #hero .scroll-cue { position: absolute; z-index: 1; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; animation: floatIt 2.5s ease-in-out infinite; }
 #hero .scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(18,14,11,0.8); }
 #hero .scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, rgba(18,14,11,0.6), transparent); }
@@ -466,8 +465,6 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   </div>
   <div class="hero-names">
     <span class="n1">Rocío y David</span>
-    <span class="amp">&amp;</span>
-    <span class="n2">David</span>
   </div>
   <div class="scroll-cue"><span>Desplázate</span><div class="scroll-line"></div></div>
 </section>
