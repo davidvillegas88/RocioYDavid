@@ -87,22 +87,17 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 /* ══ HERO ══ */
 #hero { min-height: 100vh; width: 100%; position: relative; overflow: hidden; background-image: url('fotos/header.jpeg'); background-size: cover; background-position: center center; }
 #hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.18); pointer-events: none; z-index: 0; }
-#hero .hero-over { position: absolute; z-index: 1; top: 7.2rem; right: 3rem; text-align: right; max-width: 500px; font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.72); animation: fadeUp 1.2s ease both; }
-#hero .hero-center { position: absolute; z-index: 1; top: 41%; left: 0; width: 100%; text-align: center; transform: translateY(-50%); animation: fadeUp 1.2s 0.2s ease both; }
+#hero .hero-over { position: absolute; z-index: 1; top: 8vh; right: 3vw; text-align: right; max-width: 40vw; font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.72); animation: fadeUp 1.2s ease both; }
+#hero .hero-center { position: absolute; z-index: 1; top: 41vh; left: 0; width: 100%; text-align: center; transform: translateY(-50%); animation: fadeUp 1.2s 0.2s ease both; }
 #hero .hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.2vw, 1.35rem); font-weight: 500; letter-spacing: 0.2em; color: rgba(18,14,11,0.78); margin-bottom: 0.4rem; }
 #hero .hero-loc { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.65); }
-#hero .hero-names { position: absolute; z-index: 1; top: 52%; left: 0; width: 100%; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.35s ease both; }
+#hero .hero-names { position: absolute; z-index: 1; top: 52vh; left: 0; width: 100%; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.35s ease both; }
 #hero .n1 { display: block; font-style: italic; color: var(--dark-sage); }
 #hero .scroll-cue { position: absolute; z-index: 1; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; animation: floatIt 2.5s ease-in-out infinite; }
 #hero .scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(18,14,11,0.8); }
 #hero .scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, rgba(18,14,11,0.6), transparent); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
-@media (max-width: 600px) {
-  #hero .hero-over { text-align: right; max-width: 180px; font-size: 0.52rem; top: 5rem; right: 6rem; }
-  #hero .hero-center { top: 50%; }
-  #hero .hero-names { top: 70%; font-size: clamp(3rem, 14vw, 5rem); }
-}
 
 /* ══ COUNTDOWN ══ */
 #cuenta-atras { background: var(--deep); color: var(--cream); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
