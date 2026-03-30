@@ -760,21 +760,23 @@ document.getElementById('login-modal').addEventListener('click', function(e) {
 async function doLogin(e) {
   e.preventDefault();
   if (document.getElementById('hp_login').value) return;
+
   const usuario  = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value.trim();
   const remember = document.getElementById('loginRemember').checked;
   const btn      = document.getElementById('loginBtn');
   const errEl    = document.getElementById('loginError');
+
   if (!usuario || !password) return;
   btn.disabled = true; btn.textContent = 'Comprobando...';
   errEl.classList.remove('show');
+
   try {
-    const resp = await fetch(CONFIG.appsScriptUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ action: 'login', u: usuario, p: password }),
-    });
+    // ← GET en vez de POST: evita el problema de redirección CORS de Apps Script
+    const url  = `${CONFIG.appsScriptUrl}?action=login&u=${encodeURIComponent(usuario)}&p=${encodeURIComponent(password)}`;
+    const resp = await fetch(url);
     const data = await resp.json();
+
     if (data.ok) {
       saveSession(data, remember);
       closeLogin();
@@ -788,7 +790,9 @@ async function doLogin(e) {
   } catch(err) {
     errEl.textContent = 'Error de conexión. Inténtalo de nuevo.';
     errEl.classList.add('show');
+    console.error('Login error:', err);
   }
+
   btn.disabled = false; btn.textContent = 'Entrar';
 }
 
