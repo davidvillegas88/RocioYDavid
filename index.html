@@ -101,14 +101,15 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
   text-align: right;
   font-size: 0.66rem; letter-spacing: 0.28em; text-transform: uppercase;
   color: rgba(18,14,11,0.72);
-  max-width: 360px; line-height: 1.8;
+  max-width: 340px; line-height: 1.8;
   animation: fadeUp 1.2s ease both;
 }
 .hero-center {
   position: absolute;
-  top: 42%; left: 50%;
-  transform: translate(-50%, -50%);
+  top: 40%; left: 0; right: 0;
   text-align: center;
+  transform: translateY(-50%);
+  padding: 0 2rem;
   animation: fadeUp 1.2s 0.2s ease both;
 }
 .hero-date {
@@ -124,8 +125,7 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 }
 .hero-names {
   position: absolute;
-  top: 58%; left: 50%;
-  transform: translateX(-50%);
+  top: 57%; left: 0; right: 0;
   text-align: center;
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(4rem, 12vw, 9.5rem);
@@ -140,7 +140,7 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
 @media (max-width: 600px) {
-  .hero-over { top: 4.5rem; right: 1.2rem; font-size: 0.58rem; max-width: 220px; }
+  .hero-over { top: 4.5rem; right: 1.2rem; font-size: 0.56rem; max-width: 200px; }
   .hero-center { top: 36%; }
   .hero-names { top: 52%; }
 }
