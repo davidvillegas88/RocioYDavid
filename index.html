@@ -63,6 +63,13 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 /* ══ LOGIN MODAL ══ */
 #login-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(20,14,10,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem; }
 #login-modal.open { display: flex; }
+#login-modal.gate { display: flex; }
+#login-modal.gate .login-close { display: none; }
+body.locked { overflow: hidden; }
+body.locked #nav-public,
+body.locked #nav-private,
+body.locked #public-content,
+body.locked #private-screen { display: none !important; }
 .login-box { background: var(--cream); width: 100%; max-width: 420px; padding: 3rem 2.5rem; position: relative; animation: modalIn 0.35s ease; }
 @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .login-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 1.3rem; cursor: pointer; opacity: 0.4; transition: opacity 0.2s; color: var(--deep); }
@@ -655,7 +662,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   <div style="font-size:2.5rem;margin-bottom:1rem;opacity:0.4">🔐</div>
   <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;font-style:italic;color:var(--dark-sage);margin-bottom:0.6rem">Tu zona privada</div>
   <p style="font-size:0.88rem;opacity:0.6;line-height:1.7;max-width:400px;margin:0 auto 2rem">Accede con tu usuario y contraseña para ver tu alojamiento, confirmar asistencia y los datos del regalo.</p>
-  <button onclick="openLogin()" style="display:inline-block;padding:0.95rem 2.5rem;background:var(--dark-sage);color:white;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onmouseover="this.style.background='#3a5035'" onmouseout="this.style.background='var(--dark-sage)'">Acceder a mi zona →</button>
+  <button onclick="miZonaClick(event)" style="display:inline-block;padding:0.95rem 2.5rem;background:var(--dark-sage);color:white;border:none;font-family:'Jost',sans-serif;font-size:0.72rem;letter-spacing:0.25em;text-transform:uppercase;cursor:pointer;transition:background 0.3s" onmouseover="this.style.background='#3a5035'" onmouseout="this.style.background='var(--dark-sage)'">Acceder a mi zona →</button>
 </div>
 
 <footer>
@@ -764,11 +771,23 @@ function openLogin() {
   document.getElementById('login-modal').classList.add('open');
   setTimeout(() => document.getElementById('loginUser').focus(), 100);
 }
+function isGate() {
+  return document.getElementById('login-modal').classList.contains('gate');
+}
+function openGate() {
+  document.body.classList.add('locked');
+  document.getElementById('login-modal').classList.add('gate');
+  setTimeout(() => document.getElementById('loginUser').focus(), 100);
+}
+function closeGate() {
+  document.getElementById('login-modal').classList.remove('gate');
+  document.body.classList.remove('locked');
+}
 function closeLogin() {
   document.getElementById('login-modal').classList.remove('open');
 }
 document.getElementById('login-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeLogin();
+  if (e.target === this && !isGate()) closeLogin();
 });
 
 async function doLogin(e) {
@@ -787,9 +806,14 @@ async function doLogin(e) {
     const resp = await fetch(url);
     const data = await resp.json();
     if (data.ok) {
+      const desdeGate = isGate();
       saveSession(data, remember);
-      closeLogin();
-      enterPrivateZone(data);
+      if (desdeGate) {
+        closeGate();          // entra a la web normal
+      } else {
+        closeLogin();
+        enterPrivateZone(data);
+      }
     } else {
       errEl.textContent = data.error === 'rate_limited'
         ? 'Demasiados intentos. Espera unos minutos.'
@@ -853,7 +877,7 @@ function goPublic() {
   document.getElementById('nav-private').classList.remove('visible');
   window.scrollTo(0, 0);
 }
-function logout() { clearSession(); goPublic(); }
+function logout() { clearSession(); goPublic(); openGate(); }
 
 function switchTab(tabId) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1271,7 +1295,7 @@ function copyIBAN() {
 
 /* ══ RESTAURAR SESIÓN ══ */
 loadSession();
-if (session?.ok) enterPrivateZone(session);
+if (!session?.ok) openGate();
 </script>
 </body>
 </html>
