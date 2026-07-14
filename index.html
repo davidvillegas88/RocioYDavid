@@ -813,7 +813,7 @@ function enterPrivateZone(data) {
 
   document.getElementById('privNavName').textContent = primerNombre(data.nombre);
 
-  // Saludo personalizado
+  // Saludo personalizado (género leído de la columna P de la hoja)
   const tipo = parseInt(data.tipo_web) || 1;
   const p1   = primerNombre(data.nombre);
   const p2   = primerNombre(data.nombre_pareja || '');
@@ -821,7 +821,7 @@ function enterPrivateZone(data) {
   if (tipo === 2 && p2) {
     saludo = `Queridos ${p1} y ${p2}`;
   } else {
-    saludo = `Quer${esFemenino(p1) ? 'ida' : 'ido'} ${p1}`;
+    saludo = `Quer${parseInt(data.genero) === 1 ? 'ida' : 'ido'} ${p1}`;
   }
   document.getElementById('welcomeTitle').textContent = saludo;
 
