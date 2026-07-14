@@ -11,7 +11,7 @@
 //   · El login lee el rango E:T (16 col) y devuelve género y mensaje previo.
 // ════════════════════════════════════════════════════════════════
 
-const SHEET_ID    = '1Qb60KsIejcA4DMtgxdy7LHESdqcbjk6-jKfakzxInPE';
+const SHEET_ID = '14kSEOScPo3WSUk9AitH2BZaieUj-o_Z8';
 const NOVIOS_MAIL = 'rocioetdavid@gmail.com';
 
 // ── Utilidades ────────────────────────────────────────────────

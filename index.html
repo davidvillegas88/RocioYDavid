@@ -914,19 +914,35 @@ function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
 /* ══ ALOJAMIENTO ══ */
 function renderAlojamiento(data) {
   const container = document.getElementById('alojamientoContent');
-  if (!data.hotel_reservado) {
-    container.innerHTML = `<p style="text-align:center;opacity:0.5;font-size:0.9rem;padding:2rem 0">
-      Tu alojamiento se confirmará próximamente. Si tienes dudas, escríbenos en el formulario de confirmación.</p>`;
+
+  // CASO A: le hemos asignado hotel (L = TRUE) → mostramos Q
+  if (data.aloj_asignado) {
+    const hotel = (data.aloj_hotel || '').trim() || 'Hotel por confirmar';
+    container.innerHTML = `
+      <div class="aloj-asignado">
+        <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
+        <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
+        <h3>${hotel}</h3>
+        <p>Hemos reservado este alojamiento para ti. Si tienes cualquier duda, escríbenos en el formulario de confirmación.</p>
+      </div>`;
     return;
   }
-  const aloj = (data.alojamiento || '').trim() || 'Hotel por confirmar';
-  container.innerHTML = `
-    <div class="aloj-asignado">
-      <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
-      <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
-      <h3>${aloj}</h3>
-      <p>Hemos reservado alojamiento para vosotros. Si tienes cualquier duda, escríbenos en el formulario de confirmación.</p>
-    </div>`;
+
+  // CASO B: no tiene asignado → mostramos lo que declaró, o le invitamos a decirlo
+  const propio = (data.aloj_propio || '').trim();
+  if (propio) {
+    container.innerHTML = `
+      <div class="aloj-asignado">
+        <div class="aloj-asignado-badge">Tu alojamiento</div>
+        <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
+        <h3>${propio}</h3>
+        <p>Es el alojamiento que nos indicaste. Si cambia, actualízalo en el formulario de confirmación.</p>
+      </div>`;
+  } else {
+    container.innerHTML = `<p style="text-align:center;opacity:0.6;font-size:0.95rem;padding:2rem 0;line-height:1.7">
+      Todavía no tenemos tu alojamiento. Indícanoslo en el <strong>formulario de confirmación</strong> para que sepamos dónde te quedas y poder coordinar con otros invitados!.<br><br>
+      ¿No sabes dónde? Escríbenos y te proponemos opciones cerca del lugar. 🌊</p>`;
+  }
 }
 
 /* ══ RSVP DINÁMICO ══ */
@@ -1051,6 +1067,11 @@ function renderRsvpForm() {
       <label class="fg-label">Alergias o restricciones alimentarias</label>
       <input type="text" id="alergias" placeholder="Ej: vegetariano, sin gluten...">
     </div>
+    ${session.aloj_asignado ? '' : `
+    <div class="fg">
+      <label class="fg-label">¿Dónde te alojas? 🏨</label>
+      <input type="text" id="alojPropio" placeholder="Nombre del hotel o apartamento (o déjalo en blanco si aún no lo sabes)" value="${(session.aloj_propio || '').replace(/"/g, '&quot;')}">
+    </div>`}
     <div class="fg">
       <label class="fg-label">Mensaje para los novios 💌</label>
       <textarea id="mensaje" placeholder="Cuéntanos lo que quieras..."></textarea>
@@ -1158,7 +1179,7 @@ async function submitRsvp(e) {
     total_confirmados: total,
     menu_infantil:     menuInfantil,
     hijos_nombres:     hijosNombres,
-    alojamiento:       session.alojamiento || '',
+    aloj_propio: (document.getElementById('alojPropio')?.value || '').trim(),
     fila_excel:        session.fila_excel  || 0,
   };
 
