@@ -67,15 +67,14 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 #gate-cover { display: none; position: fixed; inset: 0; z-index: 500; background: linear-gradient(to bottom, #e8eef6 0%, #f4efe6 100%); }
 #gate-cover.visible { display: flex; align-items: center; justify-content: center; }
 #gate-cover picture, #gate-cover img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
-.gate-cover-btn { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 1rem 3.2rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; box-shadow: 0 6px 20px rgba(21,33,128,0.28); transition: background 0.3s, transform 0.3s; z-index: 2; }
-.gate-cover-btn:hover { background: var(--azul-dark); transform: translateX(-50%) translateY(-2px); }
-@media (max-width: 680px) { .gate-cover-btn { padding: 0.85rem 2.4rem; font-size: 0.65rem; bottom: 8%; } }
+.gate-cover-btn { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 1rem 3.2rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; box-shadow: 0 6px 20px rgba(21,33,128,0.28); transition: background 0.3s, transform 0.3s; z-index: 2; }
+.gate-cover-btn:hover { background: var(--azul-dark); transform: translate(-50%, calc(-50% - 2px)); }
+@media (max-width: 680px) { .gate-cover-btn { padding: 0.85rem 2.4rem; font-size: 0.65rem; } }
 
 /* ══ LOGIN MODAL ══ */
 #login-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(20,14,10,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem; }
 #login-modal.open { display: flex; }
-#login-modal.gate { display: flex; }
-#login-modal.gate .login-close { display: none; }
+#login-modal.gate { display: flex; background: rgba(21,33,128,0.20); backdrop-filter: blur(3px); }
 body.locked { overflow: hidden; }
 body.locked #nav-public,
 body.locked #nav-private,
@@ -883,10 +882,12 @@ function closeGate() {
   document.body.classList.remove('locked');
 }
 function closeLogin() {
-  document.getElementById('login-modal').classList.remove('open');
+  const m = document.getElementById('login-modal');
+  m.classList.remove('open');
+  m.classList.remove('gate');   // vuelve a la portada con la foto
 }
 document.getElementById('login-modal').addEventListener('click', function(e) {
-  if (e.target === this && !isGate()) closeLogin();
+  if (e.target === this) closeLogin();
 });
 
 async function doLogin(e) {
