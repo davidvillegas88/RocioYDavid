@@ -103,13 +103,13 @@ body.locked #private-screen { display: none !important; }
 .hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
 
 /* ══ HERO ══ */
-#hero { width: 100%; display: flex; align-items: center; justify-content: center; padding: 5.5rem 1.5rem 2.5rem; background: var(--cream); }
+#hero { width: 100%; display: flex; align-items: center; justify-content: center; padding: 5.5rem 1.5rem 1.5rem; background: var(--cream); }
 #hero .hero-img { width: 100%; max-width: 1080px; height: auto; display: block; animation: fadeUp 1.2s ease both; }
-@media (max-width: 680px) { #hero { padding: 5rem 0.8rem 1.5rem; } }
+@media (max-width: 680px) { #hero { padding: 5rem 0.8rem 1rem; } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ══ BIENVENIDA ══ */
-#bienvenida { background: var(--cream); text-align: center; padding: 5rem 2rem 4.5rem; }
+#bienvenida { background: var(--cream); text-align: center; padding: 3rem 2rem 4.5rem; }
 #bienvenida .inner { max-width: 640px; }
 .bienv-deco { display: flex; justify-content: center; margin-bottom: 2.2rem; }
 .bienv-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 300; line-height: 1.75; color: var(--deep); opacity: 0.85; margin-bottom: 1.1rem; }
@@ -434,7 +434,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     <source media="(max-width: 680px)" srcset="fotos/cover_boda_movil.png">
     <img src="fotos/cover_boda.png" alt="Rocío y David · 6 de diciembre de 2026">
   </picture>
-  <button type="button" class="gate-cover-btn" onclick="openGate()">Accede</button>
+  <button type="button" class="gate-cover-btn" onclick="openGate()">Descubre más</button>
 </div>
 
 <!-- ══ NAV PÚBLICA ══ -->
@@ -470,8 +470,8 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   <div class="login-box">
     <button class="login-close" aria-label="Cerrar" onclick="closeLogin()">✕</button>
     <div class="login-eyebrow">Zona privada</div>
-    <div class="login-title">Acceder</div>
-    <p class="login-sub">Introduce el usuario y contraseña que te hemos enviado para ver tu información personalizada.</p>
+    <div class="login-title">Descubre más</div>
+    <p class="login-sub">Introduce el usuario y contraseña que te hemos enviado para ver toda la información sobre la boda.</p>
     <form class="login-form" id="loginForm" onsubmit="doLogin(event)" autocomplete="on">
       <div class="hp-field" aria-hidden="true"><input type="text" id="hp_login" name="hp_login" tabindex="-1" autocomplete="off"></div>
       <div class="login-fg">
