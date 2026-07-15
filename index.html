@@ -7,7 +7,7 @@
 <meta name="description" content="Boda de Rocío y David · 6 de diciembre de 2026 · Castillo de Los Escullos, Almería">
 <meta property="og:title" content="Rocío & David · 06.12.2026">
 <meta property="og:description" content="¡Nos casamos! 6 de diciembre de 2026 · Los Escullos, Almería">
-<meta property="og:image" content="fotos/header.jpeg">
+<meta property="og:image" content="fotos/cover_boda.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -92,19 +92,9 @@ body.locked #private-screen { display: none !important; }
 .hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
 
 /* ══ HERO ══ */
-#hero { min-height: 100vh; width: 100%; position: relative; overflow: hidden; background-image: url('fotos/header.jpeg'); background-size: cover; background-position: center center; }
-#hero::before { content: ''; position: absolute; inset: 0; background: rgba(20,15,10,0.18); pointer-events: none; z-index: 0; }
-#hero .hero-over { position: absolute; z-index: 1; top: 8vh; right: 3vw; text-align: right; max-width: 40vw; font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.72); animation: fadeUp 1.2s ease both; }
-#hero .hero-center { position: absolute; z-index: 1; top: 41vh; left: 0; width: 100%; text-align: center; transform: translateY(-50%); animation: fadeUp 1.2s 0.2s ease both; }
-#hero .hero-date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.2vw, 1.35rem); font-weight: 500; letter-spacing: 0.2em; color: rgba(18,14,11,0.78); margin-bottom: 0.4rem; }
-#hero .hero-loc { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(18,14,11,0.65); }
-#hero .hero-names { position: absolute; z-index: 1; top: 52vh; left: 0; width: 100%; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; line-height: 0.85; animation: fadeUp 1.2s 0.35s ease both; }
-#hero .n1 { display: block; font-style: italic; color: var(--dark-sage); }
-#hero .scroll-cue { position: absolute; z-index: 1; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; animation: floatIt 2.5s ease-in-out infinite; }
-#hero .scroll-cue span { font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(18,14,11,0.8); }
-#hero .scroll-line { width: 1px; height: 42px; background: linear-gradient(to bottom, rgba(18,14,11,0.6), transparent); }
+#hero { min-height: 92vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 6rem 1.5rem 3rem; background: var(--cream); }
+#hero .hero-img { width: 100%; max-width: 1040px; height: auto; display: block; animation: fadeUp 1.2s ease both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes floatIt { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
 
 /* ══ COUNTDOWN ══ */
 #cuenta-atras { background: var(--deep); color: var(--cream); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
@@ -138,27 +128,6 @@ section { padding: 6rem 2rem; }
 .tl-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; margin-bottom: 0.4rem; }
 .tl-body p { font-size: 0.87rem; line-height: 1.85; opacity: 0.72; max-width: 500px; }
 
-/* ══ GALERÍA ══ */
-#galeria { background: var(--cream); }
-.gal-tag { text-align: center; margin-top: 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--dark-sage); opacity: 0.65; }
-.carousel-wrap { position: relative; overflow: hidden; border-radius: 3px; background: var(--blush); }
-.carousel-track { display: flex; transition: transform 0.6s cubic-bezier(.4,0,.2,1); will-change: transform; }
-.carousel-slide { min-width: 100%; position: relative; aspect-ratio: 16/9; overflow: hidden; }
-.carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.carousel-slide .gal-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.45; background: linear-gradient(145deg, var(--blush), var(--ivory)); }
-.carousel-slide .gal-ph .gal-ph-icon { font-size: 2.5rem; }
-.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(250,246,240,0.85); border: 1px solid rgba(184,149,106,0.3); color: var(--deep); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; z-index: 10; transition: background 0.25s; backdrop-filter: blur(6px); }
-.carousel-btn:hover { background: var(--cream); }
-.carousel-btn.prev { left: 1rem; }
-.carousel-btn.next { right: 1rem; }
-.carousel-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
-.carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sand); border: none; cursor: pointer; transition: background 0.3s, transform 0.3s; padding: 0; }
-.carousel-dot.active { background: var(--dark-sage); transform: scale(1.4); }
-#lb { display: none; position: fixed; inset: 0; z-index: 998; background: rgba(15,10,8,0.96); align-items: center; justify-content: center; cursor: pointer; }
-#lb.on { display: flex; }
-#lb img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
-#lb-x { position: absolute; top: 1.5rem; right: 2rem; color: #fff; font-size: 1.5rem; opacity: 0.5; }
-
 /* ══ LUGAR ══ */
 #lugar { background: var(--ivory); }
 .lugar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
@@ -178,7 +147,36 @@ section { padding: 6rem 2rem; }
 .lugar-foto-ph span:first-child { font-size: 1.8rem; }
 @media (max-width: 680px) { .lugar-grid { grid-template-columns: 1fr; } }
 
+/* ══ LUGAR · dos sedes ══ */
+.lugar-lead { text-align: center; max-width: 660px; margin: 0 auto 3.5rem; font-size: 0.95rem; line-height: 1.95; opacity: 0.78; }
+.lugar-lead strong { color: var(--dark-sage); font-weight: 500; }
+.venue + .venue { margin-top: 3.5rem; }
+.venue-tag { display: inline-block; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.85; margin-bottom: 0.7rem; }
+.venue-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3.2vw, 2rem); font-weight: 400; font-style: italic; color: var(--deep); margin-bottom: 1.1rem; line-height: 1.15; }
+@media (min-width: 681px) {
+  .lugar-grid.rev { direction: rtl; }
+  .lugar-grid.rev > * { direction: ltr; }
+}
+.lugar-distancia { display: flex; gap: 1rem; align-items: flex-start; max-width: 720px; margin: 3.5rem auto 0; padding: 1.4rem 1.6rem; background: rgba(74,99,68,0.06); border-left: 2px solid var(--dark-sage); }
+.lugar-distancia .ld-icon { font-size: 1.3rem; flex-shrink: 0; }
+.lugar-distancia p { font-size: 0.88rem; line-height: 1.85; opacity: 0.8; }
+
+/* ══ CÓMO LLEGAR ══ */
+#llegar { background: var(--cream); }
+.llegar-intro { text-align: center; max-width: 640px; margin: 0 auto 3rem; font-size: 0.9rem; line-height: 1.9; opacity: 0.72; }
+.llegar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.4rem; }
+.llegar-card { background: var(--ivory); border: 1px solid rgba(184,149,106,0.15); padding: 1.9rem 1.7rem; }
+.llegar-card-icon { font-size: 1.8rem; display: block; margin-bottom: 0.8rem; }
+.llegar-card .llegar-eye { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark-sage); opacity: 0.7; margin-bottom: 0.45rem; }
+.llegar-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 400; margin-bottom: 0.5rem; }
+.llegar-card p { font-size: 0.84rem; line-height: 1.75; opacity: 0.7; }
+.llegar-nota { margin-top: 2rem; display: flex; gap: 1rem; align-items: flex-start; background: rgba(184,149,106,0.08); border-left: 2px solid var(--gold); padding: 1.4rem 1.6rem; }
+.llegar-nota .ln-icon { font-size: 1.4rem; flex-shrink: 0; }
+.llegar-nota p { font-size: 0.88rem; line-height: 1.85; opacity: 0.82; }
+.llegar-nota strong { color: var(--dark-sage); font-weight: 500; }
+
 /* ══ PROGRAMA ══ */
+.prog-intro { text-align: center; max-width: 640px; margin: 0 auto 3rem; font-size: 0.9rem; line-height: 1.95; opacity: 0.74; }
 #programa { background: var(--cream); }
 .prog-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; gap: 1.4rem; }
 .prog-day-viesab { grid-column: 1; grid-row: 1; }
@@ -400,8 +398,8 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 <!-- ══ NAV PÚBLICA ══ -->
 <nav id="nav-public">
   <a href="#historia">Historia</a>
-  <a href="#galeria">Fotos</a>
   <a href="#lugar">El lugar</a>
+  <a href="#llegar">Cómo llegar</a>
   <a href="#programa">Programa</a>
   <a href="#faq">FAQ</a>
   <span class="nav-sep">·</span>
@@ -455,15 +453,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 <div id="public-content">
 
 <section id="hero">
-  <div class="hero-over">Con todo nuestro amor · Os invitamos a nuestra boda</div>
-  <div class="hero-center">
-    <div class="hero-date">Domingo · 6 de Diciembre de 2026</div>
-    <div class="hero-loc">Los Escullos · Almería, Cabo de Gata</div>
-  </div>
-  <div class="hero-names">
-    <span class="n1">Rocío y David</span>
-  </div>
-  <div class="scroll-cue"><span>Desplázate</span><div class="scroll-line"></div></div>
+  <img class="hero-img" src="fotos/cover_boda.png" alt="Rocío y David · 6 de diciembre de 2026">
 </section>
 
 <section id="cuenta-atras">
@@ -497,30 +487,6 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   </div>
 </section>
 
-<section id="galeria">
-  <div class="inner">
-    <div class="sec-head">
-      <div class="sec-eye">Momentos juntos</div>
-      <h2 class="sec-title">Nuestra Galería</h2>
-      <div class="deco"><div class="deco-d"></div></div>
-    </div>
-    <div class="carousel-wrap reveal" id="carouselWrap">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">📸</span></div></div>
-        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌿</span></div></div>
-        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌸</span></div></div>
-        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">🌅</span></div></div>
-        <div class="carousel-slide"><div class="gal-ph"><span class="gal-ph-icon">💑</span></div></div>
-      </div>
-      <button class="carousel-btn prev" id="carouselPrev">&#8592;</button>
-      <button class="carousel-btn next" id="carouselNext">&#8594;</button>
-    </div>
-    <div class="carousel-dots" id="carouselDots"></div>
-    <p class="gal-tag">Desde 2015</p>
-  </div>
-</section>
-<div id="lb"><span id="lb-x">✕</span><img id="lb-img" src="" alt=""></div>
-
 <section id="lugar">
   <div class="inner">
     <div class="sec-head">
@@ -528,24 +494,46 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
       <h2 class="sec-title">Los Escullos, Cabo de Gata</h2>
       <div class="deco"><div class="deco-d"></div></div>
     </div>
-    <div class="lugar-grid reveal">
+    <p class="lugar-lead reveal">Nos casamos en dos rincones del mismo Parque Natural, a pocos minutos el uno del otro: la <strong>ceremonia</strong> será en la iglesia del poblado de Rodalquilar, y después <strong>celebraremos todos juntos</strong> en el Hotel Los Escullos, con el mar de fondo.</p>
+
+    <!-- SEDE 1 · Ceremonia -->
+    <div class="lugar-grid venue reveal">
       <div class="lugar-text">
-        <p>Los Escullos es uno de esos lugares que parece guardado en secreto. Un pequeño núcleo de pescadores enclavado en el corazón del <strong>Parque Natural Cabo de Gata-Níjar</strong>, lejos del ruido, lejos de las multitudes, rodeado de paisaje volcánico, monte bajo y el azul intenso del Mediterráneo.</p>
-        <p>El parque es el espacio natural protegido más grande del Mediterráneo occidental, tierra de coladas volcánicas, acantilados de roca negra y calas de arena fina con aguas cristalinas. Un paisaje que no se parece a ningún otro en Europa, desértico y árido a los pies del mar.</p>
-        <p>Os esperamos con el mar de fondo y el sol de diciembre.</p>
+        <div class="venue-tag">⛪ La ceremonia</div>
+        <h3 class="venue-title">Iglesia del Inmaculado Corazón de María</h3>
+        <p>En pleno poblado minero de Rodalquilar se levanta esta pequeña iglesia, construida a mediados del siglo pasado por las gentes que trabajaban las minas de oro del valle. Su campanario blanco es una de las estampas más reconocibles del lugar, con el desierto volcánico y el mar como telón de fondo.</p>
+        <p>Es un rincón sencillo, íntimo y con mucha historia. Allí nos daremos el «sí, quiero».</p>
+        <div class="lugar-details">
+          <div class="lugar-detail-row">
+            <div class="lugar-detail-icon">📍</div>
+            <div class="lugar-detail-text">
+              <strong>Dirección</strong>
+              Rodalquilar, 04115 Níjar, Almería · Parque Natural Cabo de Gata-Níjar
+            </div>
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=Iglesia+del+Inmaculado+Coraz%C3%B3n+de+Mar%C3%ADa,+Rodalquilar,+Almer%C3%ADa" target="_blank" rel="noopener" class="lugar-map-link">Ver en Google Maps →</a>
+      </div>
+      <div class="lugar-fotos">
+        <div class="lugar-foto"><div class="lugar-foto-ph"><span>⛪</span><span>Iglesia de Rodalquilar</span></div></div>
+        <div class="lugar-foto"><div class="lugar-foto-ph"><span>🏜️</span><span>Rodalquilar</span></div></div>
+      </div>
+    </div>
+
+    <!-- SEDE 2 · Celebración -->
+    <div class="lugar-grid venue rev reveal">
+      <div class="lugar-text">
+        <div class="venue-tag">🥂 La celebración</div>
+        <h3 class="venue-title">Los Escullos, Cabo de Gata</h3>
+        <p>Los Escullos es un pequeño núcleo de pescadores en el corazón del <strong>Parque Natural Cabo de Gata-Níjar</strong>. Después de recorrer fincas preciosas y especializadas en bodas, llegamos hasta aquí: lejos del ruido y de las multitudes, rodeados de paisaje volcánico y del azul del Mediterráneo.</p>
+        <p>El día que vinimos a conocer el hotel, nos enamoramos. No es un sitio grandilocuente, y eso es justo lo que nos conquistó: es sencillo, tranquilo y familiar, y encaja con quienes somos y con lo que queremos transmitiros.</p>
+        <p>Queremos aprovechar para invitaros a conocer Almería, las raíces y la esencia de David, y celebrar juntos, en familia, este gran día.</p>
         <div class="lugar-details">
           <div class="lugar-detail-row">
             <div class="lugar-detail-icon">📍</div>
             <div class="lugar-detail-text">
               <strong>Dirección</strong>
               Hotel Los Escullos, Ctra. Los Escullos s/n, 04118 Níjar, Almería
-            </div>
-          </div>
-          <div class="lugar-detail-row">
-            <div class="lugar-detail-icon">🚗</div>
-            <div class="lugar-detail-text">
-              <strong>Cómo llegar — la mejor opción es en coche</strong>
-              Desde Almería capital son unos 30–40 minutos. No hay transporte público directo hasta Los Escullos, así que el coche es lo más cómodo y lo que os dará más libertad para explorar la zona.
             </div>
           </div>
         </div>
@@ -560,6 +548,46 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
         <div class="lugar-foto"><img src="fotos/escullos6.jpg" alt="Los Escullos" loading="lazy"></div>
       </div>
     </div>
+
+    <div class="lugar-distancia reveal">
+      <div class="ld-icon">🚗</div>
+      <p>De la iglesia de Rodalquilar al Hotel Los Escullos hay apenas <strong>8&nbsp;km, unos 15 minutos en coche</strong> por la carretera de la costa. Al terminar la ceremonia iremos todos juntos hasta el hotel para el cóctel y la celebración.</p>
+    </div>
+  </div>
+</section>
+
+<section id="llegar">
+  <div class="inner">
+    <div class="sec-head">
+      <div class="sec-eye">A pie de mapa</div>
+      <h2 class="sec-title">Cómo Llegar</h2>
+      <div class="deco"><div class="deco-d"></div></div>
+    </div>
+    <p class="llegar-intro">Estamos en el Cabo de Gata, al levante de Almería. No hay transporte público hasta Los Escullos, así que el coche es imprescindible para moverse por la zona. Estas son las mejores opciones:</p>
+    <div class="llegar-grid reveal">
+      <div class="llegar-card">
+        <span class="llegar-card-icon">🚗</span>
+        <div class="llegar-eye">La opción más cómoda</div>
+        <h4>En coche</h4>
+        <p>Desde Murcia o Alicante se baja por la A-7 (Autovía del Mediterráneo). Desde Almería capital son unos 30–40 minutos. El coche os dará total libertad para explorar las calas y pueblos del parque.</p>
+      </div>
+      <div class="llegar-card">
+        <span class="llegar-card-icon">✈️</span>
+        <div class="llegar-eye">Avión + coche</div>
+        <h4>En avión</h4>
+        <p>El Aeropuerto de Almería es el más cercano (unos 40 min hasta Los Escullos). Málaga (~2h&nbsp;45) y Alicante (~3h) suelen tener más vuelos y mejores precios. Desde cualquiera de ellos, alquilad coche.</p>
+      </div>
+      <div class="llegar-card">
+        <span class="llegar-card-icon">🚄</span>
+        <div class="llegar-eye">Tren + coche</div>
+        <h4>En AVE</h4>
+        <p>El AVE llega hasta Murcia del Carmen. Desde allí, coche de alquiler hasta el Cabo de Gata (unas 2 horas). Buena opción si preferís no volar.</p>
+      </div>
+    </div>
+    <div class="llegar-nota reveal">
+      <div class="ln-icon">🤝</div>
+      <p><strong>¿Vuelas a Málaga?</strong> En el formulario de confirmación os preguntaremos por vuestro aeropuerto y horarios para intentar juntaros y organizar <strong>coches compartidos</strong>. Cuantos más seáis en el camino, mejor.</p>
+    </div>
   </div>
 </section>
 
@@ -570,6 +598,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
       <h2 class="sec-title">El Programa</h2>
       <div class="deco"><div class="deco-d"></div></div>
     </div>
+    <p class="prog-intro reveal">Celebrar tanto amor en un solo día nos parecía imposible. Por eso queremos vivir todo el puente de diciembre rodeados de nuestra gente: llegar sin prisas, reencontrarnos, celebrar y despedirnos poco a poco.</p>
     <div class="prog-grid">
       <div class="prog-day prog-day-viesab reveal">
         <div class="prog-day-head"><div class="prog-day-name">Viernes o Sábado</div><div class="prog-day-date">4–5 Diciembre · Llegada</div></div>
@@ -1218,46 +1247,6 @@ document.querySelectorAll('.faq-q-btn').forEach(btn => {
     if (!wasOpen) item.classList.add('open');
   });
 });
-
-/* ══ CARRUSEL ══ */
-(function() {
-  const wrap   = document.getElementById('carouselWrap');
-  const track  = document.getElementById('carouselTrack');
-  const slides = track ? track.querySelectorAll('.carousel-slide') : [];
-  const dotsEl = document.getElementById('carouselDots');
-  if (!track || !slides.length) return;
-  let current = 0, autoTimer = null;
-  slides.forEach((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', `Foto ${i + 1}`);
-    d.addEventListener('click', () => { goTo(i); stopAuto(); startAuto(); });
-    dotsEl.appendChild(d);
-  });
-  function goTo(n) {
-    current = (n + slides.length) % slides.length;
-    track.style.transform = `translateX(-${current * 100}%)`;
-    dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  }
-  function startAuto() { if (!autoTimer) autoTimer = setInterval(() => goTo(current + 1), 4500); }
-  function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
-  document.getElementById('carouselPrev').addEventListener('click', () => { goTo(current - 1); stopAuto(); startAuto(); });
-  document.getElementById('carouselNext').addEventListener('click', () => { goTo(current + 1); stopAuto(); startAuto(); });
-  let touchX = 0;
-  track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const d = touchX - e.changedTouches[0].clientX;
-    if (Math.abs(d) > 40) { goTo(current + (d > 0 ? 1 : -1)); stopAuto(); startAuto(); }
-  });
-  track.addEventListener('click', () => {
-    const img = slides[current].querySelector('img');
-    if (img) { document.getElementById('lb-img').src = img.src; document.getElementById('lb').classList.add('on'); }
-  });
-  new IntersectionObserver(entries => {
-    entries.forEach(e => e.isIntersecting ? startAuto() : stopAuto());
-  }, { threshold: 0.3 }).observe(wrap);
-})();
-document.getElementById('lb').addEventListener('click', () => document.getElementById('lb').classList.remove('on'));
 
 /* ══ GRÁFICA DEL TIEMPO ══ */
 (function() {

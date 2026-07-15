@@ -1,17 +1,20 @@
 // ════════════════════════════════════════════════════════════════
-// BODA ROCÍO & DAVID — Apps Script v3.3
+// BODA ROCÍO & DAVID — Apps Script v3.4
 // ════════════════════════════════════════════════════════════════
 //
+// CAMBIOS v3.4 — Alojamiento:
+//   · L (12) = flag booleano: ¿le hemos ASIGNADO hotel? (TRUE/FALSE)
+//   · Q (17) = nombre del hotel asignado (solo si L = TRUE)
+//   · R (18) = alojamiento que el invitado declara en el RSVP (texto libre)
+//   El login devuelve: aloj_asignado (bool), aloj_hotel (Q), aloj_propio (R).
+//   El RSVP escribe en R (18) SOLO si L = FALSE. Nunca toca L ni Q.
+//
 // CAMBIOS v3.3:
-//   · FIX: el mensaje del invitado ya NO se escribe en la columna L
-//     (que contiene el alojamiento asignado). Ahora va a la columna T.
-//   · Nueva columna P = género (0 masculino / 1 femenino) → saludo
-//     "Querido" / "Querida" en el email cuando web = 1 (singular).
-//     Si web = 2 el saludo va en plural ("Queridos").
-//   · El login lee el rango E:T (16 col) y devuelve género y mensaje previo.
+//   · Mensaje del invitado → columna T (no L).
+//   · Columna P = género (0 M / 1 F) → "Querido"/"Querida".
 // ════════════════════════════════════════════════════════════════
 
-const SHEET_ID = '14kSEOScPo3WSUk9AitH2BZaieUj-o_Z8';
+const SHEET_ID    = '14kSEOScPo3WSUk9AitH2BZaieUj-o_Z8';
 const NOVIOS_MAIL = 'rocioetdavid@gmail.com';
 
 // ── Utilidades ────────────────────────────────────────────────
@@ -81,7 +84,7 @@ function doGet(e) {
       const ss  = SpreadsheetApp.openById(SHEET_ID);
       const inv = ss.getSheetByName('Invitados');
       return jsonResponse({
-        ok: true, status: 'online', version: '3.3',
+        ok: true, status: 'online', version: '3.4',
         sheet_found: !!inv,
       });
     } catch(err) {
@@ -89,12 +92,12 @@ function doGet(e) {
     }
   }
 
-  return jsonResponse({ ok: true, status: 'online', version: '3.1' });
+  return jsonResponse({ ok: true, status: 'online', version: '3.4' });
 }
 
 // ── LOGIN ─────────────────────────────────────────────────────
 //
-// Columnas del rango E:P (índice base 0):
+// Columnas del rango E:T (índice base 0):
 //   [0]  E  Nombre
 //   [1]  F  Acompañante  → vacío=0 | 1(num)=acomp opcional | texto=web2
 //   [2]  G  Hijos
@@ -102,13 +105,13 @@ function doGet(e) {
 //   [4]  I  Menú infantil
 //   [5]  J  Alergias
 //   [6]  K  Reserva Hotel
-//   [7]  L  Alojamiento asignado  ← NO ESCRIBIR AQUÍ desde el RSVP
+//   [7]  L  Alojamiento ASIGNADO (TRUE/FALSE)  ← flag, NO escribir desde RSVP
 //   [8]  M  Web (1 o 2)
 //   [9]  N  Usuario
 //  [10]  O  Password
 //  [11]  P  Género: 0 = masculino | 1 = femenino
-//  [12]  Q  (libre)
-//  [13]  R  (libre)
+//  [12]  Q  Hotel asignado (texto, solo si L = TRUE)  ← NO escribir desde RSVP
+//  [13]  R  Alojamiento declarado por el invitado (RSVP escribe aquí si L=FALSE)
 //  [14]  S  (libre)
 //  [15]  T  Mensaje del invitado (escrito por el RSVP)
 //
@@ -167,8 +170,17 @@ function handleLogin(usuario, password) {
           if (v === null || v === '' || v === false || v === undefined) return 0;
           const n = parseInt(v); return isNaN(n) ? (v ? 1 : 0) : n;
         })();
-        const hotelReserv = !!(fila[6]);
-        const alojamiento = (fila[7] || '').toString().trim();   // columna L
+        // (columna K "Reserva Hotel" ignorada en v3.4 — sustituida por L/Q/R)
+        // Alojamiento (nuevo esquema v3.4):
+        //   L (idx 7)  = flag booleano de asignación
+        //   Q (idx 12) = nombre del hotel asignado
+        //   R (idx 13) = lo que el invitado declaró en el RSVP
+        const alojAsignado = fila[7] === true
+                          || fila[7] === 'TRUE'
+                          || fila[7] === 'true'
+                          || fila[7] === 1;
+        const alojHotel  = (fila[12] || '').toString().trim();  // columna Q
+        const alojPropio = (fila[13] || '').toString().trim();  // columna R
         const genero      = parseInt(fila[11]) === 1 ? 1 : 0;    // columna P
         const mensajePrev = (fila[15] || '').toString().trim();  // columna T
         const tieneHijos  = hijos !== null && hijos !== '' &&
@@ -196,8 +208,9 @@ function handleLogin(usuario, password) {
           tipo_web:        tipoWeb,
           tiene_acomp:     tieneAcomp,
           tiene_hijos:     tieneHijos,
-          hotel_reservado: hotelReserv,
-          alojamiento:     alojamiento,
+          aloj_asignado:   alojAsignado,        // L (bool): ¿le asignamos hotel?
+          aloj_hotel:      alojHotel,           // Q: nombre del hotel asignado
+          aloj_propio:     alojPropio,          // R: lo que declaró el invitado
           genero:          genero,
           mensaje:         mensajePrev,
           fila_excel:      filaExcel,
@@ -245,12 +258,26 @@ function handleRsvp(data) {
     const genero = parseInt(inv.getRange(fila, 16).getValue()) === 1 ? 1 : 0;
 
     // H=8 confirmados | I=9 menús | J=10 alergias | T=20 mensaje
-    // OJO: la columna L (12) es el ALOJAMIENTO ASIGNADO. No se toca.
-    // OJO: la columna P (16) es el GÉNERO. Tampoco se toca.
+    // NO se tocan: L (12) asignación, P (16) género, Q (17) hotel asignado.
     inv.getRange(fila, 8).setValue(parseInt(data.total_confirmados) || 0);
     inv.getRange(fila, 9).setValue(parseInt(data.menu_infantil)     || 0);
     inv.getRange(fila, 10).setValue(data.alergias || '');
     inv.getRange(fila, 20).setValue(data.mensaje  || '');
+
+    // Alojamiento declarado por el invitado → R (18),
+    // SOLO si no le hemos asignado hotel (L = FALSE). Si L = TRUE, se ignora.
+    const lVal = inv.getRange(fila, 12).getValue();
+    const yaAsignado = lVal === true || lVal === 'TRUE' || lVal === 'true' || lVal === 1;
+    if (!yaAsignado) {
+      inv.getRange(fila, 18).setValue(data.aloj_propio || '');
+    }
+
+    // Alojamiento a mostrar en el email de confirmación:
+    //   si tiene hotel asignado (Q, col 17) → ese;
+    //   si no, lo que acaba de declarar (R).
+    const alojEmail = yaAsignado
+      ? (inv.getRange(fila, 17).getValue() || '').toString().trim()
+      : (data.aloj_propio || '').toString().trim();
 
     const tipo = parseInt(data.tipo_web) || 1;
     const p1   = primerNombre(data.nombre);
@@ -294,7 +321,7 @@ function handleRsvp(data) {
           nombre:        p1,
           nombre_pareja: tipo === 2 ? p2 : '',
           total:         data.total_confirmados,
-          alojamiento:   data.alojamiento || '—',
+          alojamiento:   alojEmail || '—',
           alergias:      data.alergias    || 'Ninguna',
           genero:        genero,
           tipo:          tipo,
@@ -302,7 +329,7 @@ function handleRsvp(data) {
         ScriptApp.newTrigger('processPendingEmails').timeBased().after(60000).create();
       } catch(triggerErr) {
         sendSaveTheDate(data.email, p1, tipo === 2 ? p2 : '',
-                        data.total_confirmados, data.alojamiento, data.alergias,
+                        data.total_confirmados, alojEmail, data.alergias,
                         genero, tipo);
       }
     }
