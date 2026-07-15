@@ -92,8 +92,9 @@ body.locked #private-screen { display: none !important; }
 .hp-field { opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; z-index: -1; overflow: hidden; }
 
 /* ══ HERO ══ */
-#hero { min-height: 92vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 6rem 1.5rem 3rem; background: var(--cream); }
-#hero .hero-img { width: 100%; max-width: 1040px; height: auto; display: block; animation: fadeUp 1.2s ease both; }
+#hero { width: 100%; display: flex; align-items: center; justify-content: center; padding: 5.5rem 1.5rem 2.5rem; background: var(--cream); }
+#hero .hero-img { width: 100%; max-width: 1080px; height: auto; display: block; animation: fadeUp 1.2s ease both; }
+@media (max-width: 680px) { #hero { padding: 5rem 0.8rem 1.5rem; } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ══ COUNTDOWN ══ */
@@ -453,7 +454,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 <div id="public-content">
 
 <section id="hero">
-  <img class="hero-img" src="fotos/cover_boda_painted.png" alt="Rocío y David · 6 de diciembre de 2026">
+  <img class="hero-img" src="fotos/cover_boda.png" alt="Rocío y David · 6 de diciembre de 2026">
 </section>
 
 <section id="cuenta-atras">
