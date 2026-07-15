@@ -109,12 +109,24 @@ body.locked #private-screen { display: none !important; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ══ BIENVENIDA ══ */
-#bienvenida { background: var(--cream); text-align: center; padding: 3rem 2rem 4.5rem; }
-#bienvenida .inner { max-width: 640px; }
-.bienv-deco { display: flex; justify-content: center; margin-bottom: 2.2rem; }
-.bienv-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 300; line-height: 1.75; color: var(--deep); opacity: 0.85; margin-bottom: 1.1rem; }
-.bienv-text strong { font-weight: 500; font-style: italic; color: var(--azul-dark); }
-.bienv-sign { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.9rem; color: var(--verde-titulo); margin-top: 1.9rem; }
+#bienvenida { position: relative; overflow: hidden; text-align: center; padding: 3rem 2rem 5rem;
+  background:
+    radial-gradient(ellipse 55% 42% at 16% 14%, rgba(21,33,128,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 86% 26%, rgba(175,199,150,0.16) 0%, transparent 62%),
+    radial-gradient(ellipse 70% 45% at 50% 104%, rgba(21,33,128,0.05) 0%, transparent 58%),
+    var(--cream);
+}
+#bienvenida .inner { max-width: 620px; position: relative; }
+.bienv-rings { display: flex; justify-content: center; margin-bottom: 2rem; color: var(--azul); }
+.bienv-rings svg { width: 68px; height: auto; opacity: 0.85; }
+.bienv-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15rem, 2.4vw, 1.5rem); font-weight: 300; line-height: 1.8; color: var(--deep); opacity: 0.88; margin-bottom: 1.1rem; }
+.bienv-text strong { font-weight: 500; font-style: italic; color: var(--azul); }
+.bienv-divider { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin: 2.4rem 0 1.7rem; }
+.bienv-divider::before, .bienv-divider::after { content: ''; width: 62px; height: 1px; }
+.bienv-divider::before { background: linear-gradient(to right, transparent, rgba(21,33,128,0.4)); }
+.bienv-divider::after { background: linear-gradient(to left, transparent, rgba(21,33,128,0.4)); }
+.bienv-diamond { width: 6px; height: 6px; background: var(--azul); transform: rotate(45deg); opacity: 0.55; }
+.bienv-sign { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; font-size: clamp(2.2rem, 5vw, 2.9rem); color: var(--azul); line-height: 1.1; }
 
 /* ══ COUNTDOWN ══ */
 #cuenta-atras { background: var(--deep); color: var(--cream); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
@@ -500,11 +512,16 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
 <section id="bienvenida">
   <div class="inner">
-    <div class="bienv-deco"><div class="deco-d"></div></div>
+    <div class="bienv-rings reveal" aria-hidden="true">
+      <svg viewBox="0 0 92 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="35" cy="25" rx="17.5" ry="18.5" stroke="currentColor" stroke-width="1.5"/>
+        <ellipse cx="57" cy="25" rx="17.5" ry="18.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
     <p class="bienv-text reveal">Querida familia, amigos y amigas:</p>
-    <p class="bienv-text reveal">Nos emociona mucho invitaros a nuestra boda.</p>
-    <p class="bienv-text reveal">El <strong>6 de diciembre de 2026</strong> nos casaremos en <strong>Los Escullos</strong>.</p>
+    <p class="bienv-text reveal">Nos emociona mucho invitaros a nuestra boda. El <strong>6 de diciembre de 2026</strong> nos casaremos en <strong>Los Escullos</strong>.</p>
     <p class="bienv-text reveal">Estamos deseando veros a todos allí.</p>
+    <div class="bienv-divider reveal" aria-hidden="true"><span class="bienv-diamond"></span></div>
     <div class="bienv-sign reveal">Rocío &amp; David</div>
   </div>
 </section>
