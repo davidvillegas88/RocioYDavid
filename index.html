@@ -64,13 +64,12 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .priv-tab.active { color: var(--blush); border-bottom-color: var(--rose); }
 
 /* ══ PORTADA DE ACCESO ══ */
-#gate-cover { display: none; position: fixed; inset: 0; z-index: 500; background: var(--deep); }
-#gate-cover.visible { display: block; }
-#gate-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-#gate-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(21,33,128,0.55) 0%, rgba(21,33,128,0) 38%); pointer-events: none; }
-.gate-cover-btn { position: absolute; left: 50%; bottom: 9%; transform: translateX(-50%); padding: 1rem 3.2rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, transform 0.3s; z-index: 2; }
+#gate-cover { display: none; position: fixed; inset: 0; z-index: 500; background: linear-gradient(to bottom, #e8eef6 0%, #f4efe6 100%); }
+#gate-cover.visible { display: flex; align-items: center; justify-content: center; }
+#gate-cover picture, #gate-cover img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+.gate-cover-btn { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 1rem 3.2rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; box-shadow: 0 6px 20px rgba(21,33,128,0.28); transition: background 0.3s, transform 0.3s; z-index: 2; }
 .gate-cover-btn:hover { background: var(--azul-dark); transform: translateX(-50%) translateY(-2px); }
-@media (max-width: 680px) { .gate-cover-btn { padding: 0.85rem 2.4rem; font-size: 0.65rem; bottom: 11%; } }
+@media (max-width: 680px) { .gate-cover-btn { padding: 0.85rem 2.4rem; font-size: 0.65rem; bottom: 8%; } }
 
 /* ══ LOGIN MODAL ══ */
 #login-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(20,14,10,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem; }
@@ -431,7 +430,10 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
 <!-- ══ PORTADA DE ACCESO ══ -->
 <div id="gate-cover">
-  <img src="fotos/cover_boda.png" alt="Rocío y David · 6 de diciembre de 2026">
+  <picture>
+    <source media="(max-width: 680px)" srcset="fotos/cover_boda_movil.png">
+    <img src="fotos/cover_boda.png" alt="Rocío y David · 6 de diciembre de 2026">
+  </picture>
   <button type="button" class="gate-cover-btn" onclick="openGate()">Accede</button>
 </div>
 
