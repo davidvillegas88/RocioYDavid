@@ -18,6 +18,7 @@
   --sage:      #8a9e85;
   --azul:      #152180;
   --azul-dark: #0f175a;
+  --azul-cielo: #7FA9CB;
   --verde-titulo: #98A089;
   --img-bg:    #F7F4EF;
   --ivory:     #f5ede2;
@@ -48,20 +49,20 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .nav-login-btn:hover { background: var(--azul-dark) !important; }
 
 /* ══ NAV PRIVADA ══ */
-#nav-private { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--deep); flex-direction: column; }
+#nav-private { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--azul-cielo); flex-direction: column; }
 #nav-private.visible { display: flex; }
-.priv-nav-top { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.priv-nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--blush); }
+.priv-nav-top { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.25); }
+.priv-nav-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: #ffffff; }
 .priv-nav-actions { display: flex; gap: 1rem; align-items: center; }
-.priv-back-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,201,184,0.5); background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: color 0.3s; }
-.priv-back-btn:hover { color: var(--blush); }
-.priv-logout-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(232,201,184,0.5); background: none; border: 1px solid rgba(232,201,184,0.15); padding: 0.25rem 0.7rem; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.3s; }
-.priv-logout-btn:hover { border-color: var(--rose); color: var(--rose); }
+.priv-back-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.8); background: none; border: none; cursor: pointer; font-family: 'Jost', sans-serif; transition: color 0.3s; }
+.priv-back-btn:hover { color: #ffffff; }
+.priv-logout-btn { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; background: none; border: 1px solid rgba(255,255,255,0.45); padding: 0.25rem 0.7rem; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.3s; }
+.priv-logout-btn:hover { border-color: #ffffff; background: rgba(255,255,255,0.15); }
 .priv-tabs { display: flex; justify-content: center; overflow-x: auto; scrollbar-width: none; }
 .priv-tabs::-webkit-scrollbar { display: none; }
-.priv-tab { padding: 0.8rem 1.5rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,201,184,0.45); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: 'Jost', sans-serif; white-space: nowrap; transition: color 0.3s, border-color 0.3s; }
-.priv-tab:hover { color: var(--blush); }
-.priv-tab.active { color: var(--blush); border-bottom-color: var(--rose); }
+.priv-tab { padding: 0.8rem 1.5rem; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: 'Jost', sans-serif; white-space: nowrap; transition: color 0.3s, border-color 0.3s; }
+.priv-tab:hover { color: #ffffff; }
+.priv-tab.active { color: #ffffff; border-bottom-color: #ffffff; }
 
 /* ══ PORTADA DE ACCESO ══ */
 #gate-cover { display: none; position: fixed; inset: 0; z-index: 500; background: #ffffff; }
@@ -70,6 +71,45 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 #gate-cover img { max-width: 100vw; max-height: 100vh; max-height: 100dvh; width: auto; height: auto; object-fit: contain; display: block; }
 .gate-cover-btn { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 0.9rem 2.6rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap; cursor: pointer; box-shadow: 0 6px 20px rgba(21,33,128,0.28); transition: background 0.3s, transform 0.3s; z-index: 2; }
 .gate-cover-btn:hover { background: var(--azul-dark); transform: translate(-50%, calc(-50% - 2px)); }
+/* ══ RSVP AMPLIADO ══ */
+.restr-detalle { background: white; border: 1px solid rgba(184,149,106,0.22); padding: 0.7rem 0.9rem; font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--deep); outline: none; border-radius: 0; }
+.restr-detalle:focus { border-color: var(--azul); }
+.transporte-row { gap: 1rem 1.4rem; }
+.rlbl.transporte-hl .check-box { border-color: var(--azul); box-shadow: 0 0 0 3px rgba(21,33,128,0.08); }
+.rlbl.transporte-hl { font-weight: 400; }
+.transporte-nota { font-size: 0.82rem; line-height: 1.7; opacity: 0.66; background: var(--ivory); border-left: 3px solid var(--azul); padding: 0.9rem 1.1rem; margin-top: 0.2rem; }
+.hijos-hint, .songs-hint { font-size: 0.78rem; opacity: 0.55; line-height: 1.6; margin-top: -0.2rem; }
+#hijos-boxes .hijo-row { flex-wrap: wrap; gap: 0.7rem 1rem; }
+.hijo-restr { background: white; border: 1px solid rgba(184,149,106,0.22); padding: 0.5rem 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.84rem; color: var(--deep); outline: none; border-radius: 0; appearance: none; -webkit-appearance: none; flex-shrink: 0; }
+.hijo-restr:focus { border-color: var(--azul); }
+.hijo-menu-lbl { flex-shrink: 0; }
+.hijo-remove { background: none; border: none; color: var(--rose); font-size: 1.4rem; line-height: 1; cursor: pointer; padding: 0 0.3rem; opacity: 0.55; transition: opacity 0.2s; margin-left: auto; }
+.hijo-remove:hover { opacity: 1; }
+/* Buscador de canciones */
+.song-slot { position: relative; margin-top: 0.6rem; }
+.song-input { width: 100%; background: white; border: 1px solid rgba(184,149,106,0.22); padding: 0.75rem 0.95rem; font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--deep); outline: none; border-radius: 0; transition: border-color 0.3s; }
+.song-input:focus { border-color: var(--azul); }
+.song-results { border: 1px solid rgba(184,149,106,0.22); border-top: none; background: white; max-height: 260px; overflow-y: auto; }
+.song-results:empty { display: none; }
+.song-status { padding: 0.7rem 0.95rem; font-size: 0.82rem; opacity: 0.55; }
+.song-result { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0.75rem; cursor: pointer; border-bottom: 1px solid rgba(184,149,106,0.1); transition: background 0.15s; }
+.song-result:last-child { border-bottom: none; }
+.song-result:hover { background: var(--ivory); }
+.song-result img, .song-chosen img { width: 42px; height: 42px; object-fit: cover; flex-shrink: 0; border-radius: 2px; }
+.song-noimg { width: 42px; height: 42px; background: var(--head-bg); flex-shrink: 0; border-radius: 2px; }
+.song-meta { flex: 1; min-width: 0; }
+.song-name { font-size: 0.88rem; color: var(--deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.song-artist { font-size: 0.76rem; opacity: 0.55; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.song-chosen { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0.75rem; background: var(--ivory); border: 1px solid rgba(21,33,128,0.25); margin-top: 0.6rem; }
+.song-clear { background: none; border: none; color: var(--rose); font-size: 1.3rem; line-height: 1; cursor: pointer; padding: 0 0.3rem; opacity: 0.6; transition: opacity 0.2s; }
+.song-clear:hover { opacity: 1; }
+/* Ya confirmado */
+.ya-confirmado { text-align: center; padding: 2.5rem 1.5rem; }
+.ya-confirmado .msg-icon { font-size: 2.6rem; color: var(--azul); margin-bottom: 0.8rem; }
+.ya-confirmado h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-style: italic; color: var(--verde-titulo); margin-bottom: 0.7rem; }
+.ya-confirmado p { font-size: 0.88rem; opacity: 0.65; line-height: 1.8; max-width: 420px; margin: 0 auto; }
+.ya-editar-btn { max-width: 300px; margin: 1.6rem auto 0; display: block; }
+
 @media (max-width: 680px) { .gate-cover-btn { top: 72%; padding: 0.8rem 2.2rem; font-size: 0.65rem; } }
 
 /* ══ LOGIN MODAL ══ */
@@ -787,11 +827,10 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
 
   <div class="tab-panel active" id="tab-bienvenida">
     <div class="bienvenida-wrap">
-      <div class="bienvenida-eye">Tu zona privada · Boda Rocío &amp; David</div>
+      <div class="bienvenida-eye">Boda Rocío &amp; David</div>
       <div class="bienvenida-title" id="welcomeTitle">Bienvenido</div>
       <div class="bienvenida-deco"><div class="bienvenida-deco-d"></div></div>
       <div class="bienvenida-msg" id="welcomeMsg"></div>
-      <p class="bienvenida-hint">Usa las pestañas de arriba para ver tu alojamiento, confirmar y ver el regalo</p>
     </div>
   </div>
 
@@ -850,7 +889,7 @@ const CONFIG = {
 
 /* ══ SESIÓN ══ */
 let session = null;
-const SESSION_KEY = 'boda_s';
+const SESSION_KEY = 'boda_s2';
 
 function loadSession() {
   try {
@@ -973,14 +1012,7 @@ function enterPrivateZone(data) {
 
   renderAlojamiento(data);
 
-  if (data.confirmado == 1) {
-    document.getElementById('rsvp-container').style.display = 'none';
-    document.getElementById('msg-success').style.display = 'block';
-  } else {
-    document.getElementById('rsvp-container').style.display = 'block';
-    document.getElementById('msg-success').style.display = 'none';
-    renderRsvpForm();
-  }
+  renderConfirmarTab(data);
 
   switchTab('tab-bienvenida');
   window.scrollTo(0, 0);
@@ -1039,7 +1071,7 @@ function renderAlojamiento(data) {
         <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
         <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
         <h3>${hotel}</h3>
-        <p>Hemos reservado este alojamiento para ti. Si tienes cualquier duda, escríbenos en el formulario de confirmación.</p>
+        <p>Hemos reservado este alojamiento para ti. Todavía no hay que hacer nada; en cuanto tengamos más información, os la daremos.</p>
       </div>`;
     return;
   }
@@ -1063,11 +1095,94 @@ function renderAlojamiento(data) {
 
 /* ══ RSVP DINÁMICO ══ */
 
-// Helper: genera un <label class="rlbl"> con check-box custom
-function rlbl(name, value, texto, isCheckbox) {
-  const cls = isCheckbox ? 'rlbl is-checkbox' : 'rlbl';
-  const tipo = isCheckbox ? 'checkbox' : 'radio';
-  return `<label class="${cls}"><input type="${tipo}" name="${name}" value="${value}"><span class="check-box"></span>${texto}</label>`;
+const RESTRICCIONES = ['Ninguna','Intolerante a la lactosa','Celíaco/a','Vegetariano/a','Vegano/a','Alergia'];
+
+function escapeHtml(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escapeAttr(s){return (s||'').toString().replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ── Estado de la pestaña Confirmar ── */
+function renderConfirmarTab(data) {
+  const cont    = document.getElementById('rsvp-container');
+  const success = document.getElementById('msg-success');
+  success.style.display = 'none';
+  cont.style.display = 'block';
+  if (parseInt(data.confirmado) === 1) {
+    cont.innerHTML = `
+      <div class="ya-confirmado">
+        <div class="msg-icon">✓</div>
+        <h3>¡Ya está confirmado!</h3>
+        <p>Tenemos vuestra confirmación guardada. Si necesitáis cambiar algo, podéis editarla cuando queráis.</p>
+        <button type="button" class="submit-btn ya-editar-btn" onclick="editarConfirmacion()">Editar mi confirmación</button>
+      </div>`;
+  } else {
+    renderRsvpForm();
+  }
+}
+function editarConfirmacion() {
+  document.getElementById('rsvp-container').innerHTML = '';
+  renderRsvpForm();
+}
+
+/* ── Campo de restricción reutilizable ── */
+function restriccionField(id, val) {
+  let selected = 'Ninguna', detalle = '';
+  const v = (val || '').toString().trim();
+  if (v) {
+    if (v.toLowerCase().indexOf('alergia') === 0) {
+      selected = 'Alergia';
+      detalle = v.replace(/^alergia:?\s*/i, '');
+    } else if (RESTRICCIONES.indexOf(v) !== -1) {
+      selected = v;
+    }
+  }
+  const opts = RESTRICCIONES.map(r =>
+    `<option value="${r}" ${r === selected ? 'selected' : ''}>${r}</option>`).join('');
+  return `
+    <div class="fg">
+      <label class="fg-label">Restricción alimentaria</label>
+      <select id="${id}" onchange="onRestriccionChange('${id}')">${opts}</select>
+      <input type="text" id="${id}-det" class="restr-detalle" placeholder="¿A qué eres alérgico/a?"
+             value="${escapeAttr(detalle)}" style="display:${selected === 'Alergia' ? 'block' : 'none'};margin-top:0.5rem">
+    </div>`;
+}
+function onRestriccionChange(id) {
+  const sel = document.getElementById(id);
+  const det = document.getElementById(id + '-det');
+  if (det) det.style.display = sel.value === 'Alergia' ? 'block' : 'none';
+}
+function restriccionValue(id) {
+  const sel = document.getElementById(id);
+  if (!sel) return '';
+  if (sel.value === 'Alergia') {
+    const d = (document.getElementById(id + '-det')?.value || '').trim();
+    return d ? 'Alergia: ' + d : 'Alergia';
+  }
+  return sel.value === 'Ninguna' ? '' : sel.value;
+}
+
+/* ── Bloque por persona ── */
+function personaBlock(num, nombreCorto, withAttendance, pf) {
+  pf = pf || {};
+  const att = withAttendance ? `
+      <div class="fg">
+        <label class="fg-label">¿Vienes? *</label>
+        <div class="radio-row">
+          <label class="rlbl"><input type="radio" name="asistencia${num}" value="si" ${pf.asiste === 'si' ? 'checked' : ''}><span class="check-box"></span>✓ &nbsp;Sí, allí estaré</label>
+          <label class="rlbl"><input type="radio" name="asistencia${num}" value="no" ${pf.asiste === 'no' ? 'checked' : ''}><span class="check-box"></span>✗ &nbsp;No podré</label>
+        </div>
+        <span class="field-error" id="err-asistencia${num}">Selecciona una opción.</span>
+      </div>` : '';
+  return `
+    <div class="rsvp-persona-block">
+      <div class="rsvp-persona-name">${escapeHtml(nombreCorto)}</div>
+      ${att}
+      <div class="fg">
+        <label class="fg-label">Nombre completo *</label>
+        <input type="text" id="nombre_completo${num}" placeholder="Nombre y apellidos" value="${escapeAttr(pf.nombre || '')}">
+        <span class="field-error" id="err-nombre_completo${num}">Escribe el nombre completo.</span>
+      </div>
+      ${restriccionField('restriccion' + num, pf.restriccion || '')}
+    </div>`;
 }
 
 function renderRsvpForm() {
@@ -1077,164 +1192,290 @@ function renderRsvpForm() {
   const p2     = primerNombre(session.nombre_pareja || '');
   const tieneH = !!session.tiene_hijos;
 
+  const pf1 = { nombre: session.nombre_completo1, asiste: session.asiste1, restriccion: session.restriccion1 };
+  const pf2 = { nombre: session.nombre_completo2, asiste: session.asiste2, restriccion: session.restriccion2 };
+
   let html = `<form class="form-stack" id="rsvpForm" novalidate>
     <div class="hp-field" aria-hidden="true">
       <input type="text" id="hp_rsvp" tabindex="-1" autocomplete="off">
     </div>`;
 
-  /* ── Caso 3: pareja dedicada (web=2) ── */
+  /* Personas */
   if (tipo === 2) {
-    html += `
-    <div class="rsvp-personas-grid">
-      <div class="rsvp-persona-block">
-        <div class="rsvp-persona-name">${p1}</div>
-        <div class="fg">
-          <label class="fg-label">¿Confirmas tu asistencia?</label>
-          <div class="radio-row">
-            ${rlbl('asistencia1','si','✓ &nbsp;Allí estaré')}
-            ${rlbl('asistencia1','no','✗ &nbsp;No podré ir')}
-          </div>
-          <span class="field-error" id="err-asistencia1">Selecciona una opción.</span>
-        </div>
-      </div>
-      <div class="rsvp-persona-block">
-        <div class="rsvp-persona-name">${p2}</div>
-        <div class="fg">
-          <label class="fg-label">¿Confirmas tu asistencia?</label>
-          <div class="radio-row">
-            ${rlbl('asistencia2','si','✓ &nbsp;Allí estaré')}
-            ${rlbl('asistencia2','no','✗ &nbsp;No podré ir')}
-          </div>
-          <span class="field-error" id="err-asistencia2">Selecciona una opción.</span>
-        </div>
-      </div>
+    html += `<div class="rsvp-personas-grid">
+      ${personaBlock(1, p1, true, pf1)}
+      ${personaBlock(2, p2 || 'Acompañante', true, pf2)}
     </div>`;
-
-  /* ── Caso 2: con opción de acompañante ── */
   } else if (acomp === 1) {
+    const traeAcomp = !!(session.nombre_completo2 || '').trim();
+    html += personaBlock(1, p1, true, pf1);
     html += `
-    <div class="fg">
-      <label class="fg-label">¿Confirmas tu asistencia? *</label>
-      <div class="radio-row">
-        ${rlbl('asistencia1','si','✓ &nbsp;¡Allí estaré!')}
-        ${rlbl('asistencia1','no','✗ &nbsp;No podré ir')}
-      </div>
-      <span class="field-error" id="err-asistencia1">Selecciona una opción.</span>
-    </div>
     <div class="fg">
       <label class="fg-label">¿Vienes con acompañante?</label>
       <div class="radio-row">
-        <label class="rlbl"><input type="radio" name="con_acomp" value="si" onchange="onAcompChange(this)"><span class="check-box"></span>Sí</label>
-        <label class="rlbl"><input type="radio" name="con_acomp" value="no" onchange="onAcompChange(this)"><span class="check-box"></span>No</label>
+        <label class="rlbl"><input type="radio" name="con_acomp" value="si" ${traeAcomp ? 'checked' : ''} onchange="onAcompChange(this)"><span class="check-box"></span>Sí</label>
+        <label class="rlbl"><input type="radio" name="con_acomp" value="no" ${traeAcomp ? '' : 'checked'} onchange="onAcompChange(this)"><span class="check-box"></span>No</label>
       </div>
     </div>
-    <div class="fg" id="acomp-nombre-wrap" style="display:none">
-      <label class="fg-label">Nombre completo del acompañante</label>
-      <input type="text" id="nombre_acompanante" placeholder="Nombre y apellidos">
+    <div id="acomp-block" style="display:${traeAcomp ? 'block' : 'none'}">
+      ${personaBlock(2, 'Tu acompañante', false, pf2)}
     </div>`;
-
-  /* ── Caso 1: sin acompañante ── */
   } else {
-    html += `
-    <div class="fg">
-      <label class="fg-label">¿Confirmas tu asistencia? *</label>
-      <div class="radio-row">
-        ${rlbl('asistencia1','si','✓ &nbsp;¡Allí estaré!')}
-        ${rlbl('asistencia1','no','✗ &nbsp;No podré ir')}
-      </div>
-      <span class="field-error" id="err-asistencia1">Selecciona una opción.</span>
-    </div>`;
+    html += personaBlock(1, p1, true, pf1);
   }
 
-  /* ── Hijos ── */
-  if (tieneH) {
-    html += `
-    <hr class="rsvp-section-divider">
-    <div class="fg">
-      <label class="fg-label">¿Vendrán los niños? 👶</label>
-      <div class="radio-row">
-        <label class="rlbl"><input type="radio" name="con_hijos" value="si" onchange="onHijosChange(this)"><span class="check-box"></span>Sí</label>
-        <label class="rlbl"><input type="radio" name="con_hijos" value="no" onchange="onHijosChange(this)"><span class="check-box"></span>No</label>
-      </div>
-    </div>
-    <div id="hijos-detalle" style="display:none">
-      <div class="fg">
-        <label class="fg-label">¿Cuántos niños vendrán?</label>
-        <input type="number" id="num_hijos" min="1" max="10" placeholder="Número de niños"
-               oninput="renderHijoBoxes(parseInt(this.value) || 0)">
-      </div>
-      <div id="hijos-boxes"></div>
-    </div>`;
-  }
-
-  /* ── Campos comunes ── */
+  /* Contacto */
   html += `
     <hr class="rsvp-section-divider">
     <div class="fg">
-      <label class="fg-label">Email *</label>
-      <input type="email" id="email" placeholder="tu@email.com">
+      <label class="fg-label">Email de contacto *</label>
+      <input type="email" id="email" placeholder="tu@email.com" value="${escapeAttr(session.email || '')}">
       <span class="field-error" id="err-email">Introduce un email válido.</span>
     </div>
     <div class="fg">
       <label class="fg-label">Teléfono (opcional)</label>
-      <input type="tel" id="telefono" placeholder="+34 600 000 000">
+      <input type="tel" id="telefono" placeholder="+34 600 000 000" value="${escapeAttr(session.telefono || '')}">
+    </div>`;
+
+  /* Logística de grupo */
+  const diaLl = session.dia_llegada || '';
+  const diaSa = session.dia_salida  || '';
+  const transp = session.transporte || 'coche';
+  const optLl = ['','Viernes','Sábado','Domingo'];
+  const optSa = ['','Domingo','Lunes','Martes'];
+  html += `
+    <hr class="rsvp-section-divider">
+    <div class="fg">
+      <label class="fg-label">¿Qué día llegáis a la boda?</label>
+      <select id="dia_llegada">
+        ${optLl.map(o => `<option value="${o}" ${o === diaLl ? 'selected' : ''}>${o || '— Selecciona —'}</option>`).join('')}
+      </select>
     </div>
     <div class="fg">
-      <label class="fg-label">Alergias o restricciones alimentarias</label>
-      <input type="text" id="alergias" placeholder="Ej: vegetariano, sin gluten...">
+      <label class="fg-label">¿Cuándo os marcháis?</label>
+      <select id="dia_salida">
+        ${optSa.map(o => `<option value="${o}" ${o === diaSa ? 'selected' : ''}>${o || '— Selecciona —'}</option>`).join('')}
+      </select>
     </div>
-    ${session.aloj_asignado ? '' : `
     <div class="fg">
-      <label class="fg-label">¿Dónde te alojas? 🏨</label>
-      <input type="text" id="alojPropio" placeholder="Nombre del hotel o apartamento (o déjalo en blanco si aún no lo sabes)" value="${(session.aloj_propio || '').replace(/"/g, '&quot;')}">
-    </div>`}
+      <label class="fg-label">¿Cómo viajáis hasta Almería?</label>
+      <div class="radio-row transporte-row">
+        <label class="rlbl transporte-hl"><input type="radio" name="transporte" value="coche" ${transp === 'coche' ? 'checked' : ''} onchange="onTransporteChange(this)"><span class="check-box"></span>🚗 Coche</label>
+        <label class="rlbl"><input type="radio" name="transporte" value="bus" ${transp === 'bus' ? 'checked' : ''} onchange="onTransporteChange(this)"><span class="check-box"></span>🚌 Bus</label>
+        <label class="rlbl"><input type="radio" name="transporte" value="tren" ${transp === 'tren' ? 'checked' : ''} onchange="onTransporteChange(this)"><span class="check-box"></span>🚆 Tren</label>
+        <label class="rlbl"><input type="radio" name="transporte" value="avion" ${transp === 'avion' ? 'checked' : ''} onchange="onTransporteChange(this)"><span class="check-box"></span>✈️ Avión</label>
+      </div>
+    </div>
+    <div class="fg" id="ciudad-wrap" style="display:${transp && transp !== 'coche' ? 'flex' : 'none'}">
+      <label class="fg-label">¿A qué ciudad llegáis?</label>
+      <input type="text" id="ciudad_llegada" placeholder="Ciudad / aeropuerto / estación" value="${escapeAttr(session.ciudad_llegada || '')}">
+    </div>
+    <p class="transporte-nota">Venís desde muchos sitios y nos encantaría saber cómo llegáis, por si alguien necesita ayuda para llegar hasta Los Escullos. ¡Os lo agradeceríamos un montón! 🌊</p>`;
+
+  /* Alojamiento propio (solo si no le hemos asignado hotel) */
+  if (!session.aloj_asignado) {
+    html += `
+    <div class="fg">
+      <label class="fg-label">¿Dónde os alojáis? 🏨</label>
+      <input type="text" id="alojPropio" placeholder="Hotel o apartamento (o en blanco si aún no lo sabéis)" value="${escapeAttr(session.aloj_propio || '')}">
+    </div>`;
+  }
+
+  /* Niños */
+  if (tieneH) {
+    html += `
+    <hr class="rsvp-section-divider">
+    <div class="fg">
+      <label class="fg-label">¿Vendréis con niños? 👶</label>
+      <div class="radio-row">
+        <label class="rlbl"><input type="radio" name="con_hijos" value="si" onchange="onHijosChange(this)"><span class="check-box"></span>Sí</label>
+        <label class="rlbl"><input type="radio" name="con_hijos" value="no" checked onchange="onHijosChange(this)"><span class="check-box"></span>No</label>
+      </div>
+    </div>
+    <div id="hijos-detalle" style="display:none">
+      <div id="hijos-boxes"></div>
+      <p class="hijos-hint">Escribe el nombre de cada niño/a y aparecerá una fila nueva automáticamente.</p>
+    </div>`;
+  }
+
+  /* Canciones */
+  html += `
+    <hr class="rsvp-section-divider">
+    <div class="fg">
+      <label class="fg-label">Vuestras 2 canciones para la fiesta 🎵</label>
+      <p class="songs-hint">Buscad y elegid las que no pueden faltar. Se sumarán a nuestra playlist.</p>
+      ${songSlot(1)}
+      ${songSlot(2)}
+    </div>`;
+
+  /* Mensaje */
+  html += `
     <div class="fg">
       <label class="fg-label">Mensaje para los novios 💌</label>
-      <textarea id="mensaje" placeholder="Cuéntanos lo que quieras..."></textarea>
+      <textarea id="mensaje" placeholder="Contadnos lo que queráis...">${escapeHtml(session.mensaje || '')}</textarea>
     </div>
     <button type="submit" class="submit-btn" id="submitBtn">Confirmar asistencia</button>
   </form>`;
 
   document.getElementById('rsvp-container').innerHTML = html;
   document.getElementById('rsvpForm').addEventListener('submit', submitRsvp);
+
+  /* Prefill (modo edición) */
+  prefillSong(1, session.cancion1);
+  prefillSong(2, session.cancion2);
+  if (tieneH && (session.ninos_resumen || '').trim()) {
+    const siH = document.querySelector('input[name="con_hijos"][value="si"]');
+    if (siH) { siH.checked = true; onHijosChange({ value: 'si' }); prefillHijos(session.ninos_resumen); }
+  }
 }
 
 function onAcompChange(radio) {
-  const wrap = document.getElementById('acomp-nombre-wrap');
-  if (wrap) wrap.style.display = radio.value === 'si' ? 'flex' : 'none';
+  const b = document.getElementById('acomp-block');
+  if (b) b.style.display = radio.value === 'si' ? 'block' : 'none';
+}
+function onTransporteChange(radio) {
+  const w = document.getElementById('ciudad-wrap');
+  if (w) w.style.display = radio.value !== 'coche' ? 'flex' : 'none';
 }
 
+/* ── Niños dinámicos ── */
 function onHijosChange(radio) {
   const det = document.getElementById('hijos-detalle');
-  if (det) det.style.display = radio.value === 'si' ? 'flex' : 'none';
-}
-
-function renderHijoBoxes(num) {
-  const container = document.getElementById('hijos-boxes');
-  if (!container) return;
-  let html = '';
-  for (let i = 1; i <= num; i++) {
-    html += `
-    <div class="hijo-row">
-      <div class="hijo-num">Niño ${i}</div>
-      <div class="hijo-fields">
-        <input type="text" class="hijo-nombre" placeholder="Nombre" data-idx="${i}">
-        <label class="rlbl is-checkbox">
-          <input type="checkbox" class="hijo-menu" data-idx="${i}">
-          <span class="check-box"></span>
-          Menú infantil
-        </label>
-      </div>
-    </div>`;
+  if (!det) return;
+  if (radio.value === 'si') {
+    det.style.display = 'flex';
+    const box = document.getElementById('hijos-boxes');
+    if (box && !box.children.length) addHijoRow();
+  } else {
+    det.style.display = 'none';
   }
-  container.innerHTML = html;
+}
+function hijoRestriccionSelect(cls, val) {
+  return `<select class="${cls}">` + RESTRICCIONES.map(r =>
+    `<option value="${r}" ${r === (val || 'Ninguna') ? 'selected' : ''}>${r}</option>`).join('') + `</select>`;
+}
+function addHijoRow(pf) {
+  pf = pf || {};
+  const box = document.getElementById('hijos-boxes');
+  if (!box) return;
+  const row = document.createElement('div');
+  row.className = 'hijo-row';
+  row.innerHTML = `
+    <input type="text" class="hijo-nombre" placeholder="Nombre del niño/a" value="${escapeAttr(pf.nombre || '')}" oninput="onHijoInput(this)">
+    ${hijoRestriccionSelect('hijo-restr', pf.restriccion)}
+    <label class="rlbl is-checkbox hijo-menu-lbl"><input type="checkbox" class="hijo-menu" ${pf.menu ? 'checked' : ''}><span class="check-box"></span>Menú infantil</label>
+    <button type="button" class="hijo-remove" onclick="removeHijoRow(this)" aria-label="Quitar">×</button>`;
+  box.appendChild(row);
+}
+function onHijoInput(input) {
+  const box = document.getElementById('hijos-boxes');
+  const rows = box.querySelectorAll('.hijo-row');
+  const last = rows[rows.length - 1];
+  if (input.closest('.hijo-row') === last && input.value.trim() !== '') addHijoRow();
+}
+function removeHijoRow(btn) {
+  const box = document.getElementById('hijos-boxes');
+  btn.closest('.hijo-row').remove();
+  if (!box.children.length) addHijoRow();
+}
+function prefillHijos(resumen) {
+  const box = document.getElementById('hijos-boxes');
+  if (box) box.innerHTML = '';
+  (resumen || '').split(';').map(s => s.trim()).filter(Boolean).forEach(part => {
+    const toks = part.split('·').map(t => t.trim()).filter(Boolean);
+    const nombre = toks.shift() || '';
+    let menu = false, restriccion = 'Ninguna';
+    toks.forEach(t => { if (t.toLowerCase() === 'menú infantil') menu = true; else restriccion = t; });
+    addHijoRow({ nombre, menu, restriccion });
+  });
+  addHijoRow();
 }
 
+/* ── Buscador de canciones (Spotify) ── */
+const songState = { 1: { results: [], chosen: null }, 2: { results: [], chosen: null } };
+const songTimers = {};
+function songSlot(slot) {
+  return `
+    <div class="song-slot" data-slot="${slot}">
+      <input type="text" class="song-input" placeholder="Busca una canción..." oninput="onSongInput(${slot}, this.value)" autocomplete="off">
+      <div class="song-results" id="song-results-${slot}"></div>
+      <div class="song-chosen" id="song-chosen-${slot}" style="display:none"></div>
+    </div>`;
+}
+function onSongInput(slot, q) {
+  clearTimeout(songTimers[slot]);
+  const box = document.getElementById('song-results-' + slot);
+  if (!q || q.trim().length < 2) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="song-status">Buscando…</div>';
+  songTimers[slot] = setTimeout(() => searchSongs(slot, q.trim()), 350);
+}
+async function searchSongs(slot, q) {
+  const box = document.getElementById('song-results-' + slot);
+  try {
+    const resp = await fetch(`${CONFIG.appsScriptUrl}?action=song_search&q=${encodeURIComponent(q)}`);
+    const data = await resp.json();
+    songState[slot].results = data.tracks || [];
+    if (!songState[slot].results.length) { box.innerHTML = '<div class="song-status">Sin resultados</div>'; return; }
+    box.innerHTML = songState[slot].results.map((t, i) =>
+      `<div class="song-result" onclick="chooseSong(${slot}, ${i})">
+        ${t.img ? `<img src="${escapeAttr(t.img)}" alt="">` : '<div class="song-noimg"></div>'}
+        <div class="song-meta"><div class="song-name">${escapeHtml(t.name)}</div><div class="song-artist">${escapeHtml(t.artist)}</div></div>
+      </div>`).join('');
+  } catch(err) {
+    box.innerHTML = '<div class="song-status">Error de búsqueda</div>';
+  }
+}
+function chooseSong(slot, idx) {
+  const t = songState[slot].results[idx];
+  if (!t) return;
+  songState[slot].chosen = t;
+  renderChosenSong(slot, t);
+  document.getElementById('song-results-' + slot).innerHTML = '';
+  const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
+  input.value = ''; input.style.display = 'none';
+}
+function renderChosenSong(slot, t) {
+  const chosen = document.getElementById('song-chosen-' + slot);
+  chosen.style.display = 'flex';
+  chosen.innerHTML = `
+    ${t.img ? `<img src="${escapeAttr(t.img)}" alt="">` : '<div class="song-noimg"></div>'}
+    <div class="song-meta"><div class="song-name">${escapeHtml(t.name)}</div><div class="song-artist">${escapeHtml(t.artist)}</div></div>
+    <button type="button" class="song-clear" onclick="clearSong(${slot})" aria-label="Quitar">×</button>`;
+}
+function clearSong(slot) {
+  songState[slot].chosen = null;
+  const chosen = document.getElementById('song-chosen-' + slot);
+  chosen.style.display = 'none'; chosen.innerHTML = '';
+  const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
+  input.style.display = 'block';
+}
+function prefillSong(slot, stored) {
+  const s = (stored || '').toString().trim();
+  if (!s) return;
+  let url = '', rest = s;
+  const parts = s.split('|');
+  if (parts.length > 1) { url = parts[1].trim(); rest = parts[0].trim(); }
+  let name = rest, artist = '';
+  const dash = rest.split('—');
+  if (dash.length > 1) { name = dash[0].trim(); artist = dash.slice(1).join('—').trim(); }
+  const t = { name, artist, url, img: '' };
+  songState[slot].chosen = t;
+  renderChosenSong(slot, t);
+  const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
+  if (input) input.style.display = 'none';
+}
+function songValue(slot) {
+  const c = songState[slot].chosen;
+  if (!c) return '';
+  return `${c.name}${c.artist ? ' — ' + c.artist : ''}${c.url ? ' | ' + c.url : ''}`;
+}
+
+/* ── Envío ── */
 async function submitRsvp(e) {
   e.preventDefault();
   if ((document.getElementById('hp_rsvp')?.value || '') !== '') return;
 
-  const tipo = parseInt(session.tipo_web) || 1;
+  const tipo  = parseInt(session.tipo_web)    || 1;
   const acomp = parseInt(session.tiene_acomp) || 0;
   let valid = true;
   const setErr = (id, show) => document.getElementById('err-' + id)?.classList.toggle('show', show);
@@ -1242,61 +1483,80 @@ async function submitRsvp(e) {
   const as1 = document.querySelector('input[name="asistencia1"]:checked')?.value || '';
   if (!as1) { setErr('asistencia1', true); valid = false; } else setErr('asistencia1', false);
 
-  let as2 = '';
+  const nc1 = (document.getElementById('nombre_completo1')?.value || '').trim();
+  if (as1 === 'si' && !nc1) { setErr('nombre_completo1', true); valid = false; } else setErr('nombre_completo1', false);
+
+  let as2 = '', nc2 = '', r2 = '';
   if (tipo === 2) {
     as2 = document.querySelector('input[name="asistencia2"]:checked')?.value || '';
     if (!as2) { setErr('asistencia2', true); valid = false; } else setErr('asistencia2', false);
+    nc2 = (document.getElementById('nombre_completo2')?.value || '').trim();
+    if (as2 === 'si' && !nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
+    r2 = restriccionValue('restriccion2');
+  } else if (acomp === 1) {
+    const con = document.querySelector('input[name="con_acomp"]:checked')?.value || 'no';
+    if (con === 'si') {
+      as2 = 'si';
+      nc2 = (document.getElementById('nombre_completo2')?.value || '').trim();
+      if (!nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
+      r2 = restriccionValue('restriccion2');
+    }
   }
 
   const email = (document.getElementById('email')?.value || '').trim().toLowerCase();
   if (!isValidEmail(email)) { setErr('email', true); valid = false; } else setErr('email', false);
 
-  if (!valid) return;
+  if (!valid) {
+    document.querySelector('.field-error.show')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
-  const conAcomp    = acomp === 1 ? (document.querySelector('input[name="con_acomp"]:checked')?.value || 'no') : 'no';
-  const nombreAcomp = conAcomp === 'si' ? (document.getElementById('nombre_acompanante')?.value.trim() || '') : '';
+  const r1 = restriccionValue('restriccion1');
 
-  const conHijos     = document.querySelector('input[name="con_hijos"]:checked')?.value || 'no';
-  const hijosNombres = [];
-  let menuInfantil   = 0;
+  const conHijos = document.querySelector('input[name="con_hijos"]:checked')?.value || 'no';
+  const ninos = [];
+  let menuInf = 0;
   if (conHijos === 'si') {
-    document.querySelectorAll('.hijo-row').forEach((row, idx) => {
-      const nombre = row.querySelector('.hijo-nombre')?.value.trim() || `Niño ${idx + 1}`;
-      const menu   = row.querySelector('.hijo-menu')?.checked || false;
-      if (menu) menuInfantil++;
-      hijosNombres.push({ nombre, menu_infantil: menu });
+    document.querySelectorAll('.hijo-row').forEach(row => {
+      const nombre = (row.querySelector('.hijo-nombre')?.value || '').trim();
+      if (!nombre) return;
+      const restr = row.querySelector('.hijo-restr')?.value || 'Ninguna';
+      const menu  = row.querySelector('.hijo-menu')?.checked || false;
+      if (menu) menuInf++;
+      ninos.push({ nombre, restriccion: restr === 'Ninguna' ? '' : restr, menu });
     });
   }
+  const ninosResumen = ninos.map(n =>
+    [n.nombre, n.menu ? 'menú infantil' : '', n.restriccion].filter(Boolean).join(' · ')
+  ).join('; ');
 
   let total = 0;
-  if (tipo === 2) {
-    if (as1 === 'si') total++;
-    if (as2 === 'si') total++;
-  } else {
-    if (as1 === 'si') total++;
-    if (conAcomp === 'si') total++;
-  }
-  total += hijosNombres.length;
+  if (as1 === 'si') total++;
+  if (as2 === 'si') total++;
+  total += ninos.length;
 
   const payload = {
     action: 'rsvp', hp_name: '',
-    usuario:            session.usuario,
-    nombre:             session.nombre,
-    nombre_pareja:      session.nombre_pareja || '',
-    tipo_web:           tipo,
-    asistencia1:        as1,
-    asistencia2:        as2,
-    con_acompanante:    conAcomp,
-    nombre_acompanante: nombreAcomp,
+    usuario:       session.usuario,
+    nombre:        session.nombre,
+    nombre_pareja: session.nombre_pareja || '',
+    tipo_web:      tipo,
+    fila_excel:    session.fila_excel || 0,
+    nombre_completo1: nc1, asiste1: as1, restriccion1: r1,
+    nombre_completo2: nc2, asiste2: as2, restriccion2: r2,
     email,
-    telefono:  (document.getElementById('telefono')?.value || '').trim(),
-    alergias:  (document.getElementById('alergias')?.value  || '').trim(),
-    mensaje:   (document.getElementById('mensaje')?.value   || '').trim(),
+    telefono:      (document.getElementById('telefono')?.value || '').trim(),
+    dia_llegada:   document.getElementById('dia_llegada')?.value || '',
+    dia_salida:    document.getElementById('dia_salida')?.value || '',
+    transporte:    document.querySelector('input[name="transporte"]:checked')?.value || '',
+    ciudad_llegada:(document.getElementById('ciudad_llegada')?.value || '').trim(),
+    cancion1:      songValue(1),
+    cancion2:      songValue(2),
+    aloj_propio:   (document.getElementById('alojPropio')?.value || '').trim(),
+    mensaje:       (document.getElementById('mensaje')?.value || '').trim(),
+    ninos, ninos_resumen: ninosResumen,
     total_confirmados: total,
-    menu_infantil:     menuInfantil,
-    hijos_nombres:     hijosNombres,
-    aloj_propio: (document.getElementById('alojPropio')?.value || '').trim(),
-    fila_excel:        session.fila_excel  || 0,
+    menu_infantil: menuInf,
   };
 
   const btn = document.getElementById('submitBtn');
@@ -1307,10 +1567,22 @@ async function submitRsvp(e) {
     body: JSON.stringify(payload),
   }).catch(err => console.warn(err));
 
-  session.confirmado = 1;
+  Object.assign(session, {
+    confirmado: 1,
+    nombre_completo1: nc1, asiste1: as1, restriccion1: r1,
+    nombre_completo2: nc2, asiste2: as2, restriccion2: r2,
+    email, telefono: payload.telefono,
+    dia_llegada: payload.dia_llegada, dia_salida: payload.dia_salida,
+    transporte: payload.transporte, ciudad_llegada: payload.ciudad_llegada,
+    cancion1: payload.cancion1, cancion2: payload.cancion2,
+    aloj_propio: payload.aloj_propio, mensaje: payload.mensaje,
+    ninos_resumen: ninosResumen,
+  });
   saveSession(session, !!localStorage.getItem(SESSION_KEY));
+
   document.getElementById('rsvp-container').style.display = 'none';
   document.getElementById('msg-success').style.display = 'block';
+  document.getElementById('private-screen').scrollTo(0, 0);
 }
 
 /* ══ COUNTDOWN ══ */

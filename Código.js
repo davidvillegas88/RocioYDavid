@@ -1,21 +1,33 @@
 // ════════════════════════════════════════════════════════════════
-// BODA ROCÍO & DAVID — Apps Script v3.4
+// BODA ROCÍO & DAVID — Apps Script v3.5
 // ════════════════════════════════════════════════════════════════
 //
-// CAMBIOS v3.4 — Alojamiento:
-//   · L (12) = flag booleano: ¿le hemos ASIGNADO hotel? (TRUE/FALSE)
-//   · Q (17) = nombre del hotel asignado (solo si L = TRUE)
-//   · R (18) = alojamiento que el invitado declara en el RSVP (texto libre)
-//   El login devuelve: aloj_asignado (bool), aloj_hotel (Q), aloj_propio (R).
-//   El RSVP escribe en R (18) SOLO si L = FALSE. Nunca toca L ni Q.
+// CAMBIOS v3.5 — Formulario ampliado + buscador Spotify:
+//   · Mensaje → columna J (antes T). Las alergias dejan de ir en J.
+//   · Datos por persona y logística de grupo a partir de la S.
+//   · Nueva acción GET "song_search" (buscador de canciones Spotify).
 //
-// CAMBIOS v3.3:
-//   · Mensaje del invitado → columna T (no L).
-//   · Columna P = género (0 M / 1 F) → "Querido"/"Querida".
+//   MAPA DE COLUMNAS (1-based):
+//     H(8)  total confirmados        I(9)  nº menús infantiles
+//     J(10) mensaje para los novios  R(18) alojamiento propio (si L=FALSE)
+//     S(19) nombre completo 1        T(20) ¿asiste 1? (Sí/No)
+//     U(21) restricción 1            V(22) nombre completo 2
+//     W(23) ¿asiste 2? (Sí/No)       X(24) restricción 2
+//     Y(25) email                    Z(26) teléfono
+//     AA(27) día de llegada          AB(28) día de salida
+//     AC(29) cómo viajan             AD(30) ciudad de llegada
+//     AE(31) canción 1               AF(32) canción 2
+//     AG(33) niños (resumen)
+//   Intactas: K,L,M,N,O,P,Q (reserva, flag aloj, web, user, pass, género, hotel).
 // ════════════════════════════════════════════════════════════════
 
 const SHEET_ID    = '14kSEOScPo3WSUk9AitH2BZaieUj-o_Z8';
 const NOVIOS_MAIL = 'rocioetdavid@gmail.com';
+const TOTAL_COLS  = 33; // hasta AG
+
+// ── Spotify (rellena estos dos con los datos de tu app) ───────
+const SPOTIFY_CLIENT_ID     = '37d9ecff60d346848a2d707ed9a43d57';
+const SPOTIFY_CLIENT_SECRET = '7a90c40c5b324bbfb33e80e13c136c69';
 
 // ── Utilidades ────────────────────────────────────────────────
 
@@ -30,6 +42,11 @@ function normalize(str) {
 
 function primerNombre(str) {
   return (str || '').toString().trim().split(' ')[0];
+}
+
+function ensureColumns(sheet, needed) {
+  const max = sheet.getMaxColumns();
+  if (max < needed) sheet.insertColumnsAfter(max, needed - max);
 }
 
 // ── Rate limiting ─────────────────────────────────────────────
@@ -75,16 +92,15 @@ function doGet(e) {
   const params = e && e.parameter ? e.parameter : {};
   const action = (params.action || '').toLowerCase();
 
-  if (action === 'login') {
-    return handleLogin(params.u, params.p);
-  }
+  if (action === 'login')       return handleLogin(params.u, params.p);
+  if (action === 'song_search') return handleSongSearch(params.q);
 
   if (action === 'ping') {
     try {
       const ss  = SpreadsheetApp.openById(SHEET_ID);
       const inv = ss.getSheetByName('Invitados');
       return jsonResponse({
-        ok: true, status: 'online', version: '3.4',
+        ok: true, status: 'online', version: '3.5',
         sheet_found: !!inv,
       });
     } catch(err) {
@@ -92,32 +108,24 @@ function doGet(e) {
     }
   }
 
-  return jsonResponse({ ok: true, status: 'online', version: '3.4' });
+  return jsonResponse({ ok: true, status: 'online', version: '3.5' });
 }
 
 // ── LOGIN ─────────────────────────────────────────────────────
 //
-// Columnas del rango E:T (índice base 0):
-//   [0]  E  Nombre
-//   [1]  F  Acompañante  → vacío=0 | 1(num)=acomp opcional | texto=web2
-//   [2]  G  Hijos
-//   [3]  H  Confirmación
-//   [4]  I  Menú infantil
-//   [5]  J  Alergias
-//   [6]  K  Reserva Hotel
-//   [7]  L  Alojamiento ASIGNADO (TRUE/FALSE)  ← flag, NO escribir desde RSVP
-//   [8]  M  Web (1 o 2)
-//   [9]  N  Usuario
-//  [10]  O  Password
-//  [11]  P  Género: 0 = masculino | 1 = femenino
-//  [12]  Q  Hotel asignado (texto, solo si L = TRUE)  ← NO escribir desde RSVP
-//  [13]  R  Alojamiento declarado por el invitado (RSVP escribe aquí si L=FALSE)
-//  [14]  S  (libre)
-//  [15]  T  Mensaje del invitado (escrito por el RSVP)
+// Rango leído: E:AG (29 columnas, índices base 0 desde E):
+//   0 E nombre            1 F acompañante     2 G hijos
+//   3 H total confirm.    4 I menú infantil   5 J mensaje
+//   6 K reserva           7 L aloj asignado   8 M web
+//   9 N usuario          10 O password       11 P género
+//  12 Q hotel asignado   13 R aloj propio     14 S nombre completo 1
+//  15 T asiste 1         16 U restricción 1  17 V nombre completo 2
+//  18 W asiste 2         19 X restricción 2  20 Y email
+//  21 Z teléfono         22 AA día llegada   23 AB día salida
+//  24 AC transporte      25 AD ciudad        26 AE canción 1
+//  27 AF canción 2       28 AG niños resumen
 //
-// Bloques:
-//   Rocío: filas 17-84  → getRange(17, 5, 68, 16)
-//   David: filas 88-156 → getRange(88, 5, 69, 16)
+// Bloques:  Rocío: filas 17-84   ·   David: filas 88-156
 
 function handleLogin(usuario, password) {
   try {
@@ -132,64 +140,56 @@ function handleLogin(usuario, password) {
     const inv = ss.getSheetByName('Invitados');
     if (!inv) return jsonResponse({ ok: false, error: 'sheet_not_found' });
 
+    // Lectura defensiva: si la hoja aún no tiene todas las columnas,
+    // leemos hasta donde llegue y el resto se rellena con ''.
+    const maxCols = inv.getMaxColumns();
+    const readW   = Math.min(29, Math.max(1, maxCols - 4));
+
     const bloques = [
-      { rango: inv.getRange(17, 5, 68, 16), offset: 17 },
-      { rango: inv.getRange(88, 5, 69, 16), offset: 88 },
+      { rango: inv.getRange(17, 5, 68, readW), offset: 17 },
+      { rango: inv.getRange(88, 5, 69, readW), offset: 88 },
     ];
 
     const usuarioNorm = normalize(usuario);
     const passwordStr = (password || '').toString().trim();
-
-    console.log('Login attempt: ' + usuarioNorm);
 
     for (const bloque of bloques) {
       const valores = bloque.rango.getValues();
 
       for (let i = 0; i < valores.length; i++) {
         const fila = valores[i];
+        const g = idx => (idx < fila.length && fila[idx] != null) ? fila[idx] : '';
 
-        const userCol = normalize(fila[9]);
+        const userCol = normalize(g(9));
         if (!userCol) continue;
         if (userCol !== usuarioNorm) continue;
 
-        const pwCol = (fila[10] || '').toString().trim();
+        const pwCol = (g(10) || '').toString().trim();
         if (pwCol !== passwordStr) {
-          console.log('Password incorrecto para: ' + userCol);
           return jsonResponse({ ok: false, error: 'wrong_password' });
         }
 
         const filaExcel = bloque.offset + i;
-        const nombre    = (fila[0] || '').toString().trim();
+        const nombre    = (g(0) || '').toString().trim();
         const acompRaw  = fila[1];
         const acomp     = acompRaw !== null && acompRaw !== undefined
                           ? String(acompRaw).trim() : '';
-        const hijos     = fila[2];
-        const tipoWeb   = (() => { const v = parseInt(fila[8]); return isNaN(v) ? 1 : v; })();
+        const hijos     = g(2);
+        const tipoWeb   = (() => { const v = parseInt(g(8)); return isNaN(v) ? 1 : v; })();
         const confirmado = (() => {
-          const v = fila[3];
+          const v = g(3);
           if (v === null || v === '' || v === false || v === undefined) return 0;
           const n = parseInt(v); return isNaN(n) ? (v ? 1 : 0) : n;
         })();
-        // (columna K "Reserva Hotel" ignorada en v3.4 — sustituida por L/Q/R)
-        // Alojamiento (nuevo esquema v3.4):
-        //   L (idx 7)  = flag booleano de asignación
-        //   Q (idx 12) = nombre del hotel asignado
-        //   R (idx 13) = lo que el invitado declaró en el RSVP
-        const alojAsignado = fila[7] === true
-                          || fila[7] === 'TRUE'
-                          || fila[7] === 'true'
-                          || fila[7] === 1;
-        const alojHotel  = (fila[12] || '').toString().trim();  // columna Q
-        const alojPropio = (fila[13] || '').toString().trim();  // columna R
-        const genero      = parseInt(fila[11]) === 1 ? 1 : 0;    // columna P
-        const mensajePrev = (fila[15] || '').toString().trim();  // columna T
+
+        const alojAsignado = g(7) === true || g(7) === 'TRUE' || g(7) === 'true' || g(7) === 1;
+        const alojHotel  = (g(12) || '').toString().trim();  // Q
+        const alojPropio = (g(13) || '').toString().trim();  // R
+        const genero      = parseInt(g(11)) === 1 ? 1 : 0;    // P
+        const mensajePrev = (g(5)  || '').toString().trim();  // J (mensaje)
         const tieneHijos  = hijos !== null && hijos !== '' &&
                             hijos !== false && hijos !== 0 && hijos !== undefined;
 
-        // Casos de acompañante:
-        // 0 = sin acompañante (F vacío)
-        // 1 = acompañante opcional (F = 1 numérico)
-        // 2 = pareja dedicada (web=2, F tiene nombre)
         const tieneAcomp = (() => {
           if (tipoWeb === 2) return 2;
           if (acomp === '1' || acompRaw === 1 || acompRaw === 1.0) return 1;
@@ -197,7 +197,13 @@ function handleLogin(usuario, password) {
           return 0;
         })();
 
-        console.log('Login OK: ' + nombre + ' (fila ' + filaExcel + ', tipo=' + tipoWeb + ', acomp=' + tieneAcomp + ')');
+        // Valores previos del RSVP (para editar): S..AG
+        const asiste = v => {
+          const s = (v || '').toString().trim().toLowerCase();
+          if (s === 'sí' || s === 'si') return 'si';
+          if (s === 'no') return 'no';
+          return '';
+        };
 
         return jsonResponse({
           ok:              true,
@@ -208,17 +214,32 @@ function handleLogin(usuario, password) {
           tipo_web:        tipoWeb,
           tiene_acomp:     tieneAcomp,
           tiene_hijos:     tieneHijos,
-          aloj_asignado:   alojAsignado,        // L (bool): ¿le asignamos hotel?
-          aloj_hotel:      alojHotel,           // Q: nombre del hotel asignado
-          aloj_propio:     alojPropio,          // R: lo que declaró el invitado
+          aloj_asignado:   alojAsignado,
+          aloj_hotel:      alojHotel,
+          aloj_propio:     alojPropio,
           genero:          genero,
           mensaje:         mensajePrev,
           fila_excel:      filaExcel,
+          // Prefill del formulario ampliado:
+          nombre_completo1: (g(14) || '').toString().trim(),
+          asiste1:          asiste(g(15)),
+          restriccion1:     (g(16) || '').toString().trim(),
+          nombre_completo2: (g(17) || '').toString().trim(),
+          asiste2:          asiste(g(18)),
+          restriccion2:     (g(19) || '').toString().trim(),
+          email:            (g(20) || '').toString().trim(),
+          telefono:         (g(21) || '').toString().trim(),
+          dia_llegada:      (g(22) || '').toString().trim(),
+          dia_salida:       (g(23) || '').toString().trim(),
+          transporte:       (g(24) || '').toString().trim(),
+          ciudad_llegada:   (g(25) || '').toString().trim(),
+          cancion1:         (g(26) || '').toString().trim(),
+          cancion2:         (g(27) || '').toString().trim(),
+          ninos_resumen:    (g(28) || '').toString().trim(),
         });
       }
     }
 
-    console.log('Usuario no encontrado: ' + usuarioNorm);
     return jsonResponse({ ok: false });
 
   } catch(err) {
@@ -227,16 +248,62 @@ function handleLogin(usuario, password) {
   }
 }
 
-// ── Test manual (ejecutar desde el editor para verificar) ─────
+// ── Buscador de canciones (Spotify) ───────────────────────────
+
+function getSpotifyToken() {
+  const cache  = CacheService.getScriptCache();
+  const cached = cache.get('sp_token');
+  if (cached) return cached;
+  const resp = UrlFetchApp.fetch('https://accounts.spotify.com/api/token', {
+    method: 'post',
+    headers: { Authorization: 'Basic ' + Utilities.base64Encode(SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET) },
+    payload: { grant_type: 'client_credentials' },
+    muteHttpExceptions: true,
+  });
+  const data = JSON.parse(resp.getContentText() || '{}');
+  if (data.access_token) {
+    cache.put('sp_token', data.access_token, 3400);
+    return data.access_token;
+  }
+  throw new Error('spotify_auth_failed');
+}
+
+function handleSongSearch(q) {
+  try {
+    q = (q || '').toString().trim();
+    if (q.length < 2) return jsonResponse({ ok: true, tracks: [] });
+    const token = getSpotifyToken();
+    const url = 'https://api.spotify.com/v1/search?type=track&limit=6&market=ES&q=' + encodeURIComponent(q);
+    const resp = UrlFetchApp.fetch(url, {
+      headers: { Authorization: 'Bearer ' + token },
+      muteHttpExceptions: true,
+    });
+    const data  = JSON.parse(resp.getContentText() || '{}');
+    const items = (data.tracks && data.tracks.items) ? data.tracks.items : [];
+    const tracks = items.map(t => ({
+      id:     t.id,
+      name:   t.name,
+      artist: (t.artists || []).map(a => a.name).join(', '),
+      img:    (t.album && t.album.images && t.album.images.length)
+              ? t.album.images[t.album.images.length - 1].url : '',
+      url:    (t.external_urls && t.external_urls.spotify) ? t.external_urls.spotify : '',
+    }));
+    return jsonResponse({ ok: true, tracks: tracks });
+  } catch(err) {
+    return jsonResponse({ ok: false, error: err.toString(), tracks: [] });
+  }
+}
+
+// ── Test manual ───────────────────────────────────────────────
 
 function testLogin() {
   const resultado = handleLogin('isabel.caballero', 'ess4di');
   console.log('Resultado testLogin:', resultado.getContent());
 }
 
-function testLoginPareja() {
-  const resultado = handleLogin('charo', 'saiebz');
-  console.log('Resultado testLoginPareja:', resultado.getContent());
+function testSpotify() {
+  const r = handleSongSearch('bohemian rhapsody');
+  console.log(r.getContent());
 }
 
 // ── RSVP ─────────────────────────────────────────────────────
@@ -254,83 +321,109 @@ function handleRsvp(data) {
     const fila = parseInt(data.fila_excel) || 0;
     if (fila < 17 || fila > 156) throw new Error('Fila fuera de rango: ' + fila);
 
-    // Género: se lee de la hoja (P = col 16), no del cliente.
+    ensureColumns(inv, TOTAL_COLS);
+
+    const sn = v => v === 'si' ? 'Sí' : (v === 'no' ? 'No' : '');
+
+    // Género se lee de la hoja (P = col 16), no del cliente.
     const genero = parseInt(inv.getRange(fila, 16).getValue()) === 1 ? 1 : 0;
 
-    // H=8 confirmados | I=9 menús | J=10 alergias | T=20 mensaje
-    // NO se tocan: L (12) asignación, P (16) género, Q (17) hotel asignado.
-    inv.getRange(fila, 8).setValue(parseInt(data.total_confirmados) || 0);
-    inv.getRange(fila, 9).setValue(parseInt(data.menu_infantil)     || 0);
-    inv.getRange(fila, 10).setValue(data.alergias || '');
-    inv.getRange(fila, 20).setValue(data.mensaje  || '');
+    // ── Escrituras fijas ──
+    inv.getRange(fila, 8 ).setValue(parseInt(data.total_confirmados) || 0);  // H
+    inv.getRange(fila, 9 ).setValue(parseInt(data.menu_infantil)     || 0);  // I
+    inv.getRange(fila, 10).setValue(data.mensaje || '');                     // J
 
-    // Alojamiento declarado por el invitado → R (18),
-    // SOLO si no le hemos asignado hotel (L = FALSE). Si L = TRUE, se ignora.
+    // ── Alojamiento propio → R(18) SOLO si no le hemos asignado hotel ──
     const lVal = inv.getRange(fila, 12).getValue();
     const yaAsignado = lVal === true || lVal === 'TRUE' || lVal === 'true' || lVal === 1;
     if (!yaAsignado) {
       inv.getRange(fila, 18).setValue(data.aloj_propio || '');
     }
 
-    // Alojamiento a mostrar en el email de confirmación:
-    //   si tiene hotel asignado (Q, col 17) → ese;
-    //   si no, lo que acaba de declarar (R).
+    // ── Bloque nuevo S:AG (19..33) en una sola escritura ──
+    inv.getRange(fila, 19, 1, 15).setValues([[
+      data.nombre_completo1 || '',   // S
+      sn(data.asiste1),              // T
+      data.restriccion1 || '',       // U
+      data.nombre_completo2 || '',   // V
+      sn(data.asiste2),              // W
+      data.restriccion2 || '',       // X
+      data.email || '',              // Y
+      data.telefono || '',           // Z
+      data.dia_llegada || '',        // AA
+      data.dia_salida || '',         // AB
+      data.transporte || '',         // AC
+      data.ciudad_llegada || '',     // AD
+      data.cancion1 || '',           // AE
+      data.cancion2 || '',           // AF
+      data.ninos_resumen || '',      // AG
+    ]]);
+
+    // Alojamiento a mostrar en el email: Q si asignado, si no lo declarado.
     const alojEmail = yaAsignado
       ? (inv.getRange(fila, 17).getValue() || '').toString().trim()
       : (data.aloj_propio || '').toString().trim();
 
-    const tipo = parseInt(data.tipo_web) || 1;
-    const p1   = primerNombre(data.nombre);
-    const p2   = primerNombre(data.nombre_pareja || '');
-    const nombres = tipo === 2 && p2 ? `${p1} y ${p2}` : p1;
+    // ── Email a los novios ──
+    const p1 = data.nombre_completo1 || primerNombre(data.nombre) || 'Persona 1';
+    const nombres = (data.tipo_web == 2 || data.nombre_completo2)
+      ? (data.nombre_completo1 || primerNombre(data.nombre)) +
+        (data.nombre_completo2 ? ' y ' + data.nombre_completo2 : '')
+      : p1;
 
-    const as1txt  = data.asistencia1 === 'si' ? '✅ Sí' : '❌ No';
-    const as2txt  = tipo === 2
-      ? `\nAsistencia (${p2}): ${data.asistencia2 === 'si' ? '✅ Sí' : '❌ No'}` : '';
-    const acompTxt = tipo === 1 && data.con_acompanante === 'si'
-      ? `\nAcompañante: ${data.nombre_acompanante || '—'}` : '';
+    const persona = (nombre, asiste, restr) =>
+      '— ' + (nombre || '—') + ' —\n' +
+      'Asiste: ' + (asiste === 'si' ? '✅ Sí' : asiste === 'no' ? '❌ No' : '—') + '\n' +
+      'Restricción: ' + (restr || 'Ninguna') + '\n';
 
-    const hijosLineas = (data.hijos_nombres || []).length
-      ? data.hijos_nombres.map(h =>
-          `  · ${h.nombre}${h.menu_infantil ? ' 🍽️ menú infantil' : ''}`
-        ).join('\n')
-      : '—';
+    let cuerpo = 'Nueva confirmación de boda\n\n';
+    cuerpo += 'Usuario: ' + (data.usuario || '—') + '\n\n';
+    cuerpo += persona(data.nombre_completo1 || primerNombre(data.nombre), data.asiste1, data.restriccion1);
+    if ((data.nombre_completo2 || '').trim() || data.asiste2) {
+      cuerpo += '\n' + persona(data.nombre_completo2, data.asiste2, data.restriccion2);
+    }
+    cuerpo += '\nContacto:\n';
+    cuerpo += 'Email: ' + (data.email || '—') + '\n';
+    cuerpo += 'Teléfono: ' + (data.telefono || '—') + '\n\n';
+    cuerpo += 'Logística:\n';
+    cuerpo += 'Llegada: ' + (data.dia_llegada || '—') + '\n';
+    cuerpo += 'Salida: ' + (data.dia_salida || '—') + '\n';
+    cuerpo += 'Cómo viajan: ' + (data.transporte || '—') +
+              (data.ciudad_llegada ? ' (ciudad: ' + data.ciudad_llegada + ')' : '') + '\n';
+    cuerpo += 'Alojamiento: ' + (alojEmail || '—') + '\n\n';
+    cuerpo += 'Niños:\n' + (data.ninos_resumen || '—') + '\n';
+    cuerpo += 'Menús infantiles: ' + (data.menu_infantil || 0) + '\n\n';
+    cuerpo += 'Canciones:\n';
+    cuerpo += '1. ' + (data.cancion1 || '—') + '\n';
+    cuerpo += '2. ' + (data.cancion2 || '—') + '\n\n';
+    cuerpo += 'Total confirmados: ' + (data.total_confirmados || 0) + '\n\n';
+    cuerpo += 'Mensaje:\n' + (data.mensaje || '—');
 
-    GmailApp.sendEmail(
-      NOVIOS_MAIL,
-      `✅ Confirmación: ${nombres}`,
-      `Nueva confirmación de boda\n\n` +
-      `Usuario: ${data.usuario || '—'}\n` +
-      `Invitado/s: ${nombres}\n` +
-      `Email: ${data.email}\n` +
-      `Teléfono: ${data.telefono || '—'}\n\n` +
-      `Asistencia (${p1}): ${as1txt}` + as2txt + acompTxt + '\n' +
-      `Total confirmados: ${data.total_confirmados}\n\n` +
-      `Niños:\n${hijosLineas}\n` +
-      `Menús infantiles: ${data.menu_infantil || 0}\n` +
-      `Alergias: ${data.alergias || 'Ninguna'}\n\n` +
-      `Mensaje:\n${data.mensaje || '—'}`
-    );
+    GmailApp.sendEmail(NOVIOS_MAIL, '✅ Confirmación: ' + nombres, cuerpo);
 
-    const alguienAsiste = data.asistencia1 === 'si' || data.asistencia2 === 'si';
+    // ── Save the Date al invitado (si alguien asiste) ──
+    const alguienAsiste = data.asiste1 === 'si' || data.asiste2 === 'si';
     if (data.email && alguienAsiste) {
+      const restricciones = [data.restriccion1, data.restriccion2]
+        .filter(r => r && r.trim()).join(' · ') || 'Ninguna';
+      const p1n = primerNombre(data.nombre_completo1 || data.nombre);
+      const p2n = data.tipo_web == 2 ? primerNombre(data.nombre_completo2 || data.nombre_pareja) : '';
       try {
         const props = PropertiesService.getScriptProperties();
         props.setProperty('email_q_' + Date.now(), JSON.stringify({
           email:         data.email,
-          nombre:        p1,
-          nombre_pareja: tipo === 2 ? p2 : '',
+          nombre:        p1n,
+          nombre_pareja: p2n,
           total:         data.total_confirmados,
           alojamiento:   alojEmail || '—',
-          alergias:      data.alergias    || 'Ninguna',
+          restricciones: restricciones,
           genero:        genero,
-          tipo:          tipo,
+          tipo:          parseInt(data.tipo_web) || 1,
         }));
         ScriptApp.newTrigger('processPendingEmails').timeBased().after(60000).create();
       } catch(triggerErr) {
-        sendSaveTheDate(data.email, p1, tipo === 2 ? p2 : '',
-                        data.total_confirmados, alojEmail, data.alergias,
-                        genero, tipo);
+        sendSaveTheDate(data.email, p1n, p2n, data.total_confirmados,
+                        alojEmail, restricciones, genero, parseInt(data.tipo_web) || 1);
       }
     }
 
@@ -351,9 +444,8 @@ function processPendingEmails() {
     if (!key.startsWith('email_q_')) return;
     try {
       const d = JSON.parse(all[key]);
-      sendSaveTheDate(d.email, d.nombre, d.nombre_pareja,
-                      d.total, d.alojamiento, d.alergias,
-                      d.genero, d.tipo);
+      sendSaveTheDate(d.email, d.nombre, d.nombre_pareja, d.total,
+                      d.alojamiento, d.restricciones, d.genero, d.tipo);
       props.deleteProperty(key);
     } catch(err) {
       console.error('Error email pendiente:', key, err.toString());
@@ -367,18 +459,15 @@ function processPendingEmails() {
 
 // ── Save the Date ─────────────────────────────────────────────
 
-function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, alergias, genero, tipo) {
+function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restricciones, genero, tipo) {
   const calUrl =
     'https://calendar.google.com/calendar/render?action=TEMPLATE' +
     '&text=Boda+Roc%C3%ADo+%26+David' +
     '&dates=20261206T110000Z/20261206T230000Z' +
     '&details=¡Nos+casamos!+Reserva+este+día+tan+especial.' +
-    '&location=Castillo+de+Los+Escullos,+Cabo+de+Gata,+Almería' +
+    '&location=Hotel+Los+Escullos,+Cabo+de+Gata,+Almería' +
     '&sf=true&output=xml';
 
-  // Saludo:
-  //   web = 2 (pareja)  → plural  → "Queridos Ana y Luis"
-  //   web = 1 (singular)→ género  → "Querida Ana" / "Querido Luis"
   const esPareja     = parseInt(tipo) === 2 && !!nombrePareja;
   const esFemenino   = parseInt(genero) === 1;
   const destinatario = esPareja ? `${nombre} y ${nombrePareja}` : nombre;
@@ -411,7 +500,7 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, alergi
               <tr><td style="padding:24px 28px;">
                 <p style="margin:0 0 12px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b8956a;">Detalles</p>
                 <p style="margin:0 0 8px;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; 6 de Diciembre de 2026</p>
-                <p style="margin:0;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Castillo de Los Escullos, Almería</p>
+                <p style="margin:0;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Hotel Los Escullos, Cabo de Gata, Almería</p>
               </td></tr>
             </table>
             <p style="margin:0 0 14px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b8956a;">${esPareja ? 'Vuestra confirmación' : 'Tu confirmación'}</p>
@@ -425,8 +514,8 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, alergi
                 <td style="padding:10px 0;border-bottom:1px solid #ede8e0;font-size:13px;color:#3a2e28;">${alojamiento || '—'}</td>
               </tr>
               <tr>
-                <td style="padding:10px 0;font-size:13px;color:#8a7a72;">Alergias</td>
-                <td style="padding:10px 0;font-size:13px;color:#3a2e28;">${alergias || 'Ninguna'}</td>
+                <td style="padding:10px 0;font-size:13px;color:#8a7a72;">Restricciones</td>
+                <td style="padding:10px 0;font-size:13px;color:#3a2e28;">${restricciones || 'Ninguna'}</td>
               </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
