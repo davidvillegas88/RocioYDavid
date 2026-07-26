@@ -520,7 +520,7 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
               : 'Tenemos todos los detalles de tu confirmación guardados. ¡Muchísimas gracias por confirmar!'}</p>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr><td align="center">
-                <a href="${calUrl}" style="display:inline-block;background:#AFC796;color:#152180;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:15px 28px;border-radius:2px;max-width:100%;box-sizing:border-box;">
+                <a href="${calUrl}" style="display:inline-block;background:#152180;color:#ffffff;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:15px 28px;border-radius:2px;max-width:100%;box-sizing:border-box;">
                   Añadir al calendario
                 </a>
               </td></tr>

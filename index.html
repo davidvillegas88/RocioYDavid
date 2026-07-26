@@ -460,6 +460,16 @@ canvas#weatherChart { width: 100% !important; }
 .rsvp-personas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
 .rsvp-persona-block { border: 1px solid rgba(184,149,106,0.2); padding: 1.4rem 1.4rem 1rem; background: var(--ivory); }
 .rsvp-persona-block > .fg + .fg { margin-top: 1.1rem; }
+/* ── Estado "no asisten": bloquea y agrisa todo menos ¿Vienes? y el mensaje ── */
+#rsvpForm.rsvp-no-asiste .fg,
+#rsvpForm.rsvp-no-asiste .rsvp-section-divider,
+#rsvpForm.rsvp-no-asiste .transporte-nota,
+#rsvpForm.rsvp-no-asiste .hijos-hint,
+#rsvpForm.rsvp-no-asiste .songs-hint,
+#rsvpForm.rsvp-no-asiste #hijos-detalle,
+#rsvpForm.rsvp-no-asiste #acomp-block { opacity: 0.4; pointer-events: none; transition: opacity 0.3s; }
+#rsvpForm.rsvp-no-asiste .fg-asistencia,
+#rsvpForm.rsvp-no-asiste .fg-mensaje { opacity: 1; pointer-events: auto; }
 .rsvp-persona-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--verde-titulo); margin-bottom: 0.9rem; border-bottom: 1px solid rgba(184,149,106,0.15); padding-bottom: 0.5rem; }
 .rsvp-section-divider { border: none; border-top: 1px solid rgba(184,149,106,0.15); margin: 0.4rem 0; }
 #hijos-detalle { background: var(--ivory); border: 1px solid rgba(184,149,106,0.15); padding: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -1200,12 +1210,17 @@ function renderConfirmarTab(data) {
   success.style.display = 'none';
   cont.style.display = 'block';
   if (parseInt(data.confirmado) === 1) {
+    const tipoC = parseInt(data.tipo_web) || 1;
+    const noAsisteC = tipoC === 2 ? (data.asiste1 === 'no' && data.asiste2 === 'no') : (data.asiste1 === 'no');
+    const cuerpo = noAsisteC
+      ? { icon: '🤍', h: 'Tenemos tu respuesta', p: 'Nos diste que no podrás venir y lo tenemos guardado. Si al final cambian los planes, puedes editarlo cuando quieras.' }
+      : { icon: '✓', h: '¡Ya está confirmado!', p: 'Tenemos vuestra confirmación guardada. Si necesitáis cambiar algo, podéis editarla cuando queráis.' };
     cont.innerHTML = `
       <div class="ya-confirmado">
-        <div class="msg-icon">✓</div>
-        <h3>¡Ya está confirmado!</h3>
-        <p>Tenemos vuestra confirmación guardada. Si necesitáis cambiar algo, podéis editarla cuando queráis.</p>
-        <button type="button" class="submit-btn ya-editar-btn" onclick="editarConfirmacion()">Editar mi confirmación</button>
+        <div class="msg-icon">${cuerpo.icon}</div>
+        <h3>${cuerpo.h}</h3>
+        <p>${cuerpo.p}</p>
+        <button type="button" class="submit-btn ya-editar-btn" onclick="editarConfirmacion()">Editar mi respuesta</button>
       </div>`;
   } else {
     renderRsvpForm();
@@ -1257,11 +1272,11 @@ function restriccionValue(id) {
 function personaBlock(num, nombreCorto, withAttendance, pf) {
   pf = pf || {};
   const att = withAttendance ? `
-      <div class="fg">
+      <div class="fg fg-asistencia">
         <label class="fg-label">¿Vienes? *</label>
         <div class="radio-row">
-          <label class="rlbl"><input type="radio" name="asistencia${num}" value="si" ${pf.asiste === 'si' ? 'checked' : ''}><span class="check-box"></span>✓ &nbsp;Sí, allí estaré</label>
-          <label class="rlbl"><input type="radio" name="asistencia${num}" value="no" ${pf.asiste === 'no' ? 'checked' : ''}><span class="check-box"></span>✗ &nbsp;No podré</label>
+          <label class="rlbl"><input type="radio" name="asistencia${num}" value="si" ${pf.asiste === 'si' ? 'checked' : ''} onchange="onAsistenciaChange()"><span class="check-box"></span>✓ &nbsp;Sí, allí estaré</label>
+          <label class="rlbl"><input type="radio" name="asistencia${num}" value="no" ${pf.asiste === 'no' ? 'checked' : ''} onchange="onAsistenciaChange()"><span class="check-box"></span>✗ &nbsp;No podré</label>
         </div>
         <span class="field-error" id="err-asistencia${num}">Selecciona una opción.</span>
       </div>` : '';
@@ -1394,7 +1409,7 @@ function renderRsvpForm() {
 
   /* Mensaje */
   html += `
-    <div class="fg">
+    <div class="fg fg-mensaje">
       <label class="fg-label">Mensaje para los novios 💌</label>
       <textarea id="mensaje" placeholder="Contadnos lo que queráis...">${escapeHtml(session.mensaje || '')}</textarea>
     </div>
@@ -1411,11 +1426,32 @@ function renderRsvpForm() {
     const siH = document.querySelector('input[name="con_hijos"][value="si"]');
     if (siH) { siH.checked = true; onHijosChange({ value: 'si' }); prefillHijos(session.ninos_resumen); }
   }
+
+  onAsistenciaChange();
 }
 
 function onAcompChange(radio) {
   const b = document.getElementById('acomp-block');
   if (b) b.style.display = radio.value === 'si' ? 'block' : 'none';
+  onAsistenciaChange();
+}
+/* ── Bloqueo del formulario cuando no asiste nadie ── */
+function onAsistenciaChange() {
+  const form = document.getElementById('rsvpForm');
+  if (!form) return;
+  const tipo = parseInt(session.tipo_web) || 1;
+  const a1 = document.querySelector('input[name="asistencia1"]:checked')?.value || '';
+  const a2 = document.querySelector('input[name="asistencia2"]:checked')?.value || '';
+  // Pareja dedicada a dos: solo se bloquea si AMBOS dicen que no.
+  const noAsiste = tipo === 2 ? (a1 === 'no' && a2 === 'no') : (a1 === 'no');
+  form.classList.toggle('rsvp-no-asiste', noAsiste);
+  const btn = document.getElementById('submitBtn');
+  if (btn) btn.textContent = noAsiste ? 'Enviar respuesta' : 'Confirmar asistencia';
+  if (noAsiste) {
+    form.querySelectorAll('.field-error.show').forEach(el => {
+      if (!el.id.startsWith('err-asistencia')) el.classList.remove('show');
+    });
+  }
 }
 function onTransporteChange(radio) {
   const w = document.getElementById('ciudad-wrap');
@@ -1568,27 +1604,39 @@ async function submitRsvp(e) {
   if (!as1) { setErr('asistencia1', true); valid = false; } else setErr('asistencia1', false);
 
   const nc1 = (document.getElementById('nombre_completo1')?.value || '').trim();
-  if (as1 === 'si' && !nc1) { setErr('nombre_completo1', true); valid = false; } else setErr('nombre_completo1', false);
 
   let as2 = '', nc2 = '', r2 = '';
   if (tipo === 2) {
     as2 = document.querySelector('input[name="asistencia2"]:checked')?.value || '';
     if (!as2) { setErr('asistencia2', true); valid = false; } else setErr('asistencia2', false);
     nc2 = (document.getElementById('nombre_completo2')?.value || '').trim();
-    if (as2 === 'si' && !nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
     r2 = restriccionValue('restriccion2');
   } else if (acomp === 1) {
     const con = document.querySelector('input[name="con_acomp"]:checked')?.value || 'no';
     if (con === 'si') {
       as2 = 'si';
       nc2 = (document.getElementById('nombre_completo2')?.value || '').trim();
-      if (!nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
       r2 = restriccionValue('restriccion2');
     }
   }
 
+  // ¿No asiste nadie del grupo? (pareja dedicada a dos: solo si ambos dicen que no)
+  const noAsiste = tipo === 2 ? (as1 === 'no' && as2 === 'no') : (as1 === 'no');
+
   const email = (document.getElementById('email')?.value || '').trim().toLowerCase();
-  if (!isValidEmail(email)) { setErr('email', true); valid = false; } else setErr('email', false);
+
+  if (noAsiste) {
+    // No pueden venir: solo cuenta el mensaje, no exigimos el resto de campos.
+    ['nombre_completo1', 'nombre_completo2', 'email'].forEach(id => setErr(id, false));
+  } else {
+    if (as1 === 'si' && !nc1) { setErr('nombre_completo1', true); valid = false; } else setErr('nombre_completo1', false);
+    if (tipo === 2) {
+      if (as2 === 'si' && !nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
+    } else if (acomp === 1 && as2 === 'si') {
+      if (!nc2) { setErr('nombre_completo2', true); valid = false; } else setErr('nombre_completo2', false);
+    }
+    if (!isValidEmail(email)) { setErr('email', true); valid = false; } else setErr('email', false);
+  }
 
   if (!valid) {
     document.querySelector('.field-error.show')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1597,7 +1645,7 @@ async function submitRsvp(e) {
 
   const r1 = restriccionValue('restriccion1');
 
-  const conHijos = document.querySelector('input[name="con_hijos"]:checked')?.value || 'no';
+  const conHijos = noAsiste ? 'no' : (document.querySelector('input[name="con_hijos"]:checked')?.value || 'no');
   const ninos = [];
   let menuInf = 0;
   if (conHijos === 'si') {
@@ -1664,7 +1712,16 @@ async function submitRsvp(e) {
   saveSession(session, !!localStorage.getItem(SESSION_KEY));
 
   document.getElementById('rsvp-container').style.display = 'none';
-  document.getElementById('msg-success').style.display = 'block';
+  const msgEl = document.getElementById('msg-success');
+  if (noAsiste) {
+    const t = tipo === 2
+      ? { h: '¡Os echaremos de menos!', p: 'Nos da mucha pena que no podáis venir. Os mandamos un abrazo muy fuerte.<br>Si al final cambian los planes, podéis editar vuestra respuesta cuando queráis.' }
+      : { h: '¡Te echaremos de menos!', p: 'Nos da mucha pena que no puedas venir. Te mandamos un abrazo muy fuerte.<br>Si al final cambian los planes, puedes editar tu respuesta cuando quieras.' };
+    msgEl.innerHTML = `<div class="msg-icon">🤍</div><h3>${t.h}</h3><p>${t.p}</p>`;
+  } else {
+    msgEl.innerHTML = `<div class="msg-icon">🌿</div><h3>¡Confirmación recibida!</h3><p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>`;
+  }
+  msgEl.style.display = 'block';
   document.getElementById('private-screen').scrollTo(0, 0);
 }
 
