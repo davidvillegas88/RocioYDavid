@@ -473,7 +473,7 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
   const calUrl =
     'https://calendar.google.com/calendar/render?action=TEMPLATE' +
     '&text=Boda+Roc%C3%ADo+%26+David' +
-    '&dates=20261206T110000Z/20261206T230000Z' +
+    '&dates=20261206/20261207' +
     '&details=¡Nos+casamos!+Reserva+este+día+tan+especial.' +
     '&location=Hotel+Los+Escullos,+Cabo+de+Gata,+Almería' +
     '&sf=true&output=xml';
@@ -494,10 +494,10 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
       <table width="560" cellpadding="0" cellspacing="0"
              style="background:#ffffff;border-radius:4px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.07);">
         <tr>
-          <td align="center" style="background:#152180;padding:50px 40px 40px;">
-            <p style="margin:0 0 12px;color:#b8956a;font-size:12px;letter-spacing:4px;text-transform:uppercase;">Save the Date</p>
-            <h1 style="margin:0;color:#faf6f0;font-size:36px;font-weight:400;letter-spacing:2px;">Rocío &amp; David</h1>
-            <p style="margin:16px 0 0;color:#b8956a;font-size:14px;letter-spacing:3px;">6 · XII · 2026</p>
+          <td align="center" style="background:#7FA9CB;padding:50px 40px 40px;">
+            <p style="margin:0 0 12px;color:#ffffff;font-size:12px;letter-spacing:4px;text-transform:uppercase;">Save the Date</p>
+            <h1 style="margin:0;color:#ffffff;font-size:36px;font-weight:400;letter-spacing:2px;">Rocío &amp; David</h1>
+            <p style="margin:16px 0 0;color:#ffffff;font-size:14px;letter-spacing:3px;">6 · XII · 2026</p>
           </td>
         </tr>
         <tr>
@@ -518,11 +518,9 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
             <p style="margin:0 0 36px;font-size:15px;color:#5a4a42;line-height:1.8;">${esPareja
               ? 'Tenemos todos los detalles de vuestra confirmación guardados. ¡Muchísimas gracias por confirmar!'
               : 'Tenemos todos los detalles de tu confirmación guardados. ¡Muchísimas gracias por confirmar!'}</p>
-              </tr>
-            </table>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr><td align="center">
-                <a href="${calUrl}" style="display:inline-block;background:#152180;color:#faf6f0;text-decoration:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;padding:16px 36px;border-radius:2px;">
+                <a href="${calUrl}" style="display:inline-block;background:#AFC796;color:#152180;text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:15px 28px;border-radius:2px;max-width:100%;box-sizing:border-box;">
                   Añadir al calendario
                 </a>
               </td></tr>
@@ -540,8 +538,33 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
 </body>
 </html>`;
 
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Rocio y David//Boda//ES',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    'UID:boda-rocio-david-20261206@rocioydavid.com',
+    'DTSTAMP:20260101T000000Z',
+    'DTSTART;VALUE=DATE:20261206',
+    'DTEND;VALUE=DATE:20261207',
+    'SUMMARY:Boda Rocío & David',
+    'LOCATION:Iglesia de Rodalquilar / Hotel Los Escullos, Cabo de Gata, Almería',
+    'DESCRIPTION:¡Nos casamos! Ceremonia en la Iglesia de Rodalquilar y banquete en el Hotel Los Escullos.',
+    'TRANSP:TRANSPARENT',
+    'BEGIN:VALARM',
+    'ACTION:DISPLAY',
+    'DESCRIPTION:La boda de Rocío y David es en 2 días',
+    'TRIGGER:-P2D',
+    'END:VALARM',
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+  const icsBlob = Utilities.newBlob(ics, 'text/calendar', 'Boda-Rocio-David.ics');
+
   GmailApp.sendEmail(email, 'Save the Date · Rocío y David · 6 Dic 2026', '',
-                     { htmlBody: html, name: 'Rocío y David' });
+                     { htmlBody: html, name: 'Rocío y David', attachments: [icsBlob] });
 }
 
 // ── Guardar alojamiento propio (pestaña Alojamiento) ──────────
