@@ -110,7 +110,30 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .ya-confirmado p { font-size: 0.88rem; opacity: 0.65; line-height: 1.8; max-width: 420px; margin: 0 auto; }
 .ya-editar-btn { max-width: 300px; margin: 1.6rem auto 0; display: block; }
 
-@media (max-width: 680px) { .gate-cover-btn { top: 82%; padding: 0.8rem 2.2rem; font-size: 0.65rem; } }
+/* ══ ALOJAMIENTO (elección) ══ */
+.aloj-elige { max-width: 560px; margin: 0 auto; text-align: center; }
+.aloj-intro { font-size: 0.95rem; line-height: 1.8; opacity: 0.75; margin-bottom: 1.8rem; }
+.aloj-btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.6rem; }
+.aloj-choice { padding: 0.85rem 1.6rem; background: white; border: 1px solid var(--azul); color: var(--azul); font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 0.25s; }
+.aloj-choice:hover { background: rgba(21,33,128,0.06); }
+.aloj-choice.active { background: var(--azul); color: white; }
+.aloj-sub { text-align: left; margin-top: 0.4rem; }
+.aloj-sublabel { display: block; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 0.6rem; }
+.aloj-save-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.aloj-save-row input { flex: 1; min-width: 180px; background: white; border: 1px solid rgba(184,149,106,0.25); padding: 0.75rem 0.95rem; font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--deep); outline: none; }
+.aloj-save-row input:focus { border-color: var(--azul); }
+.aloj-save-btn { padding: 0.75rem 1.6rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
+.aloj-save-btn:hover { background: var(--azul-dark); }
+.aloj-save-btn:disabled { opacity: 0.6; cursor: default; }
+.aloj-saved { display: none; margin-top: 0.7rem; font-size: 0.8rem; color: var(--azul); }
+.aloj-saved.visible { display: block; }
+.aloj-towns { background: var(--ivory); border-left: 3px solid var(--azul); padding: 1.2rem 1.4rem; }
+.aloj-towns p { font-size: 0.88rem; line-height: 1.75; opacity: 0.8; margin-bottom: 0.8rem; }
+.aloj-towns p:last-child { margin-bottom: 0; }
+.aloj-towns ol { margin: 0 0 0.9rem 1.2rem; padding: 0; }
+.aloj-towns li { font-size: 0.88rem; line-height: 1.7; opacity: 0.85; margin-bottom: 0.5rem; }
+
+@media (max-width: 680px) { .gate-cover-btn { top: 85%; padding: 0.8rem 2.2rem; font-size: 0.65rem; } }
 
 /* ══ LOGIN MODAL ══ */
 #login-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(20,14,10,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 2rem; }
@@ -837,8 +860,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
   <div class="tab-panel" id="tab-alojamiento">
     <div class="aloj-tab-inner">
       <div class="sec-head">
-        <div class="sec-eye">Tu alojamiento</div>
-        <h2 class="sec-title">Dónde Dormir</h2>
+        <h2 class="sec-title">Alojamiento</h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <div id="alojamientoContent"></div>
@@ -1065,35 +1087,84 @@ function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
 /* ══ ALOJAMIENTO ══ */
 function renderAlojamiento(data) {
   const container = document.getElementById('alojamientoContent');
+  const asignado = data.aloj_asignado || (data.aloj_hotel || '').trim() !== '';
 
-  // CASO A: le hemos asignado hotel (L = TRUE) → mostramos Q
-  if (data.aloj_asignado) {
+  // CASO ASIGNADO: L marcado o Q con texto → mostramos el hotel (Q) + frase
+  if (asignado) {
     const hotel = (data.aloj_hotel || '').trim() || 'Hotel por confirmar';
     container.innerHTML = `
       <div class="aloj-asignado">
-        <div class="aloj-asignado-badge">Tu alojamiento asignado</div>
         <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
-        <h3>${hotel}</h3>
+        <h3>${escapeHtml(hotel)}</h3>
         <p>Hemos reservado este alojamiento para ti. Todavía no hay que hacer nada; en cuanto tengamos más información, os la daremos.</p>
       </div>`;
     return;
   }
 
-  // CASO B: no tiene asignado → mostramos lo que declaró, o le invitamos a decirlo
+  // CASO NO ASIGNADO: le invitamos a decirnos dónde se aloja
   const propio = (data.aloj_propio || '').trim();
-  if (propio) {
-    container.innerHTML = `
-      <div class="aloj-asignado">
-        <div class="aloj-asignado-badge">Tu alojamiento</div>
-        <div style="font-size:2.5rem;margin-bottom:0.8rem">🏨</div>
-        <h3>${propio}</h3>
-        <p>Es el alojamiento que nos indicaste. Si cambia, actualízalo en el formulario de confirmación.</p>
-      </div>`;
-  } else {
-    container.innerHTML = `<p style="text-align:center;opacity:0.6;font-size:0.95rem;padding:2rem 0;line-height:1.7">
-      Todavía no tenemos tu alojamiento. Indícanoslo en el <strong>formulario de confirmación</strong> para que sepamos dónde te quedas y poder coordinar con otros invitados!.<br><br>
-      ¿No sabes dónde? Escríbenos y te proponemos opciones cerca del lugar. 🌊</p>`;
-  }
+  container.innerHTML = `
+    <div class="aloj-elige">
+      <p class="aloj-intro">Nos gustaría saber dónde os vais a hospedar para poder ayudaros en lo que sea posible. Si queréis, indicádnoslo aquí. 🌊</p>
+      <div class="aloj-btn-row">
+        <button type="button" class="aloj-choice" data-choice="tengo" onclick="alojChoice('tengo')">Tengo alojamiento</button>
+        <button type="button" class="aloj-choice" data-choice="notengo" onclick="alojChoice('notengo')">Todavía no tengo</button>
+      </div>
+      <div id="aloj-tengo" class="aloj-sub" style="display:none">
+        <label class="aloj-sublabel">¿Dónde os alojáis?</label>
+        <div class="aloj-save-row">
+          <input type="text" id="alojPropioTab" placeholder="Hotel, apartamento, pueblo..." value="${escapeAttr(propio)}">
+          <button type="button" class="aloj-save-btn" id="alojSaveBtn" onclick="saveAlojamiento()">Guardar</button>
+        </div>
+        <span class="aloj-saved" id="alojSaved">Guardado ✓</span>
+      </div>
+      <div id="aloj-notengo" class="aloj-sub" style="display:none">
+        <div class="aloj-towns">
+          <p>Los Escullos está en pleno parque natural y no hay muchos hoteles alrededor, pero en la misma carretera hay pueblitos con sitios donde alojarse:</p>
+          <ol>
+            <li><strong>La Isleta del Moro</strong> — a 2-3 min en coche de Los Escullos.</li>
+            <li><strong>San José</strong> — a 10-15 min en coche, antes de llegar a Los Escullos.</li>
+            <li><strong>Rodalquilar</strong> — a 10-15 min en coche. ¡Aquí está la iglesia donde se celebra la ceremonia!</li>
+          </ol>
+          <p>Si tenéis dudas o no sabéis dónde quedaros, escribidnos y os ayudamos en lo que podamos. 💌</p>
+        </div>
+      </div>
+    </div>`;
+
+  // Si ya nos había indicado un sitio, abrimos directamente "Tengo alojamiento"
+  if (propio) alojChoice('tengo');
+}
+
+function alojChoice(choice) {
+  document.querySelectorAll('.aloj-choice').forEach(b =>
+    b.classList.toggle('active', b.dataset.choice === choice));
+  const tengo = document.getElementById('aloj-tengo');
+  const noten = document.getElementById('aloj-notengo');
+  if (tengo) tengo.style.display = choice === 'tengo'   ? 'block' : 'none';
+  if (noten) noten.style.display = choice === 'notengo' ? 'block' : 'none';
+}
+
+async function saveAlojamiento() {
+  const input = document.getElementById('alojPropioTab');
+  const btn   = document.getElementById('alojSaveBtn');
+  const saved = document.getElementById('alojSaved');
+  const valor = (input?.value || '').trim();
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  saved.classList.remove('visible');
+
+  const payload = { action: 'save_aloj', fila_excel: session.fila_excel || 0, aloj: valor };
+  fetch(CONFIG.appsScriptUrl, {
+    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload),
+  }).catch(err => console.warn(err));
+
+  session.aloj_propio = valor;
+  saveSession(session, !!localStorage.getItem(SESSION_KEY));
+
+  setTimeout(() => {
+    btn.disabled = false; btn.textContent = 'Guardar';
+    saved.classList.add('visible');
+  }, 600);
 }
 
 /* ══ RSVP DINÁMICO ══ */
@@ -1274,15 +1345,6 @@ function renderRsvpForm() {
       <input type="text" id="ciudad_llegada" placeholder="Ciudad / aeropuerto / estación" value="${escapeAttr(session.ciudad_llegada || '')}">
     </div>
     <p class="transporte-nota">Venís desde muchos sitios y nos encantaría saber cómo llegáis, por si alguien necesita ayuda para llegar hasta Los Escullos. ¡Os lo agradeceríamos un montón! 🌊</p>`;
-
-  /* Alojamiento propio (solo si no le hemos asignado hotel) */
-  if (!session.aloj_asignado) {
-    html += `
-    <div class="fg">
-      <label class="fg-label">¿Dónde os alojáis? 🏨</label>
-      <input type="text" id="alojPropio" placeholder="Hotel o apartamento (o en blanco si aún no lo sabéis)" value="${escapeAttr(session.aloj_propio || '')}">
-    </div>`;
-  }
 
   /* Niños */
   if (tieneH) {
@@ -1555,7 +1617,6 @@ async function submitRsvp(e) {
     ciudad_llegada:(document.getElementById('ciudad_llegada')?.value || '').trim(),
     cancion1:      songValue(1),
     cancion2:      songValue(2),
-    aloj_propio:   (document.getElementById('alojPropio')?.value || '').trim(),
     mensaje:       (document.getElementById('mensaje')?.value || '').trim(),
     ninos, ninos_resumen: ninosResumen,
     total_confirmados: total,
@@ -1578,7 +1639,7 @@ async function submitRsvp(e) {
     dia_llegada: payload.dia_llegada, dia_salida: payload.dia_salida,
     transporte: payload.transporte, ciudad_llegada: payload.ciudad_llegada,
     cancion1: payload.cancion1, cancion2: payload.cancion2,
-    aloj_propio: payload.aloj_propio, mensaje: payload.mensaje,
+    mensaje: payload.mensaje,
     ninos_resumen: ninosResumen,
   });
   saveSession(session, !!localStorage.getItem(SESSION_KEY));

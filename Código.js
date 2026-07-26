@@ -1,6 +1,12 @@
 // ════════════════════════════════════════════════════════════════
-// BODA ROCÍO & DAVID — Apps Script v3.5
+// BODA ROCÍO & DAVID — Apps Script v3.6
 // ════════════════════════════════════════════════════════════════
+//
+// CAMBIOS v3.6 — Alojamiento con guardado propio:
+//   · Nueva acción POST "save_aloj": guarda el alojamiento propio (columna R)
+//     desde la pestaña Alojamiento, sin necesidad de confirmar.
+//   · El RSVP ya no pide ni sobrescribe R (solo lo escribe si viene con valor).
+//   · El email a los novios lee R de la hoja (actualizado por save_aloj).
 //
 // CAMBIOS v3.5 — Formulario ampliado + buscador Spotify:
 //   · Mensaje → columna J (antes T). Las alergias dejan de ir en J.
@@ -81,8 +87,9 @@ function doPost(e) {
   catch(err) { return jsonResponse({ ok: false, error: 'bad_request' }); }
 
   const action = (data.action || '').toLowerCase();
-  if (action === 'login') return handleLogin(data.u, data.p);
-  if (action === 'rsvp')  return handleRsvp(data);
+  if (action === 'login')     return handleLogin(data.u, data.p);
+  if (action === 'rsvp')      return handleRsvp(data);
+  if (action === 'save_aloj') return handleSaveAloj(data);
   return jsonResponse({ ok: false, error: 'unknown_action' });
 }
 
@@ -100,7 +107,7 @@ function doGet(e) {
       const ss  = SpreadsheetApp.openById(SHEET_ID);
       const inv = ss.getSheetByName('Invitados');
       return jsonResponse({
-        ok: true, status: 'online', version: '3.5',
+        ok: true, status: 'online', version: '3.6',
         sheet_found: !!inv,
       });
     } catch(err) {
@@ -108,7 +115,7 @@ function doGet(e) {
     }
   }
 
-  return jsonResponse({ ok: true, status: 'online', version: '3.5' });
+  return jsonResponse({ ok: true, status: 'online', version: '3.6' });
 }
 
 // ── LOGIN ─────────────────────────────────────────────────────
@@ -336,8 +343,11 @@ function handleRsvp(data) {
     // ── Alojamiento propio → R(18) SOLO si no le hemos asignado hotel ──
     const lVal = inv.getRange(fila, 12).getValue();
     const yaAsignado = lVal === true || lVal === 'TRUE' || lVal === 'true' || lVal === 1;
-    if (!yaAsignado) {
-      inv.getRange(fila, 18).setValue(data.aloj_propio || '');
+    // El alojamiento propio (R) ahora se guarda desde la pestaña Alojamiento
+    // (acción save_aloj). Aquí solo lo escribimos si viniera con valor, para
+    // no borrar lo que el invitado ya haya indicado allí.
+    if (!yaAsignado && (data.aloj_propio || '').toString().trim() !== '') {
+      inv.getRange(fila, 18).setValue(data.aloj_propio);
     }
 
     // ── Bloque nuevo S:AG (19..33) en una sola escritura ──
@@ -362,7 +372,7 @@ function handleRsvp(data) {
     // Alojamiento a mostrar en el email: Q si asignado, si no lo declarado.
     const alojEmail = yaAsignado
       ? (inv.getRange(fila, 17).getValue() || '').toString().trim()
-      : (data.aloj_propio || '').toString().trim();
+      : (inv.getRange(fila, 18).getValue() || '').toString().trim();
 
     // ── Email a los novios ──
     const p1 = data.nombre_completo1 || primerNombre(data.nombre) || 'Persona 1';
@@ -540,6 +550,33 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
 
   GmailApp.sendEmail(email, 'Save the Date · Rocío y David · 6 Dic 2026', '',
                      { htmlBody: html, name: 'Rocío y David' });
+}
+
+// ── Guardar alojamiento propio (pestaña Alojamiento) ──────────
+
+function handleSaveAloj(data) {
+  try {
+    const fila = parseInt(data.fila_excel) || 0;
+    if (fila < 17 || fila > 156) throw new Error('Fila fuera de rango: ' + fila);
+
+    const ss  = SpreadsheetApp.openById(SHEET_ID);
+    const inv = ss.getSheetByName('Invitados');
+    if (!inv) throw new Error('Hoja Invitados no encontrada');
+
+    ensureColumns(inv, TOTAL_COLS);
+
+    // No tocamos R si tiene hotel asignado (L = TRUE): ese caso no ve el recuadro.
+    const lVal = inv.getRange(fila, 12).getValue();
+    const yaAsignado = lVal === true || lVal === 'TRUE' || lVal === 'true' || lVal === 1;
+    if (!yaAsignado) {
+      inv.getRange(fila, 18).setValue((data.aloj || '').toString().trim());
+    }
+
+    return jsonResponse({ success: true });
+  } catch(err) {
+    console.error('handleSaveAloj error: ' + err.toString());
+    return jsonResponse({ success: false, error: err.toString() });
+  }
 }
 
 // ── Helper JSON ───────────────────────────────────────────────
