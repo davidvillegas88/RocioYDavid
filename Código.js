@@ -494,7 +494,7 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
       <table width="560" cellpadding="0" cellspacing="0"
              style="background:#ffffff;border-radius:4px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,0.07);">
         <tr>
-          <td align="center" style="background:#3a2e28;padding:50px 40px 40px;">
+          <td align="center" style="background:#152180;padding:50px 40px 40px;">
             <p style="margin:0 0 12px;color:#b8956a;font-size:12px;letter-spacing:4px;text-transform:uppercase;">Save the Date</p>
             <h1 style="margin:0;color:#faf6f0;font-size:36px;font-weight:400;letter-spacing:2px;">Rocío &amp; David</h1>
             <p style="margin:16px 0 0;color:#b8956a;font-size:14px;letter-spacing:3px;">6 · XII · 2026</p>
@@ -509,28 +509,20 @@ function sendSaveTheDate(email, nombre, nombrePareja, total, alojamiento, restri
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf6f0;border-radius:4px;margin-bottom:32px;">
               <tr><td style="padding:24px 28px;">
                 <p style="margin:0 0 12px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b8956a;">Detalles</p>
-                <p style="margin:0 0 8px;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; 6 de Diciembre de 2026</p>
-                <p style="margin:0;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Hotel Los Escullos, Cabo de Gata, Almería</p>
+                <p style="margin:0 0 8px;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Puente de diciembre</p>
+                <p style="margin:0 0 8px;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Ceremonia y banquete · 6 de diciembre</p>
+                <p style="margin:0 0 8px;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Ceremonia · Iglesia de Rodalquilar</p>
+                <p style="margin:0;font-size:14px;color:#3a2e28;"><span style="color:#b8956a;">&#9679;</span>&nbsp; Banquete · Hotel Los Escullos, Cabo de Gata, Almería</p>
               </td></tr>
             </table>
-            <p style="margin:0 0 14px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#b8956a;">${esPareja ? 'Vuestra confirmación' : 'Tu confirmación'}</p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #ede8e0;margin-bottom:36px;">
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #ede8e0;font-size:13px;color:#8a7a72;width:140px;">Asistentes</td>
-                <td style="padding:10px 0;border-bottom:1px solid #ede8e0;font-size:13px;color:#3a2e28;">${total}</td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;border-bottom:1px solid #ede8e0;font-size:13px;color:#8a7a72;">Alojamiento</td>
-                <td style="padding:10px 0;border-bottom:1px solid #ede8e0;font-size:13px;color:#3a2e28;">${alojamiento || '—'}</td>
-              </tr>
-              <tr>
-                <td style="padding:10px 0;font-size:13px;color:#8a7a72;">Restricciones</td>
-                <td style="padding:10px 0;font-size:13px;color:#3a2e28;">${restricciones || 'Ninguna'}</td>
+            <p style="margin:0 0 36px;font-size:15px;color:#5a4a42;line-height:1.8;">${esPareja
+              ? 'Tenemos todos los detalles de vuestra confirmación guardados. ¡Muchísimas gracias por confirmar!'
+              : 'Tenemos todos los detalles de tu confirmación guardados. ¡Muchísimas gracias por confirmar!'}</p>
               </tr>
             </table>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr><td align="center">
-                <a href="${calUrl}" style="display:inline-block;background:#3a2e28;color:#faf6f0;text-decoration:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;padding:16px 36px;border-radius:2px;">
+                <a href="${calUrl}" style="display:inline-block;background:#152180;color:#faf6f0;text-decoration:none;font-size:12px;letter-spacing:3px;text-transform:uppercase;padding:16px 36px;border-radius:2px;">
                   Añadir al calendario
                 </a>
               </td></tr>
