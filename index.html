@@ -888,14 +888,14 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
     <div class="confirmar-tab-inner">
       <div class="sec-head">
         <div class="sec-eye">Fecha límite: 1 de octubre de 2026</div>
-        <h2 class="sec-title">Confirmar Asistencia</h2>
+        <h2 class="sec-title">Asistencia</h2>
         <div class="deco"><div class="deco-d"></div></div>
       </div>
       <div id="rsvp-container"></div>
       <div class="form-msg" id="msg-success" style="display:none">
         <div class="msg-icon">💚</div>
         <h3>¡Confirmación recibida!</h3>
-        <p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>
+        <p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño.<br>Recibiréis un email en breve.</p>
       </div>
     </div>
   </div>
@@ -1717,9 +1717,9 @@ async function submitRsvp(e) {
     const t = tipo === 2
       ? { h: '¡Os echaremos de menos!', p: 'Nos da mucha pena que no podáis venir. Os mandamos un abrazo muy fuerte.<br>Si al final cambian los planes, podéis editar vuestra respuesta cuando queráis.' }
       : { h: '¡Te echaremos de menos!', p: 'Nos da mucha pena que no puedas venir. Te mandamos un abrazo muy fuerte.<br>Si al final cambian los planes, puedes editar tu respuesta cuando quieras.' };
-    msgEl.innerHTML = `<div class="msg-icon">🤍</div><h3>${t.h}</h3><p>${t.p}</p>`;
+    msgEl.innerHTML = `<div class="msg-icon">💚</div><h3>${t.h}</h3><p>${t.p}</p>`;
   } else {
-    msgEl.innerHTML = `<div class="msg-icon">💚</div><h3>¡Confirmación recibida!</h3><p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>`;
+    msgEl.innerHTML = `<div class="msg-icon">💚</div><h3>¡Confirmación recibida!</h3><p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño.<br>Recibiréis un email en breve.</p>`;
   }
   msgEl.style.display = 'block';
   document.getElementById('private-screen').scrollTo(0, 0);
