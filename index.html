@@ -1213,8 +1213,8 @@ function renderConfirmarTab(data) {
     const tipoC = parseInt(data.tipo_web) || 1;
     const noAsisteC = tipoC === 2 ? (data.asiste1 === 'no' && data.asiste2 === 'no') : (data.asiste1 === 'no');
     const cuerpo = noAsisteC
-      ? { icon: '🤍', h: 'Tenemos tu respuesta', p: 'Nos diste que no podrás venir y lo tenemos guardado. Si al final cambian los planes, puedes editarlo cuando quieras.' }
-      : { icon: '✓', h: '¡Ya está confirmado!', p: 'Tenemos vuestra confirmación guardada. Si necesitáis cambiar algo, podéis editarla cuando queráis.' };
+      ? { icon: '💚', h: 'Tenemos tu respuesta', p: 'Nos diste que no podrás venir y lo tenemos guardado. Si al final cambian los planes, puedes editarlo cuando quieras.' }
+      : { icon: '💚', h: '¡Ya está confirmado!', p: 'Tenemos vuestra confirmación guardada. Si necesitáis cambiar algo, podéis editarla cuando queráis.' };
     cont.innerHTML = `
       <div class="ya-confirmado">
         <div class="msg-icon">${cuerpo.icon}</div>
