@@ -366,7 +366,7 @@ canvas#weatherChart { width: 100% !important; }
 .aloj-map-wrap { max-width: 460px; margin: 0.3rem auto 1.4rem; border: 1px solid rgba(184,149,106,0.28); overflow: hidden; }
 .aloj-map { display: block; width: 100%; height: 240px; border: 0; }
 .aloj-map-btn { margin-bottom: 1.6rem; }
-.aloj-asignado p:last-child { margin-bottom: 0; }
+.aloj-asignado p:last-child { margin-bottom: 0; opacity: 1; color: var(--deep); font-weight: 400; }
 .aloj-town-link { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; color: var(--azul); transition: color 0.25s; }
 .aloj-town-link:hover { color: var(--azul-dark); }
 
@@ -1109,8 +1109,7 @@ function renderAlojamiento(data) {
           <iframe class="aloj-map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                   src="https://maps.google.com/maps?q=${q}&z=14&output=embed"
                   title="Mapa de ${escapeAttr(hotel)}"></iframe>
-        </div>
-        <a class="aloj-map-btn" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Abrir en Google Maps →</a>`;
+        </div>`;
     }
     container.innerHTML = `
       <div class="aloj-asignado">
