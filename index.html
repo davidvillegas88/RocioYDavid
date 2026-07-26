@@ -1043,15 +1043,6 @@ function enterPrivateZone(data) {
   }
   document.getElementById('welcomeTitle').textContent = saludo;
 
-  const welcomeMsgEl = document.getElementById('welcomeMsg');
-  if ((data.mensaje || '').trim()) {
-    welcomeMsgEl.textContent = `"${data.mensaje}"`;
-    welcomeMsgEl.classList.add('visible');
-  } else {
-    welcomeMsgEl.textContent = '';
-    welcomeMsgEl.classList.remove('visible');
-  }
-
   renderAlojamiento(data);
 
   renderConfirmarTab(data);
