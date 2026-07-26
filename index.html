@@ -893,7 +893,7 @@ footer { background: var(--deep); color: var(--cream); text-align: center; paddi
       </div>
       <div id="rsvp-container"></div>
       <div class="form-msg" id="msg-success" style="display:none">
-        <div class="msg-icon">🌿</div>
+        <div class="msg-icon">💚</div>
         <h3>¡Confirmación recibida!</h3>
         <p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>
       </div>
@@ -1719,7 +1719,7 @@ async function submitRsvp(e) {
       : { h: '¡Te echaremos de menos!', p: 'Nos da mucha pena que no puedas venir. Te mandamos un abrazo muy fuerte.<br>Si al final cambian los planes, puedes editar tu respuesta cuando quieras.' };
     msgEl.innerHTML = `<div class="msg-icon">🤍</div><h3>${t.h}</h3><p>${t.p}</p>`;
   } else {
-    msgEl.innerHTML = `<div class="msg-icon">🌿</div><h3>¡Confirmación recibida!</h3><p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>`;
+    msgEl.innerHTML = `<div class="msg-icon">💚</div><h3>¡Confirmación recibida!</h3><p>Hemos recibido vuestra confirmación y os esperamos con mucho cariño el 6 de diciembre.<br>Recibiréis un email en breve.</p>`;
   }
   msgEl.style.display = 'block';
   document.getElementById('private-screen').scrollTo(0, 0);
