@@ -19,6 +19,7 @@
   --azul:      #152180;
   --azul-dark: #0f175a;
   --azul-cielo: #7FA9CB;
+  --azul-claro: #8fb4d3;
   --verde-titulo: #98A089;
   --img-bg:    #F7F4EF;
   --ivory:     #f5ede2;
@@ -517,6 +518,51 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
   .rsvp-personas-grid { grid-template-columns: 1fr; }
   .hijo-fields { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
 }
+
+/* ===== Programa · hilo del puente con monigote ===== */
+.rio{position:relative;max-width:680px;margin:0 auto}
+.rio-track,.rio-walker{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.rio-track{z-index:1}
+.rio-walker{z-index:5}
+.rio-track .thread{fill:none;stroke:var(--azul-cielo);stroke-width:2.5;opacity:0.6;stroke-linecap:round}
+.rio-track .bead{fill:var(--cream);stroke:var(--azul-cielo);stroke-width:2}
+#walker{transition:opacity .4s}
+#walker .fig{fill:none;stroke:var(--azul);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#walker .fig .filled{fill:var(--azul);stroke:none}
+.bob{animation:bob 1s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.fig.dance{transform-box:fill-box;transform-origin:bottom center;animation:dance .5s ease-in-out infinite}
+@keyframes dance{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+.rcard{position:relative;z-index:2;width:58%;background:var(--cream);border:1px solid rgba(184,149,106,0.22);border-radius:5px;padding:1.15rem 1.35rem;box-shadow:0 10px 30px -22px rgba(58,46,40,0.5)}
+.rcard.left{margin-left:1%}
+.rcard.right{margin-left:41%}
+.gap{height:88px}
+.r-date{font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--azul);opacity:0.78}
+.r-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:1.35rem;color:var(--verde-titulo);margin:0.12rem 0 0.55rem;line-height:1.1}
+.r-ev{font-size:0.83rem;opacity:0.82;margin:0.24rem 0}
+.r-ev b{font-weight:500;color:var(--deep)}
+.r-sub{font-size:0.79rem;opacity:0.66;margin-top:0.35rem;line-height:1.6}
+.rhero{position:relative;overflow:hidden;z-index:2;width:76%;margin:0 auto;background:linear-gradient(180deg,var(--azul-claro),var(--azul-cielo));color:#fff;border-radius:8px;padding:1.7rem 1.8rem;box-shadow:0 22px 50px -24px rgba(127,169,203,0.9)}
+.rhero .r-date{color:#eaf2f8;opacity:0.95}
+.rhero .r-name{color:#fff;font-size:2rem;margin-bottom:1rem}
+.rhero-grid{position:relative;z-index:2;display:grid;grid-template-columns:auto 1fr;gap:0.5rem 1rem}
+.rh-t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#fff;text-align:right;white-space:nowrap;opacity:0.95}
+.rh-e b{font-weight:500;font-size:0.9rem}
+.rh-e span{display:block;font-size:0.76rem;color:#eef4f9;opacity:0.9}
+.fw-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:4;border-radius:8px}
+.streak{position:absolute;bottom:0;width:2px;height:11px;background:linear-gradient(#fff,rgba(255,255,255,0));opacity:.9;animation:rise .42s ease-out forwards}
+@keyframes rise{from{transform:translateY(0);opacity:.9}to{transform:translateY(calc(var(--rise)*-1));opacity:.15}}
+.burst{position:absolute;width:0;height:0}
+.burst span{position:absolute;left:0;top:0;width:4px;height:4px;border-radius:50%;animation:spark .8s ease-out forwards}
+@keyframes spark{0%{opacity:1;transform:rotate(var(--a)) translateX(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateX(var(--r)) scale(.35)}}
+@media(max-width:600px){
+  .rcard{width:86%}
+  .rcard.left{margin-left:0}
+  .rcard.right{margin-left:14%}
+  .rhero{width:96%}
+  .gap{height:70px}
+}
+@media(prefers-reduced-motion:reduce){.bob,.fig.dance{animation:none}}
 </style>
 </head>
 <body>
@@ -553,7 +599,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
   <div class="priv-tabs">
     <button class="priv-tab active" data-tab="tab-bienvenida">Inicio</button>
     <button class="priv-tab" data-tab="tab-alojamiento">Alojamiento</button>
-    <button class="priv-tab" data-tab="tab-confirmar">Confirmar</button>
+    <button class="priv-tab" data-tab="tab-confirmar">Confirmación</button>
     <button class="priv-tab" data-tab="tab-regalo">Regalo</button>
   </div>
 </nav>
@@ -735,7 +781,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
         <span class="llegar-card-icon">✈️</span>
         <div class="llegar-eye">Avión + coche</div>
         <h4>En avión</h4>
-        <p>El Aeropuerto de Almería es el más cercano (a 30 min de Los Escullos). Gránada (~2h), Murcia (~1h&nbsp;30), Málaga (~2h&nbsp;45), Alicante (~3h) son las alternativas. Desde cualquiera de ellos, será necesario trasladarse en taxi/coche. </p>
+        <p>El Aeropuerto de Almería es el más cercano (a 30 min de Los Escullos). Granada (~2h), Murcia (~1h&nbsp;30), Málaga (~2h&nbsp;45), Alicante (~3h) son las alternativas. Desde cualquiera de ellos, será necesario trasladarse en taxi/coche. </p>
       </div>
       <div class="llegar-card">
         <span class="llegar-card-icon">🚄</span>
@@ -759,41 +805,50 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
       <div class="deco"><div class="deco-d"></div></div>
     </div>
     <p class="prog-intro reveal">Celebrar tanto amor en un solo día nos parecía muy complicado. Por eso queremos vivir el puente de diciembre rodeados de nuestra gente: llegar sin prisas, encontrarnos, celebrar y despedirnos poco a poco.</p>
-    <div class="prog-grid">
-      <div class="prog-day prog-day-viesab reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Viernes o Sábado</div><div class="prog-day-date">4–5 Diciembre · Llegadas</div></div>
-        <div class="prog-events">
-          <div class="prog-event"><div class="prog-time">Todo el día</div><div class="prog-info"><h4>Llegada a Los Escullos</h4><p>Llega cuando puedas. Nosotros estaremos desde el viernes, instálate y explora la zona. Avísanos cuando llegues e iremos juntándonos todos.</p></div></div>
+    <div class="rio" id="rio">
+      <svg class="rio-track" id="track"><path class="thread" id="threadPath"></path><g id="beads"></g></svg>
+      <svg class="rio-walker" id="walkerSvg"><path id="measurePath" style="fill:none;stroke:none"></path><g id="walker" opacity="0"><g class="bob" id="figHost"></g></g></svg>
+
+      <div class="rcard left day">
+        <div class="r-date">4–5 Diciembre · Llegadas</div>
+        <div class="r-name">Viernes o Sábado</div>
+        <div class="r-ev"><b>Todo el día · Llegada a Los Escullos</b></div>
+        <div class="r-sub">Llega cuando puedas. Instálate, explora la zona y avísanos: iremos juntándonos todos.</div>
+      </div>
+      <div class="gap"></div>
+
+      <div class="rcard right day">
+        <div class="r-date">5 Diciembre</div>
+        <div class="r-name">Sábado</div>
+        <div class="r-ev"><b>19:00 · Pre-boda</b></div>
+        <div class="r-sub">Para quienes lleguéis viernes o sábado, nos gustaría tener una pequeña cena informal de picoteo, para saludarnos e ir calentando motores.</div>
+      </div>
+      <div class="gap"></div>
+
+      <div class="rhero day" id="progHero">
+        <div class="r-date">6 Diciembre 2026</div>
+        <div class="r-name">Domingo · El Gran Día</div>
+        <div class="rhero-grid">
+          <div class="rh-t">12:00</div><div class="rh-e"><b>Ceremonia</b><span>Iglesia de Rodalquilar</span></div>
+          <div class="rh-t">13:30</div><div class="rh-e"><b>Cóctel</b><span>Hotel Los Escullos</span></div>
+          <div class="rh-t">15:30</div><div class="rh-e"><b>Banquete</b><span>Los mejores productos de Almería</span></div>
+          <div class="rh-t">Tarde</div><div class="rh-e"><b>Fiesta</b><span>Hasta que el cuerpo aguante</span></div>
         </div>
       </div>
-      <div class="prog-day prog-day-sab reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Sábado</div><div class="prog-day-date">5 Diciembre</div></div>
-        <div class="prog-events">
-          <div class="prog-event"><div class="prog-time">19:00h</div><div class="prog-info"><h4>Pre-boda</h4><p>Nos reuniremos para daros la bienvenida. Una cena informal de picoteo es la excusa perfecta para saludarnos e ir calentando motores.</p></div></div>
-        </div>
+      <div class="gap"></div>
+
+      <div class="rcard left day">
+        <div class="r-date">7 Diciembre · Día de después</div>
+        <div class="r-name">Lunes</div>
+        <div class="r-ev"><b>Todo el día · Día de playa</b></div>
+        <div class="r-sub">Espero que os queden algo de fuerzas: para los que aprovechéis el puente entero, nos gustaría seguir juntos y disfrutar de la playa y de vuestra compañía. Un vóley-playa, unas palas o las mejores vistas del Cabo de Gata con una ruta al Cerro de los Frailes.</div>
       </div>
-      <div class="prog-day prog-day-dom reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Domingo · El Gran Día</div><div class="prog-day-date">6 Diciembre 2026</div></div>
-        <div class="prog-events">
-          <div class="prog-event"><div class="prog-time">12:00h</div><div class="prog-icon">👰🏻‍♀️🤵🏽‍♂️</div><div class="prog-info"><h4>Ceremonia</h4><p>Iglesia de Rodalquilar.</p></div></div>
-          <div class="prog-event"><div class="prog-time">13:30h</div><div class="prog-icon">🥂</div><div class="prog-info"><h4>Cóctel</h4><p>Brindaremos en el hotel Los Escullos.</p></div></div>
-          <div class="prog-event"><div class="prog-time">15:30h</div><div class="prog-icon">🍽️</div><div class="prog-info"><h4>Banquete</h4><p>Menú con los mejores productos de Almería.</p></div></div>
-          <div class="prog-event"><div class="prog-time">Tarde</div><div class="prog-icon">🎶</div><div class="prog-info"><h4>Fiesta</h4><p>Hasta que caiga la noche y el cuerpo aguante.</p></div></div>
-        </div>
-      </div>
-      <div class="prog-day prog-day-lun reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Lunes</div><div class="prog-day-date">7 Diciembre · Día de después</div></div>
-        <div class="prog-events">
-          <div class="prog-event"><div class="prog-time">Mañana</div><div class="prog-info"><h4>Desayuno juntos</h4><p>¡La celebración no termina! Poneos al día con los novios, que seguro que ayer no pudieron verlo todo.</p></div></div>
-          <div class="prog-event"><div class="prog-time">Resto</div><div class="prog-info"><h4>Día de playa</h4><p>Palas, cartas, conversaciones. La idea es seguir juntos disfrutando de la playa y el pueblo sin multitudes.</p></div></div>
-        </div>
-      </div>
-      <div class="prog-day prog-day-mar reveal">
-        <div class="prog-day-head"><div class="prog-day-name">Martes</div><div class="prog-day-date">8 Diciembre · Despedida</div></div>
-        <div class="prog-events">
-          <div class="prog-event"><div class="prog-time">Mañana</div><div class="prog-info"><h4>Desayuno opcional</h4><p>El último café juntos antes de que cada uno tome su camino de vuelta.</p></div></div>
-          <div class="prog-event"><div class="prog-time">Tarde</div><div class="prog-info"><h4>Despedida</h4><p>Hasta que volvamos a vernos. Gracias por venir.</p></div></div>
-        </div>
+      <div class="gap"></div>
+
+      <div class="rcard right day">
+        <div class="r-date">8 Diciembre · Despedida</div>
+        <div class="r-name">Martes</div>
+        <div class="r-sub">Para los verdaderos Weekend Warriors, un último desayuno o cafelito juntos antes de que volvamos a vernos. Muchas gracias por venir.</div>
       </div>
     </div>
   </div>
@@ -1791,6 +1846,163 @@ function copyIBAN() {
 /* ══ RESTAURAR SESIÓN ══ */
 loadSession();
 if (!session?.ok) showGateCover();
+</script>
+<script>
+(function(){
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rio        = document.getElementById('rio');
+  const track      = document.getElementById('track');
+  const walkerSvg  = document.getElementById('walkerSvg');
+  const threadPath = document.getElementById('threadPath');
+  const measure    = document.getElementById('measurePath');
+  const beads      = document.getElementById('beads');
+  const walker     = document.getElementById('walker');
+  const figHost    = document.getElementById('figHost');
+  const hero       = document.getElementById('progHero');
+  const days       = [...rio.querySelectorAll('.day')];
+
+  /* ---- piezas del monigote (pies en 0,0; cuerpo hacia arriba) ---- */
+  const BODY='<line x1="0" y1="-21" x2="0" y2="-9"/><circle cx="0" cy="-25" r="3.6"/>';
+  const legs=[
+    '<line x1="0" y1="-9" x2="-6" y2="-1"/><line x1="0" y1="-9" x2="4" y2="0"/>',
+    '<line x1="0" y1="-9" x2="6" y2="-1"/><line x1="0" y1="-9" x2="-4" y2="0"/>'
+  ];
+  const arms={
+    0:'<line x1="0" y1="-18" x2="-7" y2="-11"/><rect x="-11" y="-11" width="6" height="7" rx="1"/><line x1="0" y1="-18" x2="5" y2="-13"/>',      /* maleta */
+    1:'<line x1="0" y1="-18" x2="-7" y2="-26"/><line x1="0" y1="-18" x2="6" y2="-12"/>',                                                        /* saluda */
+    4:'<line x1="0" y1="-18" x2="7" y2="-26"/><line x1="0" y1="-18" x2="-6" y2="-12"/>'                                                         /* adiós */
+  };
+  const DANCE='<line x1="0" y1="-21" x2="0" y2="-9"/><circle cx="0" cy="-25" r="3.6"/>'+
+    '<line x1="0" y1="-18" x2="-8" y2="-27"/><line x1="0" y1="-18" x2="8" y2="-27"/>'+
+    '<line x1="0" y1="-9" x2="-6" y2="0"/><line x1="0" y1="-9" x2="6" y2="0"/>'+
+    '<circle class="filled" cx="0" cy="-20" r="1.3"/>';
+  /* tumbado con gafas de sol (cabeza a la derecha, pies a la izquierda) */
+  const LIE='<line x1="-12" y1="-3" x2="6" y2="-3"/><circle cx="10" cy="-5" r="3.8"/>'+
+    '<line x1="6" y1="-3" x2="7.6" y2="-4.4"/>'+
+    '<line x1="7.4" y1="-6.2" x2="12.6" y2="-6.2" stroke-width="2.2"/>'+
+    '<line x1="-12" y1="-3" x2="-18" y2="-1"/><line x1="-12" y1="-3" x2="-17" y2="-5"/>'+
+    '<line x1="1" y1="-3" x2="5" y2="-8"/><line x1="-3" y1="-3" x2="-5" y2="0"/>';
+  /* martes: subido en el coche, saludando (se va hacia la derecha) */
+  const CAR='<circle cx="-7" cy="-2.6" r="2.6"/><circle cx="7" cy="-2.6" r="2.6"/>'+
+    '<rect x="-13" y="-9" width="26" height="6" rx="2"/>'+
+    '<rect x="-6" y="-14.5" width="12" height="5.8" rx="2"/>'+
+    '<circle cx="0" cy="-18" r="3"/>'+
+    '<line x1="0" y1="-14.5" x2="8" y2="-20"/>'+
+    '<line x1="-17" y1="-6" x2="-20.5" y2="-6"/><line x1="-17" y1="-9" x2="-21.5" y2="-9"/>';
+
+  let curKey='';
+  function render(di,best,vis){
+    if(di===2){                                   /* Gran Día: baila + cohetes */
+      if(curKey!=='dance'){ curKey='dance'; figHost.innerHTML='<g class="fig dance">'+DANCE+'</g>'; }
+      if(vis) startFW(); else stopFW();
+      return;
+    }
+    stopFW();
+    if(di===3){                                   /* Lunes: tumbado */
+      if(curKey!=='lie'){ curKey='lie'; figHost.innerHTML='<g class="fig">'+LIE+'</g>'; }
+      return;
+    }
+    if(di===4){                                   /* Martes: en el coche saludando */
+      if(curKey!=='car'){ curKey='car'; figHost.innerHTML='<g class="fig">'+CAR+'</g>'; }
+      return;
+    }
+    const step = Math.abs(Math.floor(best.y/16))%2;   /* caminar */
+    const key='w'+di+step;
+    if(key!==curKey){ curKey=key; figHost.innerHTML='<g class="fig">'+BODY+legs[step]+(arms[di]||'')+'</g>'; }
+  }
+
+  /* ---- fuegos artificiales ---- */
+  let fwTimer=null;
+  function startFW(){
+    if(fwTimer||RM) return;
+    let layer=hero.querySelector('.fw-layer');
+    if(!layer){ layer=document.createElement('div'); layer.className='fw-layer'; hero.appendChild(layer); }
+    const colors=['#ffffff','#b8956a','#eaf2f8','#dfe9f2'];
+    fwTimer=setInterval(()=>{
+      const w=layer.clientWidth,h=layer.clientHeight;
+      const n=Math.random()<0.5?2:1;               /* a veces dos cohetes a la vez */
+      for(let k=0;k<n;k++){
+        const x=24+Math.random()*(w-48);
+        const apex=18+Math.random()*(h*0.5);
+        const st=document.createElement('div'); st.className='streak';
+        st.style.left=x+'px'; st.style.setProperty('--rise',(h-apex)+'px');
+        layer.appendChild(st);
+        setTimeout(()=>{ st.remove(); burst(layer,x,apex,colors); },410);
+      }
+    },370);
+  }
+  function stopFW(){ if(fwTimer){clearInterval(fwTimer);fwTimer=null;} const l=hero.querySelector('.fw-layer'); if(l) l.innerHTML=''; }
+  function burst(layer,x,y,colors){
+    const b=document.createElement('div'); b.className='burst'; b.style.left=x+'px'; b.style.top=y+'px';
+    const n=10;
+    for(let i=0;i<n;i++){ const s=document.createElement('span');
+      s.style.setProperty('--a',(i*(360/n))+'deg');
+      s.style.setProperty('--r',(14+Math.random()*16)+'px');
+      s.style.background=colors[i%colors.length];
+      s.style.boxShadow='0 0 5px '+colors[i%colors.length];
+      b.appendChild(s);
+    }
+    layer.appendChild(b);
+    setTimeout(()=>b.remove(),840);
+  }
+
+  /* ---- curva suave por el centro de cada día ---- */
+  function smooth(p){
+    if(p.length<2) return '';
+    let d='M'+p[0].x+','+p[0].y;
+    for(let i=0;i<p.length-1;i++){
+      const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p[i+1];
+      d+=' C'+(p1.x+(p2.x-p0.x)/6)+','+(p1.y+(p2.y-p0.y)/6)+' '+(p2.x-(p3.x-p1.x)/6)+','+(p2.y-(p3.y-p1.y)/6)+' '+p2.x+','+p2.y;
+    }
+    return d;
+  }
+
+  let W=0,H=0,pts=[],samples=[],len=0;
+  function build(){
+    W=rio.clientWidth; H=rio.clientHeight;
+    [track,walkerSvg].forEach(s=>s.setAttribute('viewBox','0 0 '+W+' '+H));
+    pts=days.map(el=>{
+      const l=el.offsetLeft, w=el.offsetWidth, t=el.offsetTop, h=el.offsetHeight;
+      let x;
+      if(el.classList.contains('left'))       x = l + w + 30;   /* hueco a la derecha (sin texto) */
+      else if(el.classList.contains('right'))  x = l - 30;       /* hueco a la izquierda (sin texto) */
+      else                                     x = l + w/2;      /* gran día: centrado */
+      x = Math.max(14, Math.min(W-14, x));
+      return {x, y: t + h/2};
+    });
+    const d=smooth(pts);
+    threadPath.setAttribute('d',d); measure.setAttribute('d',d);
+    len=measure.getTotalLength();
+    beads.innerHTML=pts.map(p=>'<circle class="bead" cx="'+p.x+'" cy="'+p.y+'" r="4.5"/>').join('');
+    samples=[]; const N=280;
+    for(let i=0;i<=N;i++){ const q=measure.getPointAtLength(i/N*len); samples.push({x:q.x,y:q.y}); }
+    update();
+  }
+
+  const SCALE=1.5;
+  function update(){
+    if(!samples.length) return;
+    const top=rio.getBoundingClientRect().top;
+    let ty=window.innerHeight*0.5-top;
+    const vis=ty>-40 && ty<H+40;
+    ty=Math.max(0,Math.min(H,ty));
+    let best=samples[0];
+    for(const s of samples){ if(Math.abs(s.y-ty)<Math.abs(best.y-ty)) best=s; }
+    walker.setAttribute('transform','translate('+best.x+','+best.y+') scale('+SCALE+')');
+    walker.setAttribute('opacity',vis?'1':'0');
+    let di=0,bd=1e9;
+    pts.forEach((p,i)=>{ const dd=Math.abs(p.y-best.y); if(dd<bd){bd=dd;di=i;} });
+    render(di,best,vis);
+  }
+
+  let ticking=false;
+  window.addEventListener('scroll',()=>{ if(!ticking){requestAnimationFrame(()=>{update();ticking=false;});ticking=true;} },{passive:true});
+  window.addEventListener('resize',build);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(build);
+  window.addEventListener('load',build);
+  new ResizeObserver(build).observe(rio);
+  build();
+})();
 </script>
 </body>
 </html>
