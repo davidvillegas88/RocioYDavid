@@ -104,6 +104,14 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 .song-chosen { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0.75rem; background: var(--ivory); border: 1px solid rgba(21,33,128,0.25); margin-top: 0.6rem; }
 .song-clear { background: none; border: none; color: var(--rose); font-size: 1.3rem; line-height: 1; cursor: pointer; padding: 0 0.3rem; opacity: 0.6; transition: opacity 0.2s; }
 .song-clear:hover { opacity: 1; }
+/* Spotify look */
+.spotify-badge-row { display:flex; align-items:center; gap:0.4rem; font-size:0.68rem; letter-spacing:0.04em; color:#1DB954; margin:0.1rem 0 0.3rem; }
+.spotify-badge-row svg { width:15px; height:15px; flex-shrink:0; }
+.song-input-wrap { position:relative; }
+.song-sp-ico { position:absolute; left:0.7rem; top:50%; transform:translateY(-50%); width:17px; height:17px; z-index:2; pointer-events:none; }
+.song-input { padding-left:2.35rem !important; }
+.song-input:focus { border-color:#1DB954; box-shadow:inset 0 0 0 1px rgba(29,185,84,0.28); }
+.song-chosen { border-color:rgba(29,185,84,0.45) !important; border-left:3px solid #1DB954 !important; }
 /* Ya confirmado */
 .ya-confirmado { text-align: center; padding: 2.5rem 1.5rem; }
 .ya-confirmado .msg-icon { font-size: 2.6rem; color: var(--azul); margin-bottom: 0.8rem; }
@@ -1443,19 +1451,16 @@ function renderRsvpForm() {
     <hr class="rsvp-section-divider">
     <div class="fg">
       <label class="fg-label">Vuestras 2 canciones para la fiesta 🎵</label>
-      <p class="songs-hint">Buscad y elegid las que no pueden faltar. Se sumarán a nuestra playlist.</p>
+      <div class="spotify-badge-row">${SPOTIFY_ICON}<span>Buscador conectado a Spotify</span></div>
+      <p class="songs-hint">Escribe el nombre y elige de los resultados. Se añadirá directamente a la lista de los novios.</p>
       ${songSlot(1)}
       ${songSlot(2)}
     </div>`;
 
-  /* Mensaje */
-  html += `
-    <div class="fg fg-mensaje">
-      <label class="fg-label">Mensaje para los novios 💌</label>
-      <textarea id="mensaje" placeholder="Contadnos lo que queráis...">${escapeHtml(session.mensaje || '')}</textarea>
-    </div>
-    <button type="submit" class="submit-btn" id="submitBtn">Confirmar asistencia</button>
-  </form>`;
+  /* Envío */
+    html += `
+      <button type="submit" class="submit-btn" id="submitBtn">Confirmar asistencia</button>
+    </form>`;
 
   document.getElementById('rsvp-container').innerHTML = html;
   document.getElementById('rsvpForm').addEventListener('submit', submitRsvp);
@@ -1553,12 +1558,19 @@ function prefillHijos(resumen) {
 }
 
 /* ── Buscador de canciones (Spotify) ── */
+const SPOTIFY_ICON = `<svg viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/svg"><path fill="#1DB954" d="M84 .3C37.7.3.3 37.8.3 84c0 46.3 37.4 83.7 83.7 83.7 46.3 0 83.7-37.4 83.7-83.7C167.7 37.8 130.3.3 84 .3zm38.4 120.8a5.2 5.2 0 01-7.2 1.7c-19.7-12-44.4-14.7-73.6-8.1a5.2 5.2 0 11-2.3-10.2c31.9-7.3 59.3-4.1 81.3 9.3 2.5 1.5 3.3 4.8 1.8 7.3zm10.3-22.8c-1.9 3.1-5.9 4-9 2.2-22.5-13.9-56.8-17.9-83.4-9.8a6.5 6.5 0 11-3.8-12.5c30.4-9.2 68.2-4.8 94.1 11.1 3.1 1.9 4 6 2.1 9zm.9-23.8C106.6 58.5 62 57 36.3 64.8a7.8 7.8 0 11-4.5-15c29.6-9 78.8-7.2 109.8 11.2a7.8 7.8 0 01-8 13.4z"/></svg>`;
 const songState = { 1: { results: [], chosen: null }, 2: { results: [], chosen: null } };
 const songTimers = {};
 function songSlot(slot) {
+  const ph = 'Busca aquí tu canción en Spotify · se añadirá a la lista de los novios';
   return `
     <div class="song-slot" data-slot="${slot}">
-      <input type="text" class="song-input" placeholder="Busca una canción..." oninput="onSongInput(${slot}, this.value)" autocomplete="off">
+      <div class="song-input-wrap">
+        <span class="song-sp-ico">${SPOTIFY_ICON}</span>
+        <input type="text" class="song-input" placeholder="${ph}"
+               onfocus="this.placeholder=''" onblur="this.placeholder=&quot;${ph}&quot;"
+               oninput="onSongInput(${slot}, this.value)" autocomplete="off">
+      </div>
       <div class="song-results" id="song-results-${slot}"></div>
       <div class="song-chosen" id="song-chosen-${slot}" style="display:none"></div>
     </div>`;
@@ -1594,6 +1606,8 @@ function chooseSong(slot, idx) {
   document.getElementById('song-results-' + slot).innerHTML = '';
   const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
   input.value = ''; input.style.display = 'none';
+  const ico = document.querySelector(`.song-slot[data-slot="${slot}"] .song-sp-ico`);
+  if (ico) ico.style.display = 'none';
 }
 function renderChosenSong(slot, t) {
   const chosen = document.getElementById('song-chosen-' + slot);
@@ -1609,6 +1623,8 @@ function clearSong(slot) {
   chosen.style.display = 'none'; chosen.innerHTML = '';
   const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
   input.style.display = 'block';
+  const ico = document.querySelector(`.song-slot[data-slot="${slot}"] .song-sp-ico`);
+  if (ico) ico.style.display = 'block';
 }
 function prefillSong(slot, stored) {
   const s = (stored || '').toString().trim();
@@ -1624,6 +1640,8 @@ function prefillSong(slot, stored) {
   renderChosenSong(slot, t);
   const input = document.querySelector(`.song-slot[data-slot="${slot}"] .song-input`);
   if (input) input.style.display = 'none';
+  const ico = document.querySelector(`.song-slot[data-slot="${slot}"] .song-sp-ico`);
+  if (ico) ico.style.display = 'none';
 }
 function songValue(slot) {
   const c = songState[slot].chosen;

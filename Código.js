@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-// BODA ROCÍO & DAVID — Apps Script v3.6
+// BODA ROCÍO & DAVID — Apps Script v3.7
 // ════════════════════════════════════════════════════════════════
 //
 // CAMBIOS v3.6 — Alojamiento con guardado propio:
