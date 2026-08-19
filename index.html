@@ -366,6 +366,8 @@ canvas#weatherChart { width: 100% !important; }
 .bienvenida-msg { background: var(--ivory); border: 1px solid rgba(184,149,106,0.2); padding: 1.8rem 2rem; font-size: 0.92rem; line-height: 1.9; font-style: italic; max-width: 520px; color: var(--deep); opacity: 0.8; display: none; }
 .bienvenida-msg.visible { display: block; }
 .bienvenida-hint { margin-top: 2.5rem; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.35; }
+.bienvenida-foto { display:block; width:100%; max-width:340px; margin:1.8rem auto 0; border-radius:4px; box-shadow:0 12px 34px -18px rgba(58,46,40,0.55); }
+.bienvenida-dedic { max-width:460px; margin:1.4rem auto 0; font-family:'Cormorant Garamond',serif; font-size:clamp(1.05rem,2.2vw,1.3rem); font-style:italic; line-height:1.7; color:var(--verde-titulo); }
 
 /* ══ ALOJAMIENTO ══ */
 .aloj-tab-inner { max-width: 700px; margin: 0 auto; padding: 3rem 2rem; }
@@ -686,21 +688,33 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
           <p>Un 17 de octubre de 2015 empezaba la fiesta en Fabrik. Los dos habíamos ido con nuestros amigos, disfrazados, dispuestos a bailar y disfrutar. Y gracias a las casualidades, entre toda la multitud coincidimos y empezamos a conocernos.</p>
           <p>Estuvimos todo el curso de segundo de carrera quedando para estudiar juntos y haciendo planes los fines de semana, y ese verano empezaron los viajes Madrid–Almería.</p>
         </div>
-        <div class="story-foto"><div class="story-foto-ph"><span>📸</span><span>2015 · Fabrik</span></div></div>
+        <div class="story-foto">
+          <img src="fotos/fabrik.jpg" alt="2015 · Fabrik" loading="lazy"
+               onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/fabrik.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <div class="story-foto-ph" style="display:none"><span>📸</span><span>2015 · Fabrik</span></div>
+        </div>
       </div>
 
       <div class="story-row rev reveal">
         <div class="story-text">
           <p>La distancia creció en 2017, con Rocío en Marsella (Francia), y después fue David quien comenzó su tour internacional: Kiruna (Suecia), Toulouse (Francia), Bremen (Alemania) y vuelta a Almería. Todos estos años tuvieron muchos aviones, muchas despedidas y, sobre todo, muchos reencuentros y recuerdos juntos.</p>
         </div>
-        <div class="story-foto"><div class="story-foto-ph"><span>✈️</span><span>La distancia</span></div></div>
+        <div class="story-foto">
+          <img src="fotos/paises.jpg" alt="La distancia" loading="lazy"
+               onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/paises.';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <div class="story-foto-ph" style="display:none"><span>✈️</span><span>La distancia</span></div>
+        </div>
       </div>
 
       <div class="story-row reveal">
         <div class="story-text">
           <p>2021 fue el año en que volvimos a juntarnos en Madrid, después de una Filomena y con un contrato de doctorando. Volvieron los atardeceres en el Templo de Debod, las cenas con descuentos y las comidas en familia. Eventualmente llegó el momento de empezar a construir un hogar juntos: desde 2023 hasta hoy.</p>
         </div>
-        <div class="story-foto"><div class="story-foto-ph"><span>🌆</span><span>Madrid, 2021</span></div></div>
+        <div class="story-foto">
+          <img src="fotos/collage2color.jpg" alt="Madrid, 2021" loading="lazy"
+               onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/collage2color.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <div class="story-foto-ph" style="display:none"><span>🌆</span><span>Madrid, 2021</span></div>
+        </div>
       </div>
 
       <p class="story-closing reveal">Toda esta historia, muy resumida, nos ha traído hasta aquí. 11 años después de que nuestros caminos se cruzaran, queremos rodearnos de todos vosotros, celebrar el amor, la vida y el futuro que está por venir, y comenzar un nuevo capítulo de esta bonita historia que solo sigue en sus inicios 💘</p>
@@ -928,6 +942,9 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
       <div class="bienvenida-eye">Boda Rocío &amp; David</div>
       <div class="bienvenida-title" id="welcomeTitle">Bienvenido</div>
       <div class="bienvenida-deco"><div class="bienvenida-deco-d"></div></div>
+      <img class="bienvenida-foto" src="fotos/pedida.jpg" alt="La pedida" loading="lazy"
+           onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/pedida.png';}else{this.style.display='none';}">
+      <p class="bienvenida-dedic">Gracias por acompañarnos en este camino.<br>Nos hace muchísima ilusión celebrar este día tan especial con vosotros.</p>
       <div class="bienvenida-msg" id="welcomeMsg"></div>
     </div>
   </div>
