@@ -230,12 +230,12 @@ section { padding: 6rem 2rem; }
 
 /* ══ HISTORIA · relato ══ */
 .story { display: flex; flex-direction: column; gap: 3.5rem; }
-.story-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; }
+.story-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: stretch; }
 @media (min-width: 741px) { .story-row.rev { direction: rtl; } .story-row.rev > * { direction: ltr; } }
 .story-text p { font-size: 0.95rem; line-height: 1.95; opacity: 0.8; margin-bottom: 1rem; }
 .story-text p:last-child { margin-bottom: 0; }
-.story-foto { aspect-ratio: 4/5; overflow: hidden; background: var(--img-bg); border-radius: 3px; }
-.story-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.story-foto { position: relative; overflow: hidden; background: var(--img-bg); border-radius: 3px; min-height: 210px; }
+.story-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
 .story-foto-ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; opacity: 0.4; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; background: linear-gradient(145deg, var(--img-bg), var(--ivory)); }
 .story-foto-ph span:first-child { font-size: 2rem; }
 .story-closing { max-width: 680px; margin: 1rem auto 0; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.2vw, 1.35rem); font-style: italic; line-height: 1.7; color: var(--verde-titulo); }
@@ -700,8 +700,8 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
           <p>La distancia creció en 2017, con Rocío en Marsella (Francia), y después fue David quien comenzó su tour internacional: Kiruna (Suecia), Toulouse (Francia), Bremen (Alemania) y vuelta a Almería. Todos estos años tuvieron muchos aviones, muchas despedidas y, sobre todo, muchos reencuentros y recuerdos juntos.</p>
         </div>
         <div class="story-foto">
-          <img src="fotos/paises.jpg" alt="La distancia" loading="lazy"
-               onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/paises.';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+          <img src="fotos/paises.png" alt="La distancia" loading="lazy"
+               onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/paises.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
           <div class="story-foto-ph" style="display:none"><span>✈️</span><span>La distancia</span></div>
         </div>
       </div>
@@ -711,7 +711,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
           <p>2021 fue el año en que volvimos a juntarnos en Madrid, después de una Filomena y con un contrato de doctorando. Volvieron los atardeceres en el Templo de Debod, las cenas con descuentos y las comidas en familia. Eventualmente llegó el momento de empezar a construir un hogar juntos: desde 2023 hasta hoy.</p>
         </div>
         <div class="story-foto">
-          <img src="fotos/collage2color.jpg" alt="Madrid, 2021" loading="lazy"
+          <img src="fotos/collage2color.jpeg" alt="Madrid, 2021" loading="lazy"
                onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/collage2color.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
           <div class="story-foto-ph" style="display:none"><span>🌆</span><span>Madrid, 2021</span></div>
         </div>
