@@ -591,7 +591,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
   <a href="#lugar">El lugar</a>
   <a href="#llegar">Cómo llegar</a>
   <a href="#programa">Programa</a>
-  <a href="#faq">FAQ</a>
+  <a href="#faq">Preguntas frecuentes</a>
   <span class="nav-sep">·</span>
   <a href="#" class="nav-login-btn" id="navLoginBtn" onclick="miZonaClick(event)">Mi zona →</a>
 </nav>
@@ -1467,8 +1467,8 @@ function renderRsvpForm() {
     <hr class="rsvp-section-divider">
     <div class="fg">
       <label class="fg-label">Vuestras 2 canciones para la fiesta 🎵</label>
-      <div class="spotify-badge-row">${SPOTIFY_ICON}<span>Buscador conectado a Spotify</span></div>
-      <p class="songs-hint">Escribe el nombre y elige de los resultados. Se añadirá directamente a la lista de los novios.</p>
+      <div class="spotify-badge-row">${SPOTIFY_ICON}<span>Buscador de canciones</span></div>
+      <p class="songs-hint">Escribe el nombre</p>
       ${songSlot(1)}
       ${songSlot(2)}
     </div>`;
@@ -1578,7 +1578,7 @@ const SPOTIFY_ICON = `<svg viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/s
 const songState = { 1: { results: [], chosen: null }, 2: { results: [], chosen: null } };
 const songTimers = {};
 function songSlot(slot) {
-  const ph = 'Busca aquí tu canción en Spotify · se añadirá a la lista de los novios';
+  const ph = 'Busca aquí tu canción en Spotify · se añadirá a una lista de los novios';
   return `
     <div class="song-slot" data-slot="${slot}">
       <div class="song-input-wrap">
