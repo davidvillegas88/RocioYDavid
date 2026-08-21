@@ -72,6 +72,8 @@ body { background: var(--cream); color: var(--deep); font-family: 'Jost', sans-s
 #gate-cover img { max-width: 100vw; max-height: 100vh; max-height: 100dvh; width: auto; height: auto; object-fit: contain; display: block; }
 .gate-cover-btn { position: absolute; left: 50%; top: 82%; transform: translate(-50%, -50%); padding: 0.9rem 2.6rem; background: var(--azul); color: white; border: none; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; white-space: nowrap; cursor: pointer; box-shadow: 0 6px 20px rgba(21,33,128,0.28); transition: background 0.3s, transform 0.3s; z-index: 2; }
 .gate-cover-btn:hover { background: var(--azul-dark); transform: translate(-50%, calc(-50% - 2px)); }
+.gate-cover-btn:disabled { background: #9aa0b3; cursor: not-allowed; box-shadow: none; letter-spacing: 0.22em; }
+.gate-cover-btn:disabled:hover { background: #9aa0b3; transform: translate(-50%, -50%); }
 /* ══ RSVP AMPLIADO ══ */
 .restr-detalle { background: white; border: 1px solid rgba(184,149,106,0.22); padding: 0.7rem 0.9rem; font-family: 'Jost', sans-serif; font-size: 0.88rem; color: var(--deep); outline: none; border-radius: 0; }
 .restr-detalle:focus { border-color: var(--azul); }
@@ -607,7 +609,9 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
     <source media="(max-width: 680px)" srcset="fotos/portada_gate_movil.png">
     <img src="fotos/portada_gate.png" alt="Rocío y David · 6 de diciembre de 2026">
   </picture>
-  <button type="button" class="gate-cover-btn" onclick="openGate()">Descubre más</button>
+    <!-- CUANDO LA WEB ESTÉ LISTA: borra la línea de abajo y descomenta la siguiente -->
+  <button type="button" class="gate-cover-btn" disabled>Pronto estará lista</button>
+  <!-- <button type="button" class="gate-cover-btn" onclick="openGate()">Descubre más</button> -->
 </div>
 
 <!-- ══ NAV PÚBLICA ══ -->
