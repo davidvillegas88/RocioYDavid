@@ -1467,7 +1467,7 @@ function renderRsvpForm() {
     <div class="fg">
       <label class="fg-label">Vuestras 2 canciones para la fiesta 🎵</label>
       <div class="spotify-badge-row">${SPOTIFY_ICON}<span>Buscador de canciones</span></div>
-      <p class="songs-hint">Escribe el nombre</p>
+      <p class="songs-hint">Vuestras canciones se añadirán a una lista de los novios</p>
       ${songSlot(1)}
       ${songSlot(2)}
     </div>`;
@@ -1577,7 +1577,7 @@ const SPOTIFY_ICON = `<svg viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/s
 const songState = { 1: { results: [], chosen: null }, 2: { results: [], chosen: null } };
 const songTimers = {};
 function songSlot(slot) {
-  const ph = 'Busca aquí tu canción en Spotify · se añadirá a una lista de los novios';
+  const ph = 'Busca aquí tu canción';
   return `
     <div class="song-slot" data-slot="${slot}">
       <div class="song-input-wrap">
