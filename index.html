@@ -513,8 +513,7 @@ canvas#weatherChart { width: 100% !important; }
 .regalo-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .regalo-track::-webkit-scrollbar { display: none; }
 .regalo-slide { position: relative; flex: 0 0 100%; scroll-snap-align: center; }
-.regalo-slide img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
-.regalo-slide-ph { width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: var(--head-bg); color: var(--deep); opacity: 0.55; }
+.regalo-slide img { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: var(--head-bg); display: block; }.regalo-slide-ph { width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: var(--head-bg); color: var(--deep); opacity: 0.55; }
 .regalo-slide-ph span:first-child { font-size: 2rem; }
 .regalo-slide-ph span:last-child { font-size: 0.7rem; letter-spacing: 0.1em; }
 .regalo-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem 1rem 0.8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: #fff; text-align: center; background: linear-gradient(to top, rgba(15,23,90,0.78), rgba(15,23,90,0)); }
@@ -972,7 +971,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
       <div class="bienvenida-deco"><div class="bienvenida-deco-d"></div></div>
       <img class="bienvenida-foto" src="fotos/pedida.jpeg" alt="La pedida" loading="lazy"
            onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/pedida.png';}else{this.style.display='none';}">
-      <p class="bienvenida-dedic">Nuestra historia comenzó hace mucho años, y a base de pequeños momentos y recuerdos se ha convetido en nuestro cuento favorito. Y en cada capítulo, hemos descubierto que el amor es compartir momentos con los tuyos.<br>Gracias por compatir el camino con nosotros.</p>
+      <p class="bienvenida-dedic">Nuestra historia comenzó hace mucho años, y a base de pequeños momentos y recuerdos se ha convetido en nuestro cuento favorito. En cada capítulo, hemos descubierto que el amor es compartir momentos con los tuyos.<br>Gracias por compatir el camino con nosotros.</p>
       <div class="bienvenida-msg" id="welcomeMsg"></div>
     </div>
   </div>
