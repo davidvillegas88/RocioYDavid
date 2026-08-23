@@ -519,7 +519,7 @@ canvas#weatherChart { width: 100% !important; }
 .regalo-slide-ph span:first-child { font-size: 2rem; }
 .regalo-slide-ph span:last-child { font-size: 0.7rem; letter-spacing: 0.1em; }
 .regalo-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.4rem 1rem 0.8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: #fff; text-align: center; background: linear-gradient(to top, rgba(15,23,90,0.78), rgba(15,23,90,0)); }
-.regalo-nav { position: absolute; top: calc(50% - 1.5rem); transform: translateY(-50%); width: 2.4rem; height: 2.4rem; border: none; border-radius: 50%; background: rgba(255,255,255,0.8); color：var(--azul); font-size: 1.4rem; line-height：1; cursor：pointer; display：flex; align-items：center; justify-content：center; box-shadow：0 2px 10px rgba(0,0,0,0.18); transition：background 0.25s; }
+.regalo-nav { position: absolute; top: calc(50% - 1.5rem); transform: translateY(-50%); z-index: 3; width: 2.4rem; height: 2.4rem; border: none; border-radius: 50%; background: rgba(255,255,255,0.8); color: var(--azul); font-size: 1.4rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.18); transition: background 0.25s; }
 .regalo-nav:hover { background: #fff; }
 .regalo-nav.prev { left: 0.6rem; }
 .regalo-nav.next { right: 0.6rem; }
@@ -1015,22 +1015,22 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
         <div class="regalo-track" id="regaloTrack">
           <div class="regalo-slide">
             <img src="fotos/regalo1.jpg" alt="El coche roto" loading="lazy"
-                 onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo1.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                 onerror="const e=['jpg','jpeg','png'];this.dataset.i=(+this.dataset.i||0)+1;if(this.dataset.i<e.length){this.src='fotos/regalo1.'+e[this.dataset.i];}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🍚</span><span>regalo1.jpg</span></div>
           </div>
           <div class="regalo-slide">
             <img src="fotos/regalo2.jpeg" alt="Sin dinero pa calcetines" loading="lazy"
-                 onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo2.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                 onerror="const e=['jpg','jpeg','png'];this.dataset.i=(+this.dataset.i||0)+1;if(this.dataset.i<e.length){this.src='fotos/regalo2.'+e[this.dataset.i];}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🚗</span><span>regalo2.jpg</span></div>
           </div>
           <div class="regalo-slide">
             <img src="fotos/regalo3.jpeg" alt="Desayuno de los campeones" loading="lazy"
-                 onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo3.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                 onerror="const e=['jpg','jpeg','png'];this.dataset.i=(+this.dataset.i||0)+1;if(this.dataset.i<e.length){this.src='fotos/regalo3.'+e[this.dataset.i];}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🚇</span><span>regalo3.jpg</span></div>
           </div>
           <div class="regalo-slide">
             <img src="fotos/regalo4.jpg" alt="Arroz con pollo" loading="lazy"
-                 onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo4.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
+                 onerror="const e=['jpg','jpeg','png'];this.dataset.i=(+this.dataset.i||0)+1;if(this.dataset.i<e.length){this.src='fotos/regalo4.'+e[this.dataset.i];}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🧦</span><span>regalo4.jpg</span></div>
           </div>
         </div>
@@ -1939,6 +1939,14 @@ document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
   if (!track) return;
   const slides = track.children;
   const dotsWrap = document.getElementById('regaloDots');
+
+  // Fondo difuminado de cada foto (rellena los lados sin franja de color)
+  for (let s = 0; s < slides.length; s++) {
+    const im = slides[s].querySelector('img');
+    if (!im) continue;
+    const setBg = () => { if (im.currentSrc) slides[s].style.setProperty('--bg', `url("${im.currentSrc}")`); };
+    (im.complete && im.naturalWidth) ? setBg() : im.addEventListener('load', setBg);
+  }
   for (let i = 0; i < slides.length; i++) {
     const d = document.createElement('button');
     d.className = 'regalo-dot' + (i === 0 ? ' active' : '');
