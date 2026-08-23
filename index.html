@@ -910,7 +910,7 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
       <h2 class="sec-title">El Tiempo en Almería</h2>
       <div class="deco"><div class="deco-d"></div></div>
     </div>
-    <p class="tiempo-intro">El puente de diciembre en Almería suele ser uno de los mejores destinos de España. Esperamos tener un día soleado o con nubes y claros — históricamente, las probabilidades están de nuestra parte. En cuanto a la temperatura, aunque dé el sol durante el cóctel, mejor llevar una capa que nos abrigue de la brisa y cuando baje la temperatura.</p>
+    <p class="tiempo-intro">El puente de diciembre en Almería suele hacer un tiempo increible. Esperamos tener un día soleado o con pequeñas nubes. Históricamente, las probabilidades están de nuestra parte. En cuanto a la temperatura, aunque dé el sol durante el cóctel, mejor llevar una capa que nos abrigue de la brisa cuando baje la temperatura. Eso sí, es Almería, así que del viento poco nos va a librar.</p>
     <div class="tiempo-cards reveal">
       <div class="tiempo-card"><span class="tiempo-card-icon">🌡️</span><div class="tiempo-card-label">Máxima del día</div><div class="tiempo-card-val">17–22°C</div><div class="tiempo-card-sub">Agradable para estar al aire libre</div></div>
       <div class="tiempo-card"><span class="tiempo-card-icon">🌙</span><div class="tiempo-card-label">Mínima nocturna</div><div class="tiempo-card-val">8–12°C</div><div class="tiempo-card-sub">Llevar abrigo para la fiesta</div></div>
@@ -1013,28 +1013,24 @@ footer { background: var(--azul-cielo); color: #ffffff; text-align: center; padd
       <div class="regalo-carrusel">
         <div class="regalo-track" id="regaloTrack">
           <div class="regalo-slide">
-            <img src="fotos/regalo1.jpg" alt="Arroz con pollo" loading="lazy"
+            <img src="fotos/regalo1.jpg" alt="El coche roto" loading="lazy"
                  onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo1.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🍚</span><span>regalo1.jpg</span></div>
-            <div class="regalo-cap">Menú degustación: arroz con pollo, edición nº 347</div>
           </div>
           <div class="regalo-slide">
-            <img src="fotos/regalo2.jpg" alt="El coche roto" loading="lazy"
+            <img src="fotos/regalo2.jpeg" alt="Sin dinero pa calcetines" loading="lazy"
                  onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo2.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🚗</span><span>regalo2.jpg</span></div>
-            <div class="regalo-cap">Nuestro carruaje nupcial (se admiten empujones)</div>
           </div>
           <div class="regalo-slide">
-            <img src="fotos/regalo3.jpg" alt="Cogiendo el metro" loading="lazy"
+            <img src="fotos/regalo3.jpeg" alt="Desayuno de los campeones" loading="lazy"
                  onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo3.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🚇</span><span>regalo3.jpg</span></div>
-            <div class="regalo-cap">Transporte de lujo: línea 6, hora punta</div>
           </div>
           <div class="regalo-slide">
-            <img src="fotos/regalo4.jpg" alt="Calcetines y calzoncillos rotos" loading="lazy"
+            <img src="fotos/regalo4.jpg" alt="Arroz con pollo" loading="lazy"
                  onerror="if(!this.dataset.p){this.dataset.p=1;this.src='fotos/regalo4.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
             <div class="regalo-slide-ph" style="display:none"><span>🧦</span><span>regalo4.jpg</span></div>
-            <div class="regalo-cap">Ajuar renovado: calcetines con ventilación premium</div>
           </div>
         </div>
         <button class="regalo-nav prev" id="regaloPrev" aria-label="Anterior">‹</button>
@@ -1168,12 +1164,14 @@ function enterPrivateZone(data) {
   document.getElementById('private-screen').classList.add('visible');
   document.getElementById('public-content').style.display = 'none';
 
-  document.getElementById('privNavName').textContent = primerNombre(data.nombre);
-
   // Saludo personalizado (género leído de la columna P de la hoja)
   const tipo = parseInt(data.tipo_web) || 1;
   const p1   = primerNombre(data.nombre);
   const p2   = primerNombre(data.nombre_pareja || '');
+
+  // "Hola, ..." de la barra superior: uno o dos nombres según el tipo de web
+  document.getElementById('privNavName').textContent = (tipo === 2 && p2) ? `${p1} y ${p2}` : p1;
+
   let saludo;
   if (tipo === 2 && p2) {
     saludo = `Queridos ${p1} y ${p2}`;
