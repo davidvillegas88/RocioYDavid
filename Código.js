@@ -153,8 +153,7 @@ function handleLogin(usuario, password) {
     const readW   = Math.min(29, Math.max(1, maxCols - 4));
 
     const bloques = [
-      { rango: inv.getRange(17, 5, 68, readW), offset: 17 },
-      { rango: inv.getRange(88, 5, 69, readW), offset: 88 },
+      { rango: inv.getRange(17, 5, 141, readW), offset: 17 },
     ];
 
     const usuarioNorm = normalize(usuario);
@@ -326,7 +325,7 @@ function handleRsvp(data) {
     if (!inv) throw new Error('Hoja Invitados no encontrada');
 
     const fila = parseInt(data.fila_excel) || 0;
-    if (fila < 17 || fila > 156) throw new Error('Fila fuera de rango: ' + fila);
+    if (fila < 17 || fila > 157) throw new Error('Fila fuera de rango: ' + fila);
 
     ensureColumns(inv, TOTAL_COLS);
 
